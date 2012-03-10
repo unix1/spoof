@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<dataset>
+	<table name="user">
+		<column>id</column>
+		<column>date_created</column>
+		<column>name_first</column>
+		<column>name_last</column>
+		<column>status</column>
+		<row>
+			<value>1</value>
+			<value>2011-12-12 04:23:45</value>
+			<value>Juno</value>
+			<value>Jiana</value>
+			<value>inactive</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>2010-04-26 12:14:20</value>
+			<value>Numa</value>
+			<null />
+			<value>active</value>
+		</row>
+		<row>
+			<value>3</value>
+			<value>2009-03-09 16:54:23</value>
+			<value>Steep</value>
+			<value>Pinata</value>
+			<value>inactive</value>
+		</row>
+		<row>
+			<value>4</value>
+			<value>2008-10-28 18:22:55</value>
+			<value>Mono</value>
+			<value>Sailor</value>
+			<value>active</value>
+		</row>
+	</table>
+</dataset>
