@@ -64,6 +64,13 @@ class Driver implements IDriver
 	public $executor;
 
 	/**
+	*	Features array
+	*	Used to specify support for specific features.
+	*	Extending classes should specify what features and levels they support.
+	*/
+	protected $features = array();
+
+	/**
 	*	Constructor
 	*	Implementing classes should initialize their values here.
 	*/
@@ -76,6 +83,21 @@ class Driver implements IDriver
 		$this->table_column_separator = '';
 		$this->language = '';
 		$this->executor = '';
+	}
+
+	/**
+	*	Get feature support level
+	*	@param string $feature
+	*	@return mixed feature support level
+	*/
+	public function getFeatureLevel($feature)
+	{
+		$level = FALSE;
+		if (isset($this->features[$feature]))
+		{
+			$level = $this->features[$feature];
+		}
+		return $level;
 	}
 
 }

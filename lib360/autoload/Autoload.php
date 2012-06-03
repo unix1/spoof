@@ -1,10 +1,8 @@
 <?php
 
-namespace lib360\autoload;
-
 /*
     This is Spoof.
-    Copyright (C) 2011  Spoof project.
+    Copyright (C) 2011-2012  Spoof project.
 
     Spoof is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,11 +18,34 @@ namespace lib360\autoload;
     along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+*	Namespace for autoloading classes
+*
+*	Provides implementation for spl_autoload_register in PHP
+*/
+namespace lib360\autoload;
+
+/**
+*	Autoload class
+*
+*	Provides flexible namespace-based loading rules for classes from
+*	multiple base directories.
+*/
 class Autoload
 {
 
+	/**
+	*	Internal storage for base directories
+	*/
 	protected static $dirs = array();
 
+	/**
+	*	Import directory
+	*
+	*	Adds given directory to current list of base directories.
+	*
+	*	@param string $directory directory to add
+	*/
 	public static function import($directory)
 	{
 		if (!isset(self::$dirs[$directory]))
@@ -33,6 +54,13 @@ class Autoload
 		}
 	}
 
+	/**
+	*	Remove directory
+	*
+	*	Removes given directory from current list of base directories.
+	*
+	*	@param string $directory directory to remove
+	*/
 	public static function remove($directory)
 	{
 		if (isset(self::$dirs[$directory]))
@@ -41,6 +69,16 @@ class Autoload
 		}
 	}
 
+	/**
+	*	Load given class
+	*
+	*	Attempts to load given class. The class name has to contain full
+	*	namespace path. This function will attempt to resolve the class path
+	*	starting from each directory set with the import function. The first
+	*	match will load the file and stop.
+	*
+	*	@param string $class full class path including namespace
+	*/
 	public static function load($class)
 	{
 		$loaded = FALSE;

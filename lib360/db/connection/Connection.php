@@ -47,6 +47,13 @@ abstract class Connection implements IConnection
 	public $driver;
 
 	/**
+	*	Features array
+	*	Used to specify support for specific features.
+	*	Extending classes should specify what features and levels they support.
+	*/
+	protected $features = array();
+
+	/**
 	*	Constructor for the database connection object instantiates the object but does not connect it to a database
 	*	@param IConfig $config database connection configuration object
 	*	@throw ConfigException when DSN specified with $config object has invalid format
@@ -113,6 +120,25 @@ abstract class Connection implements IConnection
 	public function disconnect()
 	{
 		$this->connection = NULL;
+	}
+
+	/**
+	*	Get feature support level
+	*	@param string $feature
+	*	@return mixed feature support level
+	*/
+	public function getFeatureLevel($feature)
+	{
+		$level = FALSE;
+		if (isset($this->features[$feature]))
+		{
+			$level = $this->features[$feature];
+		}
+		else
+		{
+			$level = $this->driver->getFeatureLevel($feature);
+		}
+		return $level;
 	}
 
 }

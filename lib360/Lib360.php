@@ -1,10 +1,8 @@
 <?php
 
-namespace lib360;
-
 /*
     This is Spoof.
-    Copyright (C) 2011  Spoof project.
+    Copyright (C) 2011-2012  Spoof project.
 
     Spoof is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,19 +18,77 @@ namespace lib360;
     along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+*	Main spoof library namespace
+*/
+namespace lib360;
+
+/**
+*	Provides functions to initialize and reset lib360.
+*/
 class Lib360
 {
 
 	//public static $autoloadExtensions = '.php';
+	/**
+	*	Override default spl_autoload_extensions
+	*
+	*	Setting this property will override the default extensions and will
+	*	allow Autoload class to try files with the extensions listed here
+	*	in that order. Syntax is exactly the same as spl_autoload_extensions.
+	*	@see Autoload
+	*	@see spl_autoload_extensions
+	*/
 	public static $autoloadExtensions = NULL;
+
+	/**
+	*	Namespace of autoload class
+	*
+	*	Use this to implement custom autoloader.
+	*/
 	public static $autoloadNamespace = 'autoload';
+
+	/**
+	*	Autoload class name
+	*
+	*	Use this to implement custom autoloader.
+	*/
 	public static $autoloadClass = 'Autoload';
+
+	/**
+	*	Autoload class method
+	*
+	*	Use this to implement custom autoloader.
+	*/
 	public static $autoloadMethod = 'load';
+
+	/**
+	*	Current namespace
+	*	@todo determine whether this is needed
+	*/
 	public static $namespace = __NAMESPACE__;
+
+	/**
+	*	Internal initialization state
+	*/
 	protected static $initialized = FALSE;
+
+	/**
+	*	Internal autoload extensions backup
+	*/
 	protected static $autoloadExtensionsBackup = NULL;
+
+	/**
+	*	Internal record of whether autoload extensions were overriden
+	*/
 	protected static $autoloadExtensionsOverriden = FALSE;
 
+	/**
+	*	Initialize lib360
+	*
+	*	Includes and registers the autoload class, backs up previous autoload
+	*	values, sets lib360 configuration.
+	*/
 	public static function initialize()
 	{
 		if (!self::$initialized)
@@ -51,6 +107,12 @@ class Lib360
 		}
 	}
 
+	/**
+	*	Resets lib360 configuration
+	*
+	*	Attempts to restore configuration prior to lib360 initilaization.
+	*	Specifically, restores backed up autoload extensions.
+	*/
 	public static function reset()
 	{
 		if (self::$autoloadExtensionsOverriden)
