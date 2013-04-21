@@ -103,12 +103,36 @@ class Node
 	}
 
 	/**
+	*	Internal function to prepare message object as an argument
+	*	@param Message $message object to prepare
+	*	@return resource encoded message
+	*/
+	protected function prepareArgument(Message $message)
+	{
+		list($format, $values) = $message->getPebArgs();
+		return peb_encode($format, $values);
+	}
+
+	/**
 	*	Get any received messages
 	*	@return mixed decoded received message
 	*/
 	public function receive()
 	{
 		return peb_vdecode(peb_receive($this->link));
+	}
+
+	/**
+	*	Make an MFA call
+	*	@param string $module erlang module
+	*	@param string $function erlang module function
+	*	@param Message $message message object to use as argument
+	*	@return mixed decoded result message
+	*/
+	public function rpc($module, $function, Message $args)
+	{
+		$msg = $this->prepareArgument($args);
+		return peb_vdecode(peb_rpc($module, $function, $msg, $this->link));
 	}
 
 }
