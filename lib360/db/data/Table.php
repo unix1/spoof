@@ -121,7 +121,7 @@ class Table extends Store implements ITable
 
 	/**
 	*	Inserts a database record.
-	*	@param array $fields associative array of fields for insert (table field) => (update value)
+	*	@param array $fields associative array of fields for insert (table field) => (insert value)
 	*	@return integer number of rows inserted
 	*/
 	public function insert(array $fields)

@@ -64,6 +64,7 @@ class Lib360
 
 	/**
 	*	Current namespace
+	*
 	*	@todo determine whether this is needed
 	*/
 	public static $namespace = __NAMESPACE__;
