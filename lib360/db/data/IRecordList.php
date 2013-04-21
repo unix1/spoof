@@ -29,13 +29,6 @@ interface IRecordList
 {
 
 	/**
-	*	Constructor.
-	*	@param array $data optional array of IRecord database record objects
-	*	@see IRecord
-	*/
-	public function __construct(array $data = array());
-
-	/**
 	*	Transforms object into XML representation.
 	*	@return DOMDocument XML document object
 	*/

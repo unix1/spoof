@@ -68,7 +68,8 @@ class RecordListTest extends \PHPUnit_Framework_TestCase
 		$r->test2 = 'test 2 value';
 		$l = new \lib360\db\data\RecordList(array($r));
 		$expectedXMLString = '<recordlist type="RecordList"><record type="test"><test1>test 1 value</test1><test2>test 2 value</test2></record></recordlist>';
-		$expectedXML = \DOMDocument::loadXML($expectedXMLString);
+		$expectedXML = new \DomDocument();
+		$expectedXML->loadXML($expectedXMLString);
 		$resultXML = $l->toXML();
 		$this->assertEqualXMLStructure($expectedXML->firstChild, $resultXML->firstChild, TRUE, "Failed to return correct XML structure");
 	}

@@ -23,26 +23,12 @@ namespace lib360\db\data;
 /**
 *	A record list class.
 *	This class extends PHP ArrayObject and represents a list of data records.
-*	@see IDBDataRecordList
-*	@see DBDataRecord
+*	@see IRecordList
+*	@see Record
 */
 
 class RecordList extends \ArrayObject implements IRecordList
 {
-
-	/**
-	*	Constructor.
-	*	@param array $data optional array of IRecord database record objects
-	*	@see IRecord
-	*	@see Record
-	*/
-	public function __construct(array $data = array())
-	{
-		foreach ($data as $key => $value)
-		{
-			$this->offsetSet($key, $value);
-		}
-	}
 
 	/**
 	*	Transforms object into XML representation.

@@ -111,7 +111,8 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	{
 		$o = new \lib360\db\data\Record('test');
 		$expectedXMLString = '<record type="test"><test1>test 1 value</test1><test2>test 2 value</test2></record>';
-		$expectedXML = \DOMDocument::loadXML($expectedXMLString);
+		$expectedXML = new \DOMDocument();
+		$expectedXML->loadXML($expectedXMLString);
 		$o->test1 = 'test 1 value';
 		$o->test2 = 'test 2 value';
 		$resultXML = $o->toXML();

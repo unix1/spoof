@@ -99,7 +99,7 @@ class Factory
 	*	@param string $base namespace or similar prefix of object type
 	*	@param string $interface interface the object must implement
 	*/
-	public function setType($name, $base, $interface)
+	public static function setType($name, $base, $interface)
 	{
 		self::$types[$name] = array('base' => $base, 'interface' => $interface);
 	}
@@ -110,7 +110,7 @@ class Factory
 	*	@return array configuration
 	*	@throw \InvalidArgumentException when $type is not defined
 	*/
-	public function getType($type)
+	public static function getType($type)
 	{
 		if (!isset(self::$types[$type]))
 		{
@@ -122,7 +122,7 @@ class Factory
 	/**
 	*	Empties cache
 	*/
-	public function flushCache()
+	public static function flushCache()
 	{
 		self::$objects = array();
 	}
