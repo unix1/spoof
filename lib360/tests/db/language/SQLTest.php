@@ -1087,22 +1087,6 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $actual, "Insert query object didn't match the expected result");
 	}
 
-	/**
-	*	@covers \lib360\db\language\SQL::getRandomTag
-	*/
-	public function testGetRandomTag()
-	{
-		$tries = 1000;
-		$result = array();
-		for ($i = 0; $i < $tries; ++$i)
-		{
-			$key = $this->l->getRandomTag();
-			$result[$key] = 1;
-		}
-		$actual = count($result);
-		$this->assertEquals($tries, $actual, "Expected $tries result, but got $actual");
-	}
-
 }
 
 ?>

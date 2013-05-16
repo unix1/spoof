@@ -7,14 +7,16 @@ class Message
 
 	public $value;
 
-	public function __construct(value\Value $value)
+	public function __construct(array $values)
 	{
-		$this->value = $value;
+		$this->value = $values;
 	}
 
 	public function getPebArgs()
 	{
-		list($format, $values) = $this->generatePebArgs($this->value);
+		list($format, $values) = $this->generatePebArgs(
+			new value\Collection($this->value, value\Type::LLIST)
+		);
 		return array($format, array($values));
 	}
 

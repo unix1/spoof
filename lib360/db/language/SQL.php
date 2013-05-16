@@ -72,12 +72,6 @@ class SQL implements ILanguage
 	const BIND_CHAR = ':';
 
 	/**
-	*	Internal property to store tags already generated; used to verify uniqueness of a new tag
-	*	@todo this should move when DBLanguageSQL::getRandomTag moves to a separate utility
-	*/
-	protected static $randomTags = array();
-
-	/**
 	*	Gets query of the condition using driver-specific syntax.
 	*	@param \lib360\db\driver\IDriver $driver database driver
 	*	@param \lib360\db\condition\ICondition $condition database condition object
@@ -154,7 +148,8 @@ class SQL implements ILanguage
 			case \lib360\db\value\Value::TYPE_BOOLEAN:
 			case \lib360\db\value\Value::TYPE_BINARY:
 			default:
-				$tag = (string)$this->getRandomTag();
+				$tag = (string)\lib360\crypt\Random::getString(4, TRUE, TRUE);
+				//$tag = (string)$this->getRandomTag();
 				$q->addString(self::BIND_CHAR . $tag);
 				$q->values[$tag] = $value;
 			break;
@@ -239,31 +234,6 @@ class SQL implements ILanguage
 				throw new \lib360\db\language\SQLException("Unsupported or illegal condition group operator (" . $operator . ").");
 		}
 		return $o;
-	}
-
-	/**
-	*	Returns a random and optionally unique (per process) alphanumeric string of a specified length
-	*	@param $n integer length; optional, default 4
-	*	@param $unique boolean whether tag should be unique; optional, default TRUE
-	*	@param $addToUniqueList boolean whether to add to unique list; optional, default TRUE
-	*	@return random string
-	*	@todo need to move this to a separate utility, does not belong here
-	*/
-	public function getRandomTag($n = 4, $unique = TRUE, $addToUniqueList = TRUE)
-	{
-		$tag = base_convert(mt_rand(base_convert(pow(10, $n - 1), 36, 10), pow(36, $n)), 10, 36);
-		if ($unique)
-		{
-			while (isset(self::$randomTags[$tag]))
-			{
-				$tag = base_convert(mt_rand(base_convert(pow(10, $n - 1), 36, 10), pow(36, $n)), 10, 36);
-			}
-		}
-		if ($addToUniqueList)
-		{
-			self::$randomTags[$tag] = TRUE;
-		}
-		return $tag;
 	}
 
 	/**
