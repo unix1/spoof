@@ -28,18 +28,42 @@ namespace lib360\net\http\session;
 class PebKvStore implements \SessionHandlerInterface
 {
 
+	/**
+	*	Internal property for address of Erlang node
+	*/
 	protected $address;
 
+	/**
+	*	Internal property for kvstore application
+	*/
 	protected $application;
 
+	/**
+	*	Internal property for peb link resource
+	*/
 	protected $link;
 
+	/**
+	*	Internal property to store Erlang Node object
+	*/
 	protected $node;
 
+	/**
+	*	Internal property to store secret for connecting to Erlang node
+	*/
 	protected $secret;
 
+	/**
+	* Internal property to store kvstore server name
+	*/
 	protected $server;
 
+	/**
+	*	Constructor, sets initial values, including randomly generated server name
+	*	@param string $address address of Erlang node to connect to
+	*	@param string $secret Erlang secret to use during connection
+	*	@param string $application name of kvstore application
+	*/
 	public function __construct($address, $secret, $application = 'kvstore')
 	{
 		$this->address = $address;
@@ -48,6 +72,12 @@ class PebKvStore implements \SessionHandlerInterface
 		$this->server = 'kv_' . \lib360\crypt\Random::getString(4, FALSE, FALSE);
 	}
 
+	/**
+	*	Opens session, implementation of \SessionHandlerInterface::open()
+	*	@param string $savePath this is unused in this implementation
+	*	@param string $sessionName this is unused in this implementation
+	*	@return boolean TRUE
+	*/
 	public function open($savePath, $sessionName)
 	{
 		$this->node = new \lib360\net\erlang\peb\Node($this->address, $this->secret);
@@ -59,12 +89,21 @@ class PebKvStore implements \SessionHandlerInterface
 		return TRUE;
 	}
 
+	/**
+	*	Closes session, disconnects Erlang node, implementation of \SessionHandlerInterface::close()
+	*	@return boolean TRUE
+	*/
 	public function close()
 	{
 		$this->node->disconnect();
 		return TRUE;
 	}
 
+	/**
+	*	Reads session ID, implementation of \SessionHandlerInterface::read()
+	*	@param string $id existing session ID to retrieve
+	*	@return string serialized PHP session data
+	*/
 	public function read($id)
 	{
 		$args = array(
@@ -76,6 +115,12 @@ class PebKvStore implements \SessionHandlerInterface
 		return $result[0][1];
 	}
 
+	/**
+	*	Writes session data to the given session ID, implementation of \SessionHandlerInterface::write()
+	*	@param string $id session ID to write to
+	*	@param string $data serialized PHP session data
+	*	@return boolean TRUE
+	*/
 	public function write($id, $data)
 	{
 		$args = array(
@@ -88,6 +133,11 @@ class PebKvStore implements \SessionHandlerInterface
 		return TRUE;
 	}
 
+	/**
+	*	Deletes session by ID, implementation of \SessionHandlerInterface::destroy()
+	*	@param string $id session ID to delete
+	*	@return boolean TRUE
+	*/
 	public function destroy($id)
 	{
 		$args = array(
@@ -99,6 +149,11 @@ class PebKvStore implements \SessionHandlerInterface
 		return TRUE;
 	}
 
+	/**
+	*	Garbage collection for sessions, implementation of \SessionHandlerInterface::gc()
+	*	@param integer $maxlifetime maximum lifetime of session
+	*	@return TRUE
+	*/
 	public function gc($maxlifetime)
 	{
 		/*
