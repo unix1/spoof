@@ -95,7 +95,7 @@ class Factory
 
 	/**
 	*	Sets object type configuration
-	* 	@param string $name name of the object type
+	*	@param string $name name of the object type
 	*	@param string $base namespace or similar prefix of object type
 	*	@param string $interface interface the object must implement
 	*/
