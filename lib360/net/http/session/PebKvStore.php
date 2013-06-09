@@ -1,6 +1,7 @@
 <?php
 
 namespace lib360\net\http\session;
+use \lib360\net\erlang\peb as erlpeb;
 
 /*
     This is Spoof.
@@ -54,11 +55,6 @@ class PebKvStore implements \SessionHandlerInterface
 	protected $secret;
 
 	/**
-	* Internal property to store kvstore server name
-	*/
-	protected $server;
-
-	/**
 	*	Constructor, sets initial values, including randomly generated server name
 	*	@param string $address address of Erlang node to connect to
 	*	@param string $secret Erlang secret to use during connection
@@ -69,7 +65,6 @@ class PebKvStore implements \SessionHandlerInterface
 		$this->address = $address;
 		$this->secret = $secret;
 		$this->application = $application;
-		$this->server = 'kv_' . \lib360\crypt\Random::getString(3, FALSE, FALSE);
 	}
 
 	/**
@@ -80,12 +75,8 @@ class PebKvStore implements \SessionHandlerInterface
 	*/
 	public function open($savePath, $sessionName)
 	{
-		$this->node = new \lib360\net\erlang\peb\Node($this->address, $this->secret);
+		$this->node = new erlpeb\Node($this->address, $this->secret);
 		$this->link = $this->node->connect();
-		/// TODO this name could be generated on the server side
-		$args = array(new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM));
-		$message = new \lib360\net\erlang\peb\Message($args);
-		$this->node->rpc($this->application, 'start_server', $message);
 		return TRUE;
 	}
 
@@ -110,10 +101,9 @@ class PebKvStore implements \SessionHandlerInterface
 	public function read($id)
 	{
 		$args = array(
-			new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM),
-			new \lib360\net\erlang\peb\value\Primitive($id, \lib360\net\erlang\peb\value\Type::STRING)
+			new erlpeb\value\Primitive($id, erlpeb\value\Type::STRING)
 		);
-		$message = new \lib360\net\erlang\peb\Message($args);
+		$message = new erlpeb\Message($args);
 		$result = $this->node->rpc($this->application, 'read', $message);
 		return $result[0][1];
 	}
@@ -127,11 +117,10 @@ class PebKvStore implements \SessionHandlerInterface
 	public function write($id, $data)
 	{
 		$args = array(
-			new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM),
-			new \lib360\net\erlang\peb\value\Primitive($id, \lib360\net\erlang\peb\value\Type::STRING),
-			new \lib360\net\erlang\peb\value\Primitive($data, \lib360\net\erlang\peb\value\Type::STRING)
+			new erlpeb\value\Primitive($id, erlpeb\value\Type::STRING),
+			new erlpeb\value\Primitive($data, erlpeb\value\Type::STRING)
 		);
-		$message = new \lib360\net\erlang\peb\Message($args);
+		$message = new erlpeb\Message($args);
 		$result = $this->node->rpc($this->application, 'write', $message);
 		return TRUE;
 	}
@@ -144,10 +133,9 @@ class PebKvStore implements \SessionHandlerInterface
 	public function destroy($id)
 	{
 		$args = array(
-			new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM),
-			new \lib360\net\erlang\peb\value\Primitive($id, \lib360\net\erlang\peb\value\Type::STRING)
+			new erlpeb\value\Primitive($id, erlpeb\value\Type::STRING)
 		);
-		$message = new \lib360\net\erlang\peb\Message($args);
+		$message = new erlpeb\Message($args);
 		$result = $this->node->rpc($this->application, 'delete', $message);
 		return TRUE;
 	}
