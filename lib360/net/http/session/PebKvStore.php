@@ -69,7 +69,7 @@ class PebKvStore implements \SessionHandlerInterface
 		$this->address = $address;
 		$this->secret = $secret;
 		$this->application = $application;
-		$this->server = 'kv_' . \lib360\crypt\Random::getString(4, FALSE, FALSE);
+		$this->server = 'kv_' . \lib360\crypt\Random::getString(3, FALSE, FALSE);
 	}
 
 	/**
@@ -95,6 +95,9 @@ class PebKvStore implements \SessionHandlerInterface
 	*/
 	public function close()
 	{
+		$args = array(new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM));
+		$message = new \lib360\net\erlang\peb\Message($args);
+		$this->node->rpc($this->application, 'stop_server', $message);
 		$this->node->disconnect();
 		return TRUE;
 	}
