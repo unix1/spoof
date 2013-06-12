@@ -55,7 +55,7 @@ class PebKvStore implements \SessionHandlerInterface
 	protected $secret;
 
 	/**
-	*	Constructor, sets initial values, including randomly generated server name
+	*	Constructor, sets node name,address, and storage application name
 	*	@param string $address address of Erlang node to connect to
 	*	@param string $secret Erlang secret to use during connection
 	*	@param string $application name of kvstore application
@@ -86,9 +86,6 @@ class PebKvStore implements \SessionHandlerInterface
 	*/
 	public function close()
 	{
-		$args = array(new \lib360\net\erlang\peb\value\Primitive($this->server, \lib360\net\erlang\peb\value\Type::ATOM));
-		$message = new \lib360\net\erlang\peb\Message($args);
-		$this->node->rpc($this->application, 'stop_server', $message);
 		$this->node->disconnect();
 		return TRUE;
 	}
