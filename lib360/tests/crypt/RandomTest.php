@@ -26,7 +26,7 @@ class RandomTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
-	*	@covers \lib360\crypt\Random::getRandomTag
+	*	@covers \lib360\crypt\Random::getString
 	*/
 	public function testGetString()
 	{
