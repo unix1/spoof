@@ -91,7 +91,7 @@ class Autoload
 				$filename = $dir . $classpath . $ext;
 				if (file_exists($filename) && is_readable($filename))
 				{
-					require_once($filename);
+					require($filename);
 					$loaded = TRUE;
 					break;
 				}
