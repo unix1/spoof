@@ -90,8 +90,9 @@ abstract class Connection implements IConnection
 
 	/**
 	*	Checks whether the database connection is active
+	*	The default behavior checks whether the connection property is NULL.
+	*	If different for specific connection type, the implementing classes must override.
 	*	@return	boolean TRUE if connected, boolean FALSE otherwise
-	*	TODO is there a better way to check if connection is live?
 	*/
 	public function isConnected()
 	{
