@@ -1,0 +1,16 @@
+{
+    "name": "spoof/spoof",
+    "description": "Simple PHP Object Oriented Framework",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*",
+        "phpunit/dbunit": ">=1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "spoof\\": "src/"
+        }
+    }
+}

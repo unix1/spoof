@@ -1,0 +1,24 @@
+<phpunit verbose="true" backupGlobals="false" backupStaticAttributes="false">
+	<php>
+		<var name="DB_DSN" value="sqlite:test.db" />
+	</php>
+	<testsuites>
+		<testsuite name="lib360_autoload">
+			<directory>autoload</directory>
+		</testsuite>
+		<testsuite name="lib360">
+			<directory>./</directory>
+		</testsuite>
+		<!--
+		<testsuite name="lib360_db">
+			<directory>db</directory>
+		</testsuite>
+		<testsuite name="lib360_db_condition">
+			<directory>db/condition</directory>
+		</testsuite>
+		<testsuite name="Lib360_Module">
+			<directory>Module</directory>
+		</testsuite>
+		-->
+	</testsuites>
+</phpunit>
