@@ -195,7 +195,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 		catch (InvalidValueException $e)
 		{
 		}
-		$this->assertInstanceOf('InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
+		$this->assertInstanceOf('\spoof\lib360\db\value\InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
 	}
 
 	/**
@@ -329,7 +329,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 		catch (InvalidValueException $e)
 		{
 		}
-		$this->assertInstanceOf('InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
+		$this->assertInstanceOf('\spoof\lib360\db\value\InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
 	}
 
 	/**
@@ -405,7 +405,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 		catch (InvalidValueException $e)
 		{
 		}
-		$this->assertInstanceOf('InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
+		$this->assertInstanceOf('\spoof\lib360\db\value\InvalidValueException', $e, "Failed to throw InvalidValueException when invalid value type given");
 	}
 
 	/**
