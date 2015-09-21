@@ -20,8 +20,6 @@ namespace spoof\tests\lib360\db\value;
     along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'lib360' . DIRECTORY_SEPARATOR . 'initialize.php');
-
 use \spoof\lib360\db\value\InvalidValueException;
 use \spoof\lib360\db\value\UnknownTypeException;
 use \spoof\lib360\db\value\Value;

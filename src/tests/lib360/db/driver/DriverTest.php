@@ -20,8 +20,6 @@ namespace spoof\tests\lib360\db\driver;
     along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'lib360' . DIRECTORY_SEPARATOR . 'initialize.php');
-
 class DriverTest extends \PHPUnit_Framework_TestCase
 {
 

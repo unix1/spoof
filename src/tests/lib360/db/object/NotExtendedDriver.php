@@ -23,7 +23,6 @@ namespace spoof\tests\lib360\db\object;
 /**
 *	This class implements a driver for MySQL connections.
 */
-
 class NotExtendedDriver
 {
 
