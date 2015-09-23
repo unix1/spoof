@@ -3,13 +3,18 @@
 		<var name="DB_DSN" value="sqlite:test.db" />
 	</php>
 	<testsuites>
-		<testsuite name="lib360_autoload">
-			<directory>autoload</directory>
-		</testsuite>
 		<testsuite name="lib360">
 			<directory>./</directory>
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">~/Development/php/spoof.new/src/lib360</directory>
+			<exclude>
+				<directory>~/Development/php/spoof.new/src/tests</directory>
+			</exclude>
+		</whitelist>
+	</filter>
 	<logging>
 		<log type="coverage-html" target="~/Development/php/spoofns-test-results" charset="UTF-8" yui="true" highlight="false" lowUpperBound="35" highLowerBound="70"/>
 	</logging>

@@ -3,9 +3,6 @@
 		<var name="DB_DSN" value="sqlite:test.db" />
 	</php>
 	<testsuites>
-		<testsuite name="lib360_autoload">
-			<directory>autoload</directory>
-		</testsuite>
 		<testsuite name="lib360">
 			<directory>./</directory>
 		</testsuite>
