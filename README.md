@@ -94,7 +94,7 @@ $result = $userTable->select($condgroup1, NULL, array('id', 'name'));
 ### limit fields in class definition
 This is equivalent of above but defined inside the class as default. You can always override per query.
 ```php
-class UserTable extends data\Table
+class UserTable extends Table
 {
 	protected $db = 'test';
 	protected $name = 'user';
@@ -142,7 +142,7 @@ Now use the above join inside a view class. Notice you can add as many join obje
 
 use \spoof\lib360\db\data\View;
 
-class UserCommentsView extends data\View
+class UserCommentsView extends View
 {
 	public function __construct()
 	{
