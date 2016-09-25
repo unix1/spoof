@@ -85,6 +85,9 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::select
+	*	@covers \spoof\lib360\db\executor\PDO::queryResults
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
 	*	@depends testBindValues
 	*/
 	public function testSelect_FailPrepare()
@@ -105,6 +108,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::select
+	*	@covers \spoof\lib360\db\executor\PDO::queryResults
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testSelect_FailExecute()
@@ -125,6 +132,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::select
+	*	@covers \spoof\lib360\db\executor\PDO::queryResults
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testSelect_Success()
@@ -149,6 +160,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::update
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
 	*	@depends testBindValues
 	*/
 	public function testUpdate_FailPrepare()
@@ -169,6 +184,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::update
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testUpdate_FailExecute()
@@ -191,6 +211,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::update
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testUpdate_Success()
@@ -215,6 +240,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::insert
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
 	*	@depends testBindValues
 	*/
 	public function testInsert_FailPrepare()
@@ -235,6 +264,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::insert
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testInsert_FailExecute()
@@ -257,6 +291,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::insert
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testInsert_Success()
@@ -283,6 +322,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::delete
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
 	*	@depends testBindValues
 	*/
 	public function testDelete_FailPrepare()
@@ -303,6 +346,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::delete
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testDelete_FailExecute()
@@ -323,6 +371,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::delete
+	*	@covers \spoof\lib360\db\executor\PDO::queryAffectedCount
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testDelete_Success()
@@ -346,6 +399,9 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::query
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
 	*	@depends testBindValues
 	*/
 	public function testQuery_FailPrepare()
@@ -366,6 +422,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::query
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testQuery_FailExecute()
@@ -386,6 +446,10 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
 	/**
 	*	@covers \spoof\lib360\db\executor\PDO::query
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementClose
+	*	@covers \spoof\lib360\db\executor\PDO::queryStatementLive
+	*	@covers \spoof\lib360\db\executor\PDO::getStatement
+	*	@covers \spoof\lib360\db\executor\PDO::execute
 	*	@depends testBindValues
 	*/
 	public function testQuery_Success()
