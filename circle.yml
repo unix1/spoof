@@ -1,4 +1,4 @@
 test:
   override:
     - cd src/tests
-    - ../../vendor/phpunit/phpunit/phpunit
+    - phpunit
