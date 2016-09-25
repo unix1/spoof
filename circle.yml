@@ -3,6 +3,6 @@ dependencies:
     - sudo apt-get update; sudo apt-get install php5-xdebug
 test:
   override:
-    - vendor/bin/phpunit -c src/tests/phpunit.xml
+    - vendor/bin/phpunit -c src/tests/phpunit-log.xml
   post:
     - vendor/bin/test-reporter
