@@ -1,6 +1,7 @@
 dependencies:
   pre:
     - sudo apt-get update; sudo apt-get install php5-xdebug
+    - echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini
 test:
   override:
     - vendor/bin/phpunit -c src/tests/phpunit-log.xml
