@@ -1,4 +1,6 @@
-[![CircleCI](https://circleci.com/gh/unix1/spoof.svg?style=shield)](https://circleci.com/gh/unix1/spoof) [![Code Climate](https://codeclimate.com/github/unix1/spoof/badges/gpa.svg)](https://codeclimate.com/github/unix1/spoof)
+[![CircleCI](https://circleci.com/gh/unix1/spoof.svg?style=shield)](https://circleci.com/gh/unix1/spoof)
+[![Code Climate](https://codeclimate.com/github/unix1/spoof/badges/gpa.svg)](https://codeclimate.com/github/unix1/spoof)
+[![Test Coverage](https://codeclimate.com/github/unix1/spoof/badges/coverage.svg)](https://codeclimate.com/github/unix1/spoof/coverage)
 
 # spoof
 Simple PHP Object Oriented Framework consists of convenient and simple, yet advanced database abstraction layer. It's simple to get started and use, but also packs advanced features.
