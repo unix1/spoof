@@ -54,15 +54,6 @@ interface IConnection
 	*/
 	public function disconnect();
 
-	/**
-	*	Get feature support level.
-	*
-	*	@param string $feature
-	*
-	*	@return mixed feature support level
-	*/
-	public function getFeatureLevel($feature);
-
 }
 
 ?>

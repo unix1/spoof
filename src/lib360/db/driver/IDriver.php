@@ -30,15 +30,6 @@ interface IDriver
 	*/
 	public function __construct();
 
-	/**
-	*	Get feature support level
-	*
-	*	@param string $feature
-	*
-	*	@return mixed feature support level
-	*/
-	public function getFeatureLevel($feature);
-
 }
 
 ?>

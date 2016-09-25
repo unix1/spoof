@@ -137,27 +137,6 @@ abstract class Connection implements IConnection
 		$this->connection = NULL;
 	}
 
-	/**
-	*	Gets feature support level.
-	*
-	*	@param string $feature
-	*
-	*	@return mixed feature support level
-	*/
-	public function getFeatureLevel($feature)
-	{
-		$level = FALSE;
-		if (isset($this->features[$feature]))
-		{
-			$level = $this->features[$feature];
-		}
-		else
-		{
-			$level = $this->driver->getFeatureLevel($feature);
-		}
-		return $level;
-	}
-
 }
 
 ?>
