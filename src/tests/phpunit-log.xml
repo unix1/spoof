@@ -8,14 +8,15 @@
 		</testsuite>
 	</testsuites>
 	<filter>
-		<whitelist>
-			<directory suffix=".php">~/Development/php/spoof.new/src/lib360</directory>
+		<whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../../src/lib360</directory>
 			<exclude>
-				<directory>~/Development/php/spoof.new/src/tests</directory>
+				<directory>../../src/tests</directory>
 			</exclude>
 		</whitelist>
 	</filter>
 	<logging>
-		<log type="coverage-html" target="~/Development/php/spoofns-test-results" charset="UTF-8" yui="true" highlight="false" lowUpperBound="35" highLowerBound="70"/>
+		<log type="coverage-html" target="../../build/logs/cover-html" charset="UTF-8" yui="true" highlight="false" lowUpperBound="35" highLowerBound="70"/>
+		<log type="coverage-clover" target="../../build/logs/clover.xml"/>
 	</logging>
 </phpunit>
