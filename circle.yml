@@ -1,5 +1,5 @@
 test:
   override:
-    - vendor/phpunit/phpunit/phpunit -c src/tests/phpunit.xml
+    - vendor/bin/phpunit -c src/tests/phpunit.xml
   post:
     - vendor/bin/test-reporter
