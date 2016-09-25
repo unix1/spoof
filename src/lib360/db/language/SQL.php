@@ -194,52 +194,52 @@ class SQL implements ILanguage
 			case Condition::OPERATOR_EQUALS:
 				if ($condition->value2->getType() == Value::TYPE_NULL)
 				{
-					$o = self::CONDITION_EQUALS_NULL;
+					$operator = self::CONDITION_EQUALS_NULL;
 				}
 				else
 				{
-					$o = self::CONDITION_EQUALS;
+					$operator = self::CONDITION_EQUALS;
 				}
 			break;
 			case Condition::OPERATOR_NOT_EQUALS:
 				if ($condition->value2->getType() == Value::TYPE_NULL)
 				{
-					$o = self::CONDITION_NOT_EQUALS_NULL;
+					$operator = self::CONDITION_NOT_EQUALS_NULL;
 				}
 				else
 				{
-					$o = self::CONDITION_NOT_EQUALS;
+					$operator = self::CONDITION_NOT_EQUALS;
 				}
 			break;
 			case Condition::OPERATOR_GREATER_THAN:
-				$o = self::CONDITION_GREATER_THAN;
+				$operator = self::CONDITION_GREATER_THAN;
 			break;
 			case Condition::OPERATOR_GREATER_THAN_OR_EQUAL:
-				$o = self::CONDITION_GREATER_THAN_OR_EQUAL;
+				$operator = self::CONDITION_GREATER_THAN_OR_EQUAL;
 			break;
 			case Condition::OPERATOR_LESS_THAN:
-				$o = self::CONDITION_LESS_THAN;
+				$operator = self::CONDITION_LESS_THAN;
 			break;
 			case Condition::OPERATOR_LESS_THAN_OR_EQUAL:
-				$o = self::CONDITION_LESS_THAN_OR_EQUAL;
+				$operator = self::CONDITION_LESS_THAN_OR_EQUAL;
 			break;
 			case Condition::OPERATOR_IN:
-				$o = self::CONDITION_IN;
+				$operator = self::CONDITION_IN;
 			break;
 			case Condition::OPERATOR_NOT_IN:
-				$o = self::CONDITION_NOT_IN;
+				$operator = self::CONDITION_NOT_IN;
 			break;
 			default:
 				throw new SQLException("Unsupported or illegal condition operator (" . $condition->operator . ").");
 		}
-		return $o;
+		return $operator;
 	}
 
 	/**
 	*	Returns SQL operator for given condition group object operator.
 	*
 	*	@param IDriver $driver database driver object
-	*	@param integer $operator one of ConditionGroup operator constants' values
+	*	@param integer $group_operator one of ConditionGroup operator constants' values
 	*
 	*	@return string SQL operator
 	*
@@ -247,20 +247,20 @@ class SQL implements ILanguage
 	*
 	*	@see ConditionGroup
 	*/
-	public function getConditionGroupOperator(IDriver $driver, $operator)
+	public function getConditionGroupOperator(IDriver $driver, $group_operator)
 	{
-		switch($operator)
+		switch($group_operator)
 		{
 			case ConditionGroup::OPERATOR_AND:
-				$o = self::CONDITIONGROUP_AND;
+				$operator = self::CONDITIONGROUP_AND;
 			break;
 			case ConditionGroup::OPERATOR_OR:
-				$o = self::CONDITIONGROUP_OR;
+				$operator = self::CONDITIONGROUP_OR;
 			break;
 			default:
-				throw new SQLException("Unsupported or illegal condition group operator (" . $operator . ").");
+				throw new SQLException("Unsupported or illegal condition group operator (" . $group_operator . ").");
 		}
-		return $o;
+		return $operator;
 	}
 
 	/**

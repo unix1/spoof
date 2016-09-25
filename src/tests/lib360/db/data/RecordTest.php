@@ -38,8 +38,8 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testConstruct_Default()
 	{
-		$o = new Record();
-		$this->assertInstanceOf('\spoof\lib360\db\data\Record', $o, "Failed to create an instance");
+		$record = new Record();
+		$this->assertInstanceOf('\spoof\lib360\db\data\Record', $record, "Failed to create an instance");
 	}
 
 	/**
@@ -48,8 +48,8 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_CustomType()
 	{
 		$type = 'test';
-		$o = new Record($type);
-		$this->assertEquals($type, $this->getProtectedProperty('\spoof\lib360\db\data\Record', '__type')->getValue($o), "Failed to set custom type");
+		$record = new Record($type);
+		$this->assertEquals($type, $this->getProtectedProperty('\spoof\lib360\db\data\Record', '__type')->getValue($record), "Failed to set custom type");
 	}
 
 	/**
@@ -58,9 +58,9 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	public function testSet()
 	{
 		$testValue = 'test1';
-		$o = new Record();
-		$o->test1 = $testValue;
-		$this->assertEquals($testValue, $o->offsetGet('test1'), "Failed to set value");
+		$record = new Record();
+		$record->test1 = $testValue;
+		$this->assertEquals($testValue, $record->offsetGet('test1'), "Failed to set value");
 	}
 
 	/**
@@ -69,11 +69,11 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testGet_Fail()
 	{
-		$o = new Record();
+		$record = new Record();
 		$e = NULL;
 		try
 		{
-			$v = $o->test;
+			$v = $record->test;
 		}
 		catch (\OutOfBoundsException $e)
 		{
@@ -87,14 +87,14 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testGet_Success()
 	{
-		$o = new Record();
+		$record = new Record();
 		$e = NULL;
 		$v = NULL;
 		$testValue = 'test value';
-		$o->test = $testValue;
+		$record->test = $testValue;
 		try
 		{
-			$v = $o->test;
+			$v = $record->test;
 		}
 		catch (\OutOfBoundsException $e)
 		{
@@ -109,13 +109,13 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testToXML()
 	{
-		$o = new Record('test');
+		$record = new Record('test');
 		$expectedXMLString = '<record type="test"><test1>test 1 value</test1><test2>test 2 value</test2></record>';
 		$expectedXML = new \DOMDocument();
 		$expectedXML->loadXML($expectedXMLString);
-		$o->test1 = 'test 1 value';
-		$o->test2 = 'test 2 value';
-		$resultXML = $o->toXML();
+		$record->test1 = 'test 1 value';
+		$record->test2 = 'test 2 value';
+		$resultXML = $record->toXML();
 		$this->assertEqualXMLStructure($expectedXML->firstChild, $resultXML->firstChild, TRUE, "Failed to return correct XML structure");
 	}
 

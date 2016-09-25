@@ -31,11 +31,11 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_InvalidValue2OperatorIn()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		try
 		{
-			$o = new Condition($v1, Condition::OPERATOR_IN, $v2);
+			$condition = new Condition($value1, Condition::OPERATOR_IN, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
@@ -49,11 +49,11 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_InvalidValue2OperatorNotIn()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		try
 		{
-			$o = new Condition($v1, Condition::OPERATOR_NOT_IN, $v2);
+			$condition = new Condition($value1, Condition::OPERATOR_NOT_IN, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
@@ -67,11 +67,11 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_SuccessNoException()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		try
 		{
-			$o = new Condition($v1, Condition::OPERATOR_EQUALS, $v2);
+			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
@@ -85,16 +85,16 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_SuccessValue1()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		try
 		{
-			$o = new Condition($v1, Condition::OPERATOR_EQUALS, $v2);
+			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
 		}
-		$this->assertEquals($v1, $o->value1, "Threw an exception when none should have occurred");
+		$this->assertEquals($value1, $condition->value1, "Threw an exception when none should have occurred");
 	}
 
 	/**
@@ -103,16 +103,16 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_SuccessValue2()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		try
 		{
-			$o = new Condition($v1, Condition::OPERATOR_EQUALS, $v2);
+			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
 		}
-		$this->assertEquals($v2, $o->value2, "Threw an exception when none should have occurred");
+		$this->assertEquals($value2, $condition->value2, "Threw an exception when none should have occurred");
 	}
 
 	/**
@@ -121,17 +121,17 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_SuccessOperator()
 	{
 		$e = NULL;
-		$v1 = new Value('test1', Value::TYPE_STRING);
-		$v2 = new Value('test2', Value::TYPE_STRING);
+		$value1 = new Value('test1', Value::TYPE_STRING);
+		$value2 = new Value('test2', Value::TYPE_STRING);
 		$operator = Condition::OPERATOR_EQUALS;
 		try
 		{
-			$o = new Condition($v1, $operator, $v2);
+			$condition = new Condition($value1, $operator, $value2);
 		}
 		catch (\InvalidArgumentException $e)
 		{
 		}
-		$this->assertEquals($operator, $o->operator, "Threw an exception when none should have occurred");
+		$this->assertEquals($operator, $condition->operator, "Threw an exception when none should have occurred");
 	}
 
 }

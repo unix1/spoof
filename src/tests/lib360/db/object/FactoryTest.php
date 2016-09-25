@@ -96,7 +96,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 		$e = NULL;
 		try
 		{
-			$o = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, 'SQL');
+			Factory::get(Factory::OBJECT_TYPE_LANGUAGE, 'SQL');
 		}
 		catch (\spoof\lib360\db\Exception $e)
 		{

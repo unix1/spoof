@@ -368,19 +368,19 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 			Condition::OPERATOR_EQUALS,
 			new Value(NULL, Value::TYPE_NULL)
 		);
-		$o = ConditionGroup::OPERATOR_AND;
+		$operator = ConditionGroup::OPERATOR_AND;
 		$c2 = new Condition(
 			new Value('testcolumn1', Value::TYPE_COLUMN),
 			Condition::OPERATOR_EQUALS,
 			new Value(NULL, Value::TYPE_NULL)
 		);
 		$c = new ConditionGroup($c1);
-		$c->addCondition($o, $c2);
+		$c->addCondition($operator, $c2);
 		$actual = $this->l->getCondition($this->d, $c);
 		$expected = new Query();
 		$expected->setString(SQL::CONDITION_WRAPPER_START);
 		$expected->addQuery($this->l->getCondition($this->d, $c1));
-		$expected->addString($this->l->getConditionGroupOperator($this->d, $o));
+		$expected->addString($this->l->getConditionGroupOperator($this->d, $operator));
 		$expected->addQuery($this->l->getCondition($this->d, $c2));
 		$expected->addString(SQL::CONDITION_WRAPPER_END);
 		$this->assertEquals($expected, $actual, "Condition query object didn't match the expected value");

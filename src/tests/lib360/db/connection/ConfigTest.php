@@ -30,8 +30,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 	public function testConstruct_RequiredArgs()
 	{
 		$dsn = 'mysql:localhost';
-		$o = new Config($dsn);
-		$this->assertEquals($dsn, $o->dsn, "Failed to set dsn during instantiation");
+		$config = new Config($dsn);
+		$this->assertEquals($dsn, $config->dsn, "Failed to set dsn during instantiation");
 	}
 
 	/**
@@ -44,8 +44,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 		$pass = 'pass';
 		$driver = 'test_driver';
 		$options = array('opt1' => 'option1', 'opt2' => 'option2');
-		$o = new Config($dsn, $user, $pass, $options, $driver);
-		$this->assertEquals(array($dsn, $user, $pass, $options, $driver), array($o->dsn, $o->username, $o->password, $o->options, $o->driver), "Failed to set arguments during instantiation");
+		$config = new Config($dsn, $user, $pass, $options, $driver);
+		$this->assertEquals(
+		  array($dsn, $user, $pass, $options, $driver),
+		  array($config->dsn, $config->username, $config->password, $config->options, $config->driver),
+		  "Failed to set arguments during instantiation"
+		);
 	}
 
 }
