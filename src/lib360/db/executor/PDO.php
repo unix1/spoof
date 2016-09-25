@@ -45,7 +45,7 @@ class PDO implements IExecutor
 	/**
 	*	Executes database select.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*	@param string $name optional name to use for identifying records
@@ -54,9 +54,9 @@ class PDO implements IExecutor
 	*
 	*	@throw PreparedQueryException when database error occurs during query execution
 	*/
-	public function select(IConnection $db, $query, array $values = NULL, $name = NULL)
+	public function select(IConnection $conn, $query, array $values = NULL, $name = NULL)
 	{
-		$records = $this->queryResults($db, $query, $values, $name);
+		$records = $this->queryResults($conn, $query, $values, $name);
 		$recordlist = new RecordList($records);
 		return $recordlist;
 	}
@@ -64,7 +64,7 @@ class PDO implements IExecutor
 	/**
 	*	Executes database update.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -72,15 +72,15 @@ class PDO implements IExecutor
 	*
 	*	@throw PreparedQueryException when database error occurs during query execution
 	*/
-	public function update(IConnection $db, $query, array $values = NULL)
+	public function update(IConnection $conn, $query, array $values = NULL)
 	{
-		return $this->queryAffectedCount($db, $query, $values);
+		return $this->queryAffectedCount($conn, $query, $values);
 	}
 
 	/**
 	*	Executes database insert.
 	*
-	*	@param IConnection $db object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -88,15 +88,15 @@ class PDO implements IExecutor
 	*
 	*	@throw PreparedQueryException when database error occurs during query execution
 	*/
-	public function insert(IConnection $db, $query, array $values = NULL)
+	public function insert(IConnection $conn, $query, array $values = NULL)
 	{
-		return $this->queryAffectedCount($db, $query, $values);
+		return $this->queryAffectedCount($conn, $query, $values);
 	}
 
 	/**
 	*	Executes database delete.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -104,37 +104,37 @@ class PDO implements IExecutor
 	*
 	*	@throw PreparedQueryException when database error occurs during query execution
 	*/
-	public function delete(IConnection $db, $query, array $values = NULL)
+	public function delete(IConnection $conn, $query, array $values = NULL)
 	{
-		return $this->queryAffectedCount($db, $query, $values);
+		return $this->queryAffectedCount($conn, $query, $values);
 	}
 
 	/**
 	*	Executes a generic database query.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
 	*	@throw PreparedQueryException when database error occurs during query execution
 	*/
-	public function query(IConnection $db, $query, array $values = NULL)
+	public function query(IConnection $conn, $query, array $values = NULL)
 	{
-		$this->queryStatementClose($db, $query, $values);
+		$this->queryStatementClose($conn, $query, $values);
 	}
 
 	/**
 	*	Executes query and gets resulting rows.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*	@param string $name optional name to use for identifying records
 	*
 	*	@return array result database rows
 	*/
-	private function queryResults(IConnection $db, $query, $values = NULL, $name = NULL) {
-		$sth = $this->queryStatementLive($db, $query, $values);
+	private function queryResults(IConnection $conn, $query, $values = NULL, $name = NULL) {
+		$sth = $this->queryStatementLive($conn, $query, $values);
 		$sth->setFetchMode(\PDO::FETCH_CLASS, '\spoof\lib360\db\data\Record', array(0 => $name));
 		$records = $sth->fetchAll();
 		$sth->closeCursor();
@@ -144,28 +144,28 @@ class PDO implements IExecutor
 	/**
 	*	Executes query and gets affected row count.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
 	*	@return integer number of rows affected
 	*/
-	private function queryAffectedCount(IConnection $db, $query, array $values = NULL) {
-		$sth = $this->queryStatementClose($db, $query, $values);
+	private function queryAffectedCount(IConnection $conn, $query, array $values = NULL) {
+		$sth = $this->queryStatementClose($conn, $query, $values);
 		return $sth->rowCount();
 	}
 
 	/**
 	*	Executes query and gets closed statement handle.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
 	*	@return \PDOStatement PDO statement handle object
 	*/
-	private function queryStatementClose(IConnection $db, $query, array $values = NULL) {
-		$sth = $this->queryStatementLive($db, $query, $values);
+	private function queryStatementClose(IConnection $conn, $query, array $values = NULL) {
+		$sth = $this->queryStatementLive($conn, $query, $values);
 		$sth->closeCursor();
 		return $sth;
 	}
@@ -173,14 +173,14 @@ class PDO implements IExecutor
 	/**
 	*	Executes query and gets open statement handle.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
 	*	@return \PDOStatement PDO statement handle object
 	*/
-	private function queryStatementLive(IConnection $db, $query, array $values = NULL) {
-		$sth = $this->getStatement($db, $query);
+	private function queryStatementLive(IConnection $conn, $query, array $values = NULL) {
+		$sth = $this->getStatement($conn, $query);
 		$this->execute($sth, $values);
 		return $sth;
 	}
@@ -188,19 +188,19 @@ class PDO implements IExecutor
 	/**
 	*	Gets a prepared query statement.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query string
 	*
 	*	@return \PDOStatement PDO statement handle object
 	*
 	*	@throw PreparedQueryException when database error occurs during statement creation
 	*/
-	private function getStatement(IConnection $db, $query) {
-		$sth = $db->getConnection()->prepare($query);
+	private function getStatement(IConnection $conn, $query) {
+		$sth = $conn->getConnection()->prepare($query);
 		if ($sth === FALSE)
 		{
-			$error_info = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_info[0] . ". Driver error code: " . $error_info[1] . ". Driver error message: " . $error_info[2] . ".");
+			$error = $conn->getConnection()->errorInfo();
+			throw new PreparedQueryException("SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . ".");
 		}
 		return $sth;
 	}
@@ -217,8 +217,8 @@ class PDO implements IExecutor
 		$this->bindValues($sth, $values);
 		if (!$sth->execute())
 		{
-			$error_info = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_info[0] . ". Driver error code: " . $error_info[1] . ". Driver error message: " . $error_info[2] . ".");
+			$error = $sth->errorInfo();
+			throw new PreparedQueryException("SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . ".");
 		}
 	}
 
