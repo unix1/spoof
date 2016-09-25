@@ -6,16 +6,5 @@
 		<testsuite name="lib360">
 			<directory>./</directory>
 		</testsuite>
-		<!--
-		<testsuite name="lib360_db">
-			<directory>db</directory>
-		</testsuite>
-		<testsuite name="lib360_db_condition">
-			<directory>db/condition</directory>
-		</testsuite>
-		<testsuite name="Lib360_Module">
-			<directory>Module</directory>
-		</testsuite>
-		-->
 	</testsuites>
 </phpunit>
