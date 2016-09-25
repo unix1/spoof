@@ -56,22 +56,8 @@ class PDO implements IExecutor
 	*/
 	public function select(IConnection $db, $query, array $values = NULL, $name = NULL)
 	{
-		$sth = $db->getConnection()->prepare($query);
-		if ($sth === FALSE)
-		{
-			$error_array = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$this->bindValues($sth, $values);
-		if (!$sth->execute())
-		{
-			$error_array = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$sth->setFetchMode(\PDO::FETCH_CLASS, '\spoof\lib360\db\data\Record', array(0 => $name));
-		$record_array = $sth->fetchAll();
-		$recordlist = new RecordList($record_array);
-		$sth->closeCursor();
+		$records = $this->queryResults($db, $query, $values, $name);
+		$recordlist = new RecordList($records);
 		return $recordlist;
 	}
 
@@ -88,20 +74,7 @@ class PDO implements IExecutor
 	*/
 	public function update(IConnection $db, $query, array $values = NULL)
 	{
-		$sth = $db->getConnection()->prepare($query);
-		if ($sth === FALSE)
-		{
-			$error_array = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$this->bindValues($sth, $values);
-		if (!$sth->execute())
-		{
-			$error_array = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$sth->closeCursor();
-		return $sth->rowCount();
+		return $this->queryAffectedCount($db, $query, $values);
 	}
 
 	/**
@@ -117,20 +90,7 @@ class PDO implements IExecutor
 	*/
 	public function insert(IConnection $db, $query, array $values = NULL)
 	{
-		$sth = $db->getConnection()->prepare($query);
-		if ($sth === FALSE)
-		{
-			$error_array = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$this->bindValues($sth, $values);
-		if (!$sth->execute())
-		{
-			$error_array = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$sth->closeCursor();
-		return $sth->rowCount();
+		return $this->queryAffectedCount($db, $query, $values);
 	}
 
 	/**
@@ -146,20 +106,7 @@ class PDO implements IExecutor
 	*/
 	public function delete(IConnection $db, $query, array $values = NULL)
 	{
-		$sth = $db->getConnection()->prepare($query);
-		if ($sth === FALSE)
-		{
-			$error_array = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$this->bindValues($sth, $values);
-		if (!$sth->execute())
-		{
-			$error_array = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
-		}
-		$sth->closeCursor();
-		return $sth->rowCount();
+		return $this->queryAffectedCount($db, $query, $values);
 	}
 
 	/**
@@ -173,20 +120,106 @@ class PDO implements IExecutor
 	*/
 	public function query(IConnection $db, $query, array $values = NULL)
 	{
+		$this->queryStatementClose($db, $query, $values);
+	}
+
+	/**
+	*	Executes query and gets resulting rows.
+	*
+	*	@param IConnection $db database connection object
+	*	@param string $query prepared query statement
+	*	@param array $values optional array of values for prepared statement
+	*	@param string $name optional name to use for identifying records
+	*
+	*	@return array result database rows
+	*/
+	private function queryResults(IConnection $db, $query, $values = NULL, $name = NULL) {
+		$sth = $this->queryStatementLive($db, $query, $values);
+		$sth->setFetchMode(\PDO::FETCH_CLASS, '\spoof\lib360\db\data\Record', array(0 => $name));
+		$records = $sth->fetchAll();
+		$sth->closeCursor();
+		return $records;
+	}
+
+	/**
+	*	Executes query and gets affected row count.
+	*
+	*	@param IConnection $db database connection object
+	*	@param string $query prepared query statement
+	*	@param array $values optional array of values for prepared statement
+	*
+	*	@return integer number of rows affected
+	*/
+	private function queryAffectedCount(IConnection $db, $query, array $values = NULL) {
+		$sth = $this->queryStatementClose($db, $query, $values);
+		return $sth->rowCount();
+	}
+
+	/**
+	*	Executes query and gets closed statement handle.
+	*
+	*	@param IConnection $db database connection object
+	*	@param string $query prepared query statement
+	*	@param array $values optional array of values for prepared statement
+	*
+	*	@return \PDOStatement PDO statement handle object
+	*/
+	private function queryStatementClose(IConnection $db, $query, array $values = NULL) {
+		$sth = $this->queryStatementLive($db, $query, $values);
+		$sth->closeCursor();
+		return $sth;
+	}
+
+	/**
+	*	Executes query and gets open statement handle.
+	*
+	*	@param IConnection $db database connection object
+	*	@param string $query prepared query statement
+	*	@param array $values optional array of values for prepared statement
+	*
+	*	@return \PDOStatement PDO statement handle object
+	*/
+	private function queryStatementLive(IConnection $db, $query, array $values = NULL) {
+		$sth = $this->getStatement($db, $query);
+		$this->execute($sth, $values);
+		return $sth;
+	}
+
+	/**
+	*	Gets a prepared query statement.
+	*
+	*	@param IConnection $db database connection object
+	*	@param string $query prepared query string
+	*
+	*	@return \PDOStatement PDO statement handle object
+	*
+	*	@throw PreparedQueryException when database error occurs during statement creation
+	*/
+	private function getStatement(IConnection $db, $query) {
 		$sth = $db->getConnection()->prepare($query);
 		if ($sth === FALSE)
 		{
-			$error_array = $db->getConnection()->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
+			$error_info = $db->getConnection()->errorInfo();
+			throw new PreparedQueryException("SQLState: " . $error_info[0] . ". Driver error code: " . $error_info[1] . ". Driver error message: " . $error_info[2] . ".");
 		}
+		return $sth;
+	}
+
+	/**
+	*	Executes query using prepared statement.
+	*
+	*	@param \PDOStatement $sth
+	*	@param array $values
+	*
+	*	@throw PreparedQueryException when database error occurs during query execution
+	*/
+	private function execute(\PDOStatement $sth, array $values = NULL) {
 		$this->bindValues($sth, $values);
 		if (!$sth->execute())
 		{
-			$error_array = $sth->errorInfo();
-			throw new PreparedQueryException("SQLState: " . $error_array[0] . ". Driver error code: " . $error_array[1] . ". Driver error message: " . $error_array[2] . ".");
+			$error_info = $sth->errorInfo();
+			throw new PreparedQueryException("SQLState: " . $error_info[0] . ". Driver error code: " . $error_info[1] . ". Driver error message: " . $error_info[2] . ".");
 		}
-		$sth->closeCursor();
-		//return $sth->rowCount();
 	}
 
 	/**
