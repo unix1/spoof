@@ -97,25 +97,25 @@ class SQL implements ILanguage
 	*/
 	public function getCondition(IDriver $driver, ICondition $condition)
 	{
-		$q = new Query();
+		$query = new Query();
 		if ($condition instanceof IConditionGroup)
 		{
-			$q->setString(self::CONDITION_WRAPPER_START);
-			$q->addQuery($this->getCondition($driver, $condition->condition));
+			$query->setString(self::CONDITION_WRAPPER_START);
+			$query->addQuery($this->getCondition($driver, $condition->condition));
 			foreach ($condition->conditions as $i => $cond)
 			{
-				$q->addString($this->getConditionGroupOperator($driver, $condition->operators[$i]));
-				$q->addQuery($this->getCondition($driver, $cond));
+				$query->addString($this->getConditionGroupOperator($driver, $condition->operators[$i]));
+				$query->addQuery($this->getCondition($driver, $cond));
 			}
-			$q->addString(self::CONDITION_WRAPPER_END);
+			$query->addString(self::CONDITION_WRAPPER_END);
 		}
 		elseif ($condition instanceof ICondition)
 		{
-			$q->addQuery($this->getValue($driver, $condition->value1));
-			$q->addString($this->getConditionOperator($driver, $condition));
-			$q->addQuery($this->getValue($driver, $condition->value2));
+			$query->addQuery($this->getValue($driver, $condition->value1));
+			$query->addString($this->getConditionOperator($driver, $condition));
+			$query->addQuery($this->getValue($driver, $condition->value2));
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -128,34 +128,34 @@ class SQL implements ILanguage
 	*/
 	public function getValue(IDriver $driver, IValue $value)
 	{
-		$q = new Query();
+		$query = new Query();
 		switch ($value->getType())
 		{
 			case Value::TYPE_PREPARED:
-				$q->addString(self::BIND_CHAR . $value->getValue());
+				$query->addString(self::BIND_CHAR . $value->getValue());
 			break;
 
 			case Value::TYPE_COLUMN:
-				$q->addString($this->getFieldFormatted($driver, $value->getValue()));
+				$query->addString($this->getFieldFormatted($driver, $value->getValue()));
 			break;
 
 			case Value::TYPE_NULL:
-				$q->addString(self::VALUE_NULL);
+				$query->addString(self::VALUE_NULL);
 			break;
 
 			case Value::TYPE_ARRAY:
-				$q->addString(self::CONDITION_VALUES_WRAPPER_START);
+				$query->addString(self::CONDITION_VALUES_WRAPPER_START);
 				$first_value = TRUE;
 				foreach ($value->getValue() as $v)
 				{
 					if (!$first_value)
 					{
-						$q->addString(self::CONDITION_VALUES_SEPARATOR, FALSE);
+						$query->addString(self::CONDITION_VALUES_SEPARATOR, FALSE);
 					}
-					$q->addQuery($this->getValue($driver, $v));
+					$query->addQuery($this->getValue($driver, $v));
 					$first_value = FALSE;
 				}
-				$q->addString(self::CONDITION_VALUES_WRAPPER_END);
+				$query->addString(self::CONDITION_VALUES_WRAPPER_END);
 			break;
 
 			/// @todo implement function type
@@ -170,11 +170,11 @@ class SQL implements ILanguage
 			default:
 				$tag = (string)Random::getString(4, TRUE, TRUE);
 				//$tag = (string)$this->getRandomTag();
-				$q->addString(self::BIND_CHAR . $tag);
-				$q->values[$tag] = $value;
+				$query->addString(self::BIND_CHAR . $tag);
+				$query->values[$tag] = $value;
 			break;
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -288,14 +288,14 @@ class SQL implements ILanguage
 	*/
 	public function getSelect(IDriver $driver, IStore $storage, ICondition $condition = NULL, array $fields = NULL)
 	{
-		$q = new Query(self::SELECT . ' ' . $this->getSelectFields($driver, $fields) . ' ' . self::FROM);
-		$q->addQuery($this->getSelectFrom($driver, $storage));
+		$query = new Query(self::SELECT . ' ' . $this->getSelectFields($driver, $fields) . ' ' . self::FROM);
+		$query->addQuery($this->getSelectFrom($driver, $storage));
 		if (!is_null($condition))
 		{
-			$q->addString(self::WHERE);
-			$q->addQuery($this->getCondition($driver, $condition));
+			$query->addString(self::WHERE);
+			$query->addQuery($this->getCondition($driver, $condition));
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -363,17 +363,17 @@ class SQL implements ILanguage
 	{
 		if ($storage instanceof IView)
 		{
-			$q = $this->getSelectFromView($driver, $storage);
+			$query = $this->getSelectFromView($driver, $storage);
 		}
 		elseif ($storage instanceof ITable)
 		{
-			$q = new Query($this->getSelectFromTable($driver, $storage));
+			$query = new Query($this->getSelectFromTable($driver, $storage));
 		}
 		else
 		{
 			throw new \InvalidArgumentException("Storage object of type \spoof\lib360\db\data\IView and \spoof\lib360\db\data\ITable expected, " . get_class($storage) . " given.");
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -416,25 +416,25 @@ class SQL implements ILanguage
 	*/
 	public function getSelectFromView(IDriver $driver, IView $storage)
 	{
-		$q = new Query();
+		$query = new Query();
 		$i = 0;
 		foreach ($storage->joins as $key => $join)
 		{
 			if ($i > 0)
 			{
-				$q->addString(self::SELECT_JOIN_SEPARATOR, FALSE);
+				$query->addString(self::SELECT_JOIN_SEPARATOR, FALSE);
 			}
 			if ($join instanceof Join)
 			{
-				$q->addQuery($this->getJoin($driver, $join));
+				$query->addQuery($this->getJoin($driver, $join));
 			}
 			elseif ($join instanceof Table)
 			{
-				$q->addString($this->getSelectFromTable($driver, $join));
+				$query->addString($this->getSelectFromTable($driver, $join));
 			}
 			elseif (is_string($join))
 			{
-				$q->addString($this->getSelectFromTableName($driver, $join));
+				$query->addString($this->getSelectFromTableName($driver, $join));
 			}
 			else
 			{
@@ -442,7 +442,7 @@ class SQL implements ILanguage
 			}
 			$i ++;
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -455,8 +455,8 @@ class SQL implements ILanguage
 	*/
 	public function getJoin(IDriver $driver, IJoin $join)
 	{
-		$q = new Query();
-		$q->setString($driver->table_quote_start . $join->table_base . $driver->table_quote_end);
+		$query = new Query();
+		$query->setString($driver->table_quote_start . $join->table_base . $driver->table_quote_end);
 		foreach ($join->table_join as $i => $table)
 		{
 			switch ($join->type[$i])
@@ -479,12 +479,12 @@ class SQL implements ILanguage
 				default:
 					throw new UnknownTypeException("Unsupported join type " . $join->type[$i]);
 			}
-			$q->addString($join_string);
-			$q->addString($driver->table_quote_start . $table . $driver->table_quote_end);
-			$q->addString(self::SELECT_JOIN_ON);
-			$q->addQuery($this->getCondition($driver, $join->condition[$i]));
+			$query->addString($join_string);
+			$query->addString($driver->table_quote_start . $table . $driver->table_quote_end);
+			$query->addString(self::SELECT_JOIN_ON);
+			$query->addQuery($this->getCondition($driver, $join->condition[$i]));
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -499,16 +499,16 @@ class SQL implements ILanguage
 	*/
 	public function getUpdate(IDriver $driver, IStore $storage, array $fields, ICondition $condition = NULL)
 	{
-		$q = new Query(self::UPDATE);
-		$q->addQuery($this->getSelectFrom($driver, $storage));
-		$q->addString(self::UPDATE_SET);
-		$q->addQuery($this->getUpdateFields($driver, $fields));
+		$query = new Query(self::UPDATE);
+		$query->addQuery($this->getSelectFrom($driver, $storage));
+		$query->addString(self::UPDATE_SET);
+		$query->addQuery($this->getUpdateFields($driver, $fields));
 		if (!is_null($condition))
 		{
-			$q->addString(self::WHERE);
-			$q->addQuery($this->getCondition($driver, $condition));
+			$query->addString(self::WHERE);
+			$query->addQuery($this->getCondition($driver, $condition));
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -521,20 +521,20 @@ class SQL implements ILanguage
 	*/
 	public function getUpdateFields(IDriver $driver, array $fields)
 	{
-		$q = new Query();
+		$query = new Query();
 		$i = 0;
 		foreach ($fields as $field => $value)
 		{
 			if ($i > 0)
 			{
-				$q->addString(self::UPDATE_FIELD_SEPARATOR, FALSE);
+				$query->addString(self::UPDATE_FIELD_SEPARATOR, FALSE);
 			}
-			$q->addString($this->getFieldFormatted($driver, $field));
-			$q->addString(self::EQUALS);
-			$q->addQuery($this->getValue($driver, $value));
+			$query->addString($this->getFieldFormatted($driver, $field));
+			$query->addString(self::EQUALS);
+			$query->addQuery($this->getValue($driver, $value));
 			$i ++;
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -548,14 +548,14 @@ class SQL implements ILanguage
 	*/
 	public function getDelete(IDriver $driver, IStore $storage, ICondition $condition = NULL)
 	{
-		$q = new Query(self::DELETE . ' ' . self::FROM);
-		$q->addQuery($this->getSelectFrom($driver, $storage));
+		$query = new Query(self::DELETE . ' ' . self::FROM);
+		$query->addQuery($this->getSelectFrom($driver, $storage));
 		if (!is_null($condition))
 		{
-			$q->addString(self::WHERE);
-			$q->addQuery($this->getCondition($driver, $condition));
+			$query->addString(self::WHERE);
+			$query->addQuery($this->getCondition($driver, $condition));
 		}
-		return $q;
+		return $query;
 	}
 
 	/**
@@ -569,16 +569,16 @@ class SQL implements ILanguage
 	*/
 	public function getInsert(IDriver $driver, IStore $storage, array $data)
 	{
-		$q = new Query(self::INSERT . ' ' . self::INSERT_INTO);
-		$q->addQuery($this->getSelectFrom($driver, $storage));
-		$q->addString(self::INSERT_VALUES_WRAPPER_START);
-		$q->addString($this->getInsertFields($driver, $data));
-		$q->addString(self::INSERT_VALUES_WRAPPER_END);
-		$q->addString(self::INSERT_VALUES);
-		$q->addString(self::INSERT_VALUES_WRAPPER_START);
-		$q->addQuery($this->getInsertValues($driver, $data));
-		$q->addString(self::INSERT_VALUES_WRAPPER_END);
-		return $q;
+		$query = new Query(self::INSERT . ' ' . self::INSERT_INTO);
+		$query->addQuery($this->getSelectFrom($driver, $storage));
+		$query->addString(self::INSERT_VALUES_WRAPPER_START);
+		$query->addString($this->getInsertFields($driver, $data));
+		$query->addString(self::INSERT_VALUES_WRAPPER_END);
+		$query->addString(self::INSERT_VALUES);
+		$query->addString(self::INSERT_VALUES_WRAPPER_START);
+		$query->addQuery($this->getInsertValues($driver, $data));
+		$query->addString(self::INSERT_VALUES_WRAPPER_END);
+		return $query;
 	}
 
 	/**
@@ -609,18 +609,18 @@ class SQL implements ILanguage
 	*/
 	public function getInsertValues(IDriver $driver, array $data)
 	{
-		$q = new Query();
+		$query = new Query();
 		$i = 0;
 		foreach ($data as $value)
 		{
 			if ($i > 0)
 			{
-				$q->addString(self::INSERT_FIELD_SEPARATOR, FALSE);
+				$query->addString(self::INSERT_FIELD_SEPARATOR, FALSE);
 			}
-			$q->addQuery($this->getValue($driver, $value));
+			$query->addQuery($this->getValue($driver, $value));
 			$i ++;
 		}
-		return $q;
+		return $query;
 	}
 
 }

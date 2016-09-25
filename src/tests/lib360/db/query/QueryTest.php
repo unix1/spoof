@@ -30,8 +30,8 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testConstruct_Default()
 	{
-		$q = new Query();
-		$actual = array($q->query, $q->values);
+		$query = new Query();
+		$actual = array($query->query, $query->values);
 		$expected = array('', array());
 		$this->assertEquals($expected, $actual, "Failed to initialize with default values");
 	}
@@ -43,8 +43,8 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	{
 		$queryString = 'test string';
 		$queryValues = array('key1' => 'value1', 'key2' => 'value2');
-		$q = new Query($queryString, $queryValues);
-		$actual = array($q->query, $q->values);
+		$query = new Query($queryString, $queryValues);
+		$actual = array($query->query, $query->values);
 		$expected = array($queryString, $queryValues);
 		$this->assertEquals($expected, $actual, "Failed to initialize with custom supplied values");
 	}
@@ -54,10 +54,10 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testSetString_New()
 	{
-		$query = 'test string';
-		$q = new Query();
-		$q->setString($query);
-		$this->assertEquals($query, $q->query, "The string property of the object didn't match the string that was initially set");
+		$query_string = 'test string';
+		$query = new Query();
+		$query->setString($query_string);
+		$this->assertEquals($query_string, $query->query, "The string property of the object didn't match the string that was initially set");
 	}
 
 	/**
@@ -66,11 +66,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testSetString_Override()
 	{
-		$query = 'test string override';
-		$q = new Query();
-		$q->setString('test string 1');
-		$q->setString($query);
-		$this->assertEquals($query, $q->query, "The string property of the object didn't match the string that was set to override existing value");
+		$query_string = 'test string override';
+		$query = new Query();
+		$query->setString('test string 1');
+		$query->setString($query_string);
+		$this->assertEquals($query_string, $query->query, "The string property of the object didn't match the string that was set to override existing value");
 	}
 
 	/**
@@ -79,10 +79,10 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddString_InitialHintTrue()
 	{
-		$query = 'test string';
-		$q = new Query();
-		$q->addString($query, TRUE);
-		$this->assertEquals($query, $q->query, "Failed to add initial string with space hint");
+		$query_string = 'test string';
+		$query = new Query();
+		$query->addString($query_string, TRUE);
+		$this->assertEquals($query_string, $query->query, "Failed to add initial string with space hint");
 	}
 
 	/**
@@ -91,10 +91,10 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddString_InitialHintFalse()
 	{
-		$query = 'test string';
-		$q = new Query();
-		$q->addString($query, FALSE);
-		$this->assertEquals($query, $q->query, "Failed to add initial string with no space hint");
+		$query_string = 'test string';
+		$query = new Query();
+		$query->addString($query_string, FALSE);
+		$this->assertEquals($query_string, $query->query, "Failed to add initial string with no space hint");
 	}
 
 	/**
@@ -103,12 +103,12 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddString_AdditionalHintTrue()
 	{
-		$query1 = 'test string';
-		$query2 = 'test additional string';
-		$q = new Query();
-		$q->setString($query1);
-		$q->addString($query2, TRUE);
-		$this->assertEquals($query1 . ' ' . $query2, $q->query, "Failed to add additional string with space hint");
+		$query_string1 = 'test string';
+		$query_string2 = 'test additional string';
+		$query = new Query();
+		$query->setString($query_string1);
+		$query->addString($query_string2, TRUE);
+		$this->assertEquals($query_string1 . ' ' . $query_string2, $query->query, "Failed to add additional string with space hint");
 	}
 
 	/**
@@ -117,12 +117,12 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddString_AdditionalHintFalse()
 	{
-		$query1 = 'test string';
-		$query2 = 'test additional string';
-		$q = new Query();
-		$q->setString($query1);
-		$q->addString($query2, FALSE);
-		$this->assertEquals($query1 . $query2, $q->query, "Failed to add additional string with no space hint");
+		$query_string1 = 'test string';
+		$query_string2 = 'test additional string';
+		$query = new Query();
+		$query->setString($query_string1);
+		$query->addString($query_string2, FALSE);
+		$this->assertEquals($query_string1 . $query_string2, $query->query, "Failed to add additional string with no space hint");
 	}
 
 	/**
@@ -130,10 +130,10 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddValues_Initial()
 	{
-		$q = new Query();
+		$query = new Query();
 		$expected = array('key1' => 'value1', 'key2' => 'value2');
-		$q->addValues($expected);
-		$this->assertEquals($expected, $q->values, "Failed to add initial values");
+		$query->addValues($expected);
+		$this->assertEquals($expected, $query->values, "Failed to add initial values");
 	}
 
 	/**
@@ -142,13 +142,13 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddValues_Additional()
 	{
-		$q = new Query();
+		$query = new Query();
 		$arr1 = array('key1' => 'value1', 'key2' => 'value2');
 		$arr2 = array('key3' => 'value3', 'key4' => 'value4');
-		$q->addValues($arr1);
-		$q->addValues($arr2);
+		$query->addValues($arr1);
+		$query->addValues($arr2);
 		$expected = array('key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4');
-		$this->assertEquals($expected, $q->values, "Failed to add additional values");
+		$this->assertEquals($expected, $query->values, "Failed to add additional values");
 	}
 
 	/**
@@ -156,18 +156,18 @@ class QueryTest extends \PHPUnit_Framework_TestCase
 	*/
 	public function testAddQuery()
 	{
-		$arrInitial = array('one' => 'value', 'two' => 'another value');
-		$queryInitial = 'Initial query string';
-		$q = new Query($queryInitial, $arrInitial);
-		$arrAdd = array('key1' => 'value1', 'key2' => 'value2');
-		$queryAdd = 'Test query string';
-		$qAdd = new Query($queryAdd, $arrAdd);
-		$q->addQuery($qAdd);
+		$query_initial_values = array('one' => 'value', 'two' => 'another value');
+		$query_initial_string = 'Initial query string';
+		$query_initial = new Query($query_initial_string, $query_initial_values);
+		$query_additional_values = array('key1' => 'value1', 'key2' => 'value2');
+		$query_additional_string = 'Test query string';
+		$query_additional = new Query($query_additional_string, $query_additional_values);
+		$query_initial->addQuery($query_additional);
 		$expected = array(
 				array('one' => 'value', 'two' => 'another value', 'key1' => 'value1', 'key2' => 'value2'),
-				$queryInitial . ' ' . $queryAdd
+				$query_initial_string . ' ' . $query_additional_string
 		);
-		$this->assertEquals($expected, array($q->values, $q->query), "Failed to add query object");
+		$this->assertEquals($expected, array($query_initial->values, $query_initial->query), "Failed to add query object");
 	}
 
 }
