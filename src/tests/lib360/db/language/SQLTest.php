@@ -242,8 +242,8 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 	public function testGetFieldFormatted()
 	{
 		$field = 'test_tablespace.test_table.test_field';
-		$separator = $this->d->column_quote_end . $this->d->table_column_separator . $this->d->column_quote_start;
-		$fieldFormattedExpected = $this->d->column_quote_start . 'test_tablespace' . $separator . 'test_table' . $separator . 'test_field' . $this->d->column_quote_end;
+		$separator = $this->d->columnQuoteEnd . $this->d->columnSeparator . $this->d->columnQuoteStart;
+		$fieldFormattedExpected = $this->d->columnQuoteStart . 'test_tablespace' . $separator . 'test_table' . $separator . 'test_field' . $this->d->columnQuoteEnd;
 		$fieldFormattedActual = $this->l->getFieldFormatted($this->d, $field);
 		$this->assertEquals($fieldFormattedExpected, $fieldFormattedActual, "Failed to format field to driver specifications");
 	}
@@ -407,7 +407,7 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$field = 'tablespace.table.field';
 		$field_as = 'test_field';
 		$actual = $this->l->getSelectFieldFormatted($this->d, $field, $field_as);
-		$expected = $this->l->getFieldFormatted($this->d, $field) . ' ' . SQL::SELECT_AS . ' ' . $this->d->column_quote_start . $field_as . $this->d->column_quote_end;
+		$expected = $this->l->getFieldFormatted($this->d, $field) . ' ' . SQL::SELECT_AS . ' ' . $this->d->columnQuoteStart . $field_as . $this->d->columnQuoteEnd;
 		$this->assertEquals($expected, $actual, "Field didn't get formatted correctly for select as");
 	}
 
@@ -458,7 +458,7 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 	{
 		$table = 'test_table';
 		$actual = $this->l->getSelectFromTableName($this->d, $table);
-		$expected = $this->d->table_quote_start . $table . $this->d->table_quote_end;
+		$expected = $this->d->tableQuoteStart . $table . $this->d->tableQuoteEnd;
 		$this->assertEquals($expected, $actual, "Table string name was formatted incorrectly");
 	}
 
@@ -493,9 +493,9 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_LEFT_OUTER . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
@@ -521,9 +521,9 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_INNER . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
@@ -549,9 +549,9 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_JOIN . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
@@ -577,9 +577,9 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_RIGHT_OUTER . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
@@ -605,9 +605,9 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_FULL . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
@@ -641,15 +641,15 @@ class SQLTest extends \PHPUnit_Framework_TestCase
 		$actual = $this->l->getJoin($this->d, $j);
 		$expected = new Query();
 		$expected->setString(
-			$this->d->table_quote_start . $table_base . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_base . $this->d->tableQuoteEnd . ' ' .
 			SQL::JOIN_TYPE_LEFT_OUTER . ' ' .
-			$this->d->table_quote_start . $table_join1 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join1 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond1));
 		$expected->addString(
 			SQL::JOIN_TYPE_INNER . ' ' .
-			$this->d->table_quote_start . $table_join2 . $this->d->table_quote_end . ' ' .
+			$this->d->tableQuoteStart . $table_join2 . $this->d->tableQuoteEnd . ' ' .
 			SQL::SELECT_JOIN_ON
 		);
 		$expected->addQuery($this->l->getCondition($this->d, $cond2));

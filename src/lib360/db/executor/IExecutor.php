@@ -31,7 +31,7 @@ interface IExecutor
 	/**
 	*	Executes database select.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*	@param string $name optional name to use for identifying records
@@ -40,12 +40,12 @@ interface IExecutor
 	*
 	*	@throw \spoof\lib360\db\Exception when database error occurs during query execution
 	*/
-	public function select(IConnection $db, $query, array $values = NULL, $name = NULL);
+	public function select(IConnection $conn, $query, array $values = NULL, $name = NULL);
 
 	/**
 	*	Executes database update.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -53,12 +53,12 @@ interface IExecutor
 	*
 	*	@throw \spoof\lib360\db\Exception when database error occurs during query execution
 	*/
-	public function update(IConnection $db, $query, array $values = NULL);
+	public function update(IConnection $conn, $query, array $values = NULL);
 
 	/**
 	*	Executes database insert.
 	*
-	*	@param IConnection $db object
+	*	@param IConnection $conn object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -66,12 +66,12 @@ interface IExecutor
 	*
 	*	@throw \spoof\lib360\db\Exception when database error occurs during query execution
 	*/
-	public function insert(IConnection $db, $query, array $values = NULL);
+	public function insert(IConnection $conn, $query, array $values = NULL);
 
 	/**
 	*	Executes database delete.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
@@ -79,18 +79,18 @@ interface IExecutor
 	*
 	*	@throw \lib360\db\Exception when database error occurs during query execution
 	*/
-	public function delete(IConnection $db, $query, array $values = NULL);
+	public function delete(IConnection $conn, $query, array $values = NULL);
 
 	/**
 	*	Executes a generic database query.
 	*
-	*	@param IConnection $db database connection object
+	*	@param IConnection $conn database connection object
 	*	@param string $query prepared query statement
 	*	@param array $values optional array of values for prepared statement
 	*
 	*	@throw \lib360\db\Exception when database error occurs during query execution
 	*/
-	public function query(IConnection $db, $query, array $values = NULL);
+	public function query(IConnection $conn, $query, array $values = NULL);
 
 }
 

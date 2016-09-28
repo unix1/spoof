@@ -30,11 +30,11 @@ class Sqlite extends Driver
 	*/
 	public function __construct()
 	{
-		$this->table_quote_start = '`';
-		$this->table_quote_end = '`';
-		$this->column_quote_start = '`';
-		$this->column_quote_end = '`';
-		$this->table_column_separator = '.';
+		$this->tableQuoteStart = '`';
+		$this->tableQuoteEnd = '`';
+		$this->columnQuoteStart = '`';
+		$this->columnQuoteEnd = '`';
+		$this->columnSeparator = '.';
 		$this->language = 'SQL';
 		$this->executor = 'PDO';
 	}

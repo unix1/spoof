@@ -31,11 +31,11 @@ class DriverTest extends \PHPUnit_Framework_TestCase
 		$d = new HelperDriver();
 		$expected = array('', '', '', '', '', '', '');
 		$actual = array(
-				$d->table_quote_start,
-				$d->table_quote_end,
-				$d->column_quote_start,
-				$d->column_quote_end,
-				$d->table_column_separator,
+				$d->tableQuoteStart,
+				$d->tableQuoteEnd,
+				$d->columnQuoteStart,
+				$d->columnQuoteEnd,
+				$d->columnSeparator,
 				$d->language,
 				$d->executor
 		);

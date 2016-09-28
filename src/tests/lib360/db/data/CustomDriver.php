@@ -25,11 +25,11 @@ namespace spoof\tests\lib360\db\data;
 */
 class CustomDriver extends \spoof\lib360\db\driver\Driver
 {
-	public $table_quote_start;
-	public $table_quote_end;
-	public $column_quote_start;
-	public $column_quote_end;
-	public $table_column_separator;
+	public $tableQuoteStart;
+	public $tableQuoteEnd;
+	public $columnQuoteStart;
+	public $columnQuoteEnd;
+	public $columnSeparator;
 	public $language;
 	public $executor;
 
@@ -38,11 +38,11 @@ class CustomDriver extends \spoof\lib360\db\driver\Driver
 	*/
 	public function __construct()
 	{
-		$this->table_quote_start = '`';
-		$this->table_quote_end = '`';
-		$this->column_quote_start = '`';
-		$this->column_quote_end = '`';
-		$this->table_column_separator = '.';
+		$this->tableQuoteStart = '`';
+		$this->tableQuoteEnd = '`';
+		$this->columnQuoteStart = '`';
+		$this->columnQuoteEnd = '`';
+		$this->columnSeparator = '.';
 		$this->language = 'SQL';
 		$this->executor = 'PDO';
 	}

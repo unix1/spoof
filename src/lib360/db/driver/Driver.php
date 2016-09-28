@@ -31,27 +31,27 @@ class Driver implements IDriver
 	/**
 	*	Quote character prior to table name start
 	*/
-	public $table_quote_start;
+	public $tableQuoteStart;
 
 	/**
 	*	Quote character after table name end
 	*/
-	public $table_quote_end;
+	public $tableQuoteEnd;
 
 	/**
 	*	Quote character prior to column quote start
 	*/
-	public $column_quote_start;
+	public $columnQuoteStart;
 
 	/**
 	*	Quote character after column name end
 	*/
-	public $column_quote_end;
+	public $columnQuoteEnd;
 
 	/**
 	*	Character separator between table name and column name
 	*/
-	public $table_column_separator;
+	public $columnSeparator;
 
 	/**
 	*	String language to use with driver
@@ -78,11 +78,11 @@ class Driver implements IDriver
 	*/
 	public function __construct()
 	{
-		$this->table_quote_start = '';
-		$this->table_quote_end = '';
-		$this->column_quote_start = '';
-		$this->column_quote_end = '';
-		$this->table_column_separator = '';
+		$this->tableQuoteStart = '';
+		$this->tableQuoteEnd = '';
+		$this->columnQuoteStart = '';
+		$this->columnQuoteEnd = '';
+		$this->columnSeparator = '';
 		$this->language = '';
 		$this->executor = '';
 	}

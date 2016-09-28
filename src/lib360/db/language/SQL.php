@@ -273,7 +273,7 @@ class SQL implements ILanguage
 	*/
 	public function getFieldFormatted(IDriver $driver, $field)
 	{
-		return $driver->column_quote_start . str_replace($driver->table_column_separator, $driver->column_quote_end . $driver->table_column_separator . $driver->column_quote_start, $field) . $driver->column_quote_end;
+		return $driver->columnQuoteStart . str_replace($driver->columnSeparator, $driver->columnQuoteEnd . $driver->columnSeparator . $driver->columnQuoteStart, $field) . $driver->columnQuoteEnd;
 	}
 
 	/**
@@ -344,7 +344,7 @@ class SQL implements ILanguage
 		}
 		else
 		{
-			$field = $this->getFieldFormatted($driver, $field_key) . ' ' . self::SELECT_AS . ' ' . $driver->column_quote_start . $field_value . $driver->column_quote_end;
+			$field = $this->getFieldFormatted($driver, $field_key) . ' ' . self::SELECT_AS . ' ' . $driver->columnQuoteStart . $field_value . $driver->columnQuoteEnd;
 		}
 		return $field;
 	}
@@ -399,7 +399,7 @@ class SQL implements ILanguage
 	*/
 	public function getSelectFromTableName(IDriver $driver, $name)
 	{
-		return $driver->table_quote_start . $name . $driver->table_quote_end;
+		return $driver->tableQuoteStart . $name . $driver->tableQuoteEnd;
 	}
 
 	/**
@@ -456,7 +456,7 @@ class SQL implements ILanguage
 	public function getJoin(IDriver $driver, IJoin $join)
 	{
 		$query = new Query();
-		$query->setString($driver->table_quote_start . $join->table_base . $driver->table_quote_end);
+		$query->setString($driver->tableQuoteStart . $join->table_base . $driver->tableQuoteEnd);
 		foreach ($join->table_join as $i => $table)
 		{
 			switch ($join->type[$i])
@@ -480,7 +480,7 @@ class SQL implements ILanguage
 					throw new UnknownTypeException("Unsupported join type " . $join->type[$i]);
 			}
 			$query->addString($join_string);
-			$query->addString($driver->table_quote_start . $table . $driver->table_quote_end);
+			$query->addString($driver->tableQuoteStart . $table . $driver->tableQuoteEnd);
 			$query->addString(self::SELECT_JOIN_ON);
 			$query->addQuery($this->getCondition($driver, $join->condition[$i]));
 		}
