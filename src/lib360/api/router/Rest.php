@@ -54,37 +54,71 @@ class Rest implements api\IRouter
 	* @return api\Response response object
 	*/
 	public function handleRequest(api\Request $request) {
-		// map request to class and method
-		$args = array();
-		$args[] = array_pop($request->parts);
-		$res = array_pop($request->parts);
-		$class = '\\' . $this->namespace . implode('\\', $request->parts);
-		$method = $this->translateOperation($request->operation) . $res;
-
-		// make sure class and method exist
 		$response = new api\Response();
-		if (class_exists($class) && method_exists($class, $method)) {
-			$module = new $class($this->config);
-			$args += $request->data;
-			// execute called function
-			try {
-				$response->body = call_user_func_array(array($module, $method),
-					$args);
-				//TODO this needs to be different 2xx status based on what happened
-				$response->status = api\Response::STATUS_OK;
-			} catch (\InvalidArgumentException $e) {
-				$response->status = api\Response::STATUS_BAD_REQUEST;
-				$response->body = $e->getMessage();
-			} catch (api\ResourceNotFoundException $e) {
-				$response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
-				$response->body = $e->getMessage();
+		try {
+			// map request to class and method
+			list($class, $method, $args) = $this->translateRequest($request);
+			// make sure class and method exist
+			if (!class_exists($class) || !method_exists($class, $method)) {
+				throw new api\ResourceNotFoundException('Resource not found');
 			}
-		} else {
+			$module = new $class($this->config);
+			// execute called function
+			$response->body = call_user_func_array(array($module, $method), $args);
+			//TODO this needs to be different 2xx status based on what happened
+			$response->status = api\Response::STATUS_OK;
+		} catch (\InvalidArgumentException $e) {
+			$response->status = api\Response::STATUS_BAD_REQUEST;
+			$response->body = $e->getMessage();
+		} catch (api\ResourceNotFoundException $e) {
 			$response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
+			$response->body = $e->getMessage();
 		}
-
 		// return result
 		return $response;
+	}
+
+	/**
+	* Internal function that translates request object to execution path
+	*
+	* @param api\Request $request request object
+	*
+	* @return array parsed result
+	*	0 => string class
+	*	1 => string method
+	*	2 => array arguments
+	*
+	* @throws api\ResourceNotFoundException when request has too few parts
+	*/
+	protected function translateRequest(api\Request $request) {
+		$class = '\\' . $this->namespace . '\\';
+		$args = array();
+		switch (count($request->parts)) {
+			case 0:
+				// if request has no parts, we can't find the resource
+				throw new api\ResourceNotFoundException('No resource specified in request');
+			break;
+			case 1:
+				// if there's only one part, that's the class name
+				$class .= $request->parts[0];
+				$method = $this->translateOperation($request->operation);
+			break;
+			case 2:
+				// if there are 2 parts, that's class and method
+				$class .= $request->parts[0];
+				$method = $this->translateOperation($request->operation) .
+					$request->parts[1];
+			break;
+			default:
+				// request has 3 or more parts
+				$parts = $request->parts;
+				$args[] = array_pop($parts);
+				$method = $this->translateOperation($request->operation) .
+					array_pop($parts);
+				$class .= implode('\\', $parts);
+		}
+		$args += $request->data;
+		return array($class, $method, $args);
 	}
 
 	/**

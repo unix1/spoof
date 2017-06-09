@@ -26,13 +26,17 @@ class Rest extends api\request\Handler
 	* Generate request object from an HTTP request
 	*
 	* @return api\Request request object
-	 */
+	*/
 	public function getRequest() {
 		$request = new api\Request();
 		if (strpos($_SERVER['REQUEST_URI'], '?') === FALSE) {
 			$request->parts = explode('/', $_SERVER['REQUEST_URI']);
 		} else {
 			$request->parts = explode('/', strstr($_SERVER['REQUEST_URI'], '?', TRUE));
+		}
+		// Remove part 0 genearated as a result of initial `/`
+		if (isset($request->parts[0]) && $request->parts[0] == '') {
+			array_shift($request->parts);
 		}
 		$request->operation = $_SERVER['REQUEST_METHOD'];
 		$request->data = $_GET;
