@@ -5,7 +5,7 @@ namespace spoof\lib360\net\erlang\peb\value;
 interface IValue
 {
 
-	public function __construct($value, $type);
+    public function __construct($value, $type);
 
 }
 

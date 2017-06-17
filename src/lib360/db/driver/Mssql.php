@@ -21,23 +21,23 @@ namespace spoof\lib360\db\driver;
  */
 
 /**
-*	This class implements a driver for Microsoft SQL Server connections.
-*/
+ * This class implements a driver for Microsoft SQL Server connections.
+ */
 class Mssql extends Driver
 {
-	/**
-	*	Constructor
-	*/
-	public function __construct()
-	{
-		$this->tableQuoteStart = '[';
-		$this->tableQuoteEnd = ']';
-		$this->columnQuoteStart = '[';
-		$this->columnQuoteEnd = ']';
-		$this->columnSeparator = '.';
-		$this->language = 'SQL';
-		$this->executor = 'PDO';
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tableQuoteStart = '[';
+        $this->tableQuoteEnd = ']';
+        $this->columnQuoteStart = '[';
+        $this->columnQuoteEnd = ']';
+        $this->columnSeparator = '.';
+        $this->language = 'SQL';
+        $this->executor = 'PDO';
+    }
 
 }
 

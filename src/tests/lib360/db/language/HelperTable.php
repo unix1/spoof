@@ -19,12 +19,11 @@ namespace spoof\tests\lib360\db\language;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 class HelperTable extends \spoof\lib360\db\data\Table
 {
 
-	protected $name = 'HelperTestTable';
-	protected $db = 'HelperTestDB';
+    protected $name = 'HelperTestTable';
+    protected $db = 'HelperTestDB';
 
 }
 

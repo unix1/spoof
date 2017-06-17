@@ -3,25 +3,25 @@
 namespace spoof\lib360\api;
 
 /**
-* Standard request object
-*/
+ * Standard request object
+ */
 class Request
 {
 
-	/**
-	* Parts of request path
-	*/
-	public $parts = array();
+    /**
+     * Parts of request path
+     */
+    public $parts = array();
 
-	/**
-	* Operation to perform
-	*/
-	public $operation;
+    /**
+     * Operation to perform
+     */
+    public $operation;
 
-	/**
-	* Data or arguments passed in request
-	*/
-	public $data = array();
+    /**
+     * Data or arguments passed in request
+     */
+    public $data = array();
 
 }
 

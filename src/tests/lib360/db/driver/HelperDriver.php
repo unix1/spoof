@@ -21,8 +21,8 @@ namespace spoof\tests\lib360\db\driver;
  */
 
 /**
-*	This is a test helper class for testing DBDriver abstract class
-*/
+ *    This is a test helper class for testing DBDriver abstract class
+ */
 class HelperDriver extends \spoof\lib360\db\driver\Driver
 {
 }

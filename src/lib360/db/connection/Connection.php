@@ -2,8 +2,8 @@
 
 namespace spoof\lib360\db\connection;
 
-use \spoof\lib360\db\object\Factory;
-use \spoof\lib360\db\object\NotFoundException;
+use spoof\lib360\db\object\Factory;
+use spoof\lib360\db\object\NotFoundException;
 
 /**
  *  This is Spoof.
@@ -24,118 +24,105 @@ use \spoof\lib360\db\object\NotFoundException;
  */
 
 /**
-*	A database connection class
-*
-*	This class is a wrapper around PHP's PDO database connection object.
-*/
+ * A database connection class
+ *
+ * This class is a wrapper around PHP's PDO database connection object.
+ */
 abstract class Connection implements IConnection
 {
 
-	/**
-	*	Connection object.
-	*
-	*	Internal property used to store the PHP PDO connection object.
-	*/
-	protected $connection;
+    /**
+     * Driver object
+     *
+     * Used to retrieve connection specific behavior.
+     */
+    public $driver;
+    /**
+     * Connection object.
+     *
+     * Internal property used to store the PHP PDO connection object.
+     */
+    protected $connection;
+    /**
+     * Connection configuration object
+     *
+     * Internal property used to store database connection configuration object.
+     */
+    protected $config;
+    /**
+     * Features array
+     *
+     * Used to specify support for specific features. Extending classes
+     * should specify what features and levels they support.
+     */
+    protected $features = array();
 
-	/**
-	*	Connection configuration object
-	*
-	*	Internal property used to store database connection configuration object.
-	*/
-	protected $config;
+    /**
+     * Constructor for the database connection object instantiates the object
+     * but does not connect it to a database.
+     *
+     * @param IConfig $config database connection configuration object
+     *
+     * @throw ConfigException when DSN specified with $config object has
+     *    invalid format
+     * @throw NotFoundException when driver specified with $config
+     *    cannot be loaded
+     *
+     * @todo extra logging when \spoof\lib360\db\object\Factory throws exception?
+     */
+    public function __construct(IConfig $config)
+    {
+        $this->config = $config;
+        $col = strpos($config->dsn, ':');
+        if ($col === false || $col == 0) {
+            throw new ConfigException("Invalid DSN ({$config->dsn}); couldn't parse driver name.");
+        }
+        // get driver name, explicit config option overrides automatic from DSN
+        if (isset($config->driver)) {
+            $driverName = $config->driver;
+        } else {
+            $driverName = ucfirst(substr($config->dsn, 0, $col));
+        }
+        try {
+            $this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
+        } catch (NotFoundException $e) {
+            /// TODO implement some logging here
+            throw $e;
+        }
+    }
 
-	/**
-	*	Driver object
-	*
-	*	Used to retrieve connection specific behavior.
-	*/
-	public $driver;
+    /**
+     * Checks whether the database connection is active.
+     *
+     * @return    boolean TRUE if connected, boolean FALSE otherwise
+     *    TODO is there a better way to check if connection is live?
+     */
+    public function isConnected()
+    {
+        if (is_null($this->connection)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-	/**
-	*	Features array
-	*
-	*	Used to specify support for specific features. Extending classes
-	*	should specify what features and levels they support.
-	*/
-	protected $features = array();
+    /**
+     * Retrieves the underlying connection object.
+     *
+     * @return    connection object if connected, NULL otherwise
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 
-	/**
-	*	Constructor for the database connection object instantiates the object
-	*	but does not connect it to a database.
-	*
-	*	@param IConfig $config database connection configuration object
-	*
-	*	@throw ConfigException when DSN specified with $config object has
-	*	invalid format
-	*	@throw NotFoundException when driver specified with $config
-	*	cannot be loaded
-	*
-	*	@todo extra logging when \spoof\lib360\db\object\Factory throws exception?
-	*/
-	public function __construct(IConfig $config)
-	{
-		$this->config = $config;
-		$col = strpos($config->dsn, ':');
-		if ($col === FALSE || $col == 0)
-		{
-			throw new ConfigException("Invalid DSN ({$config->dsn}); couldn't parse driver name.");
-		}
-		// get driver name, explicit config option overrides automatic from DSN
-		if (isset($config->driver))
-		{
-			$driverName = $config->driver;
-		}
-		else
-		{
-			$driverName = ucfirst(substr($config->dsn, 0, $col));
-		}
-		try
-		{
-			$this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
-		}
-		catch (NotFoundException $e)
-		{
-			/// TODO implement some logging here
-			throw $e;
-		}
-	}
-
-	/**
-	*	Checks whether the database connection is active.
-	*
-	*	@return	boolean TRUE if connected, boolean FALSE otherwise
-	*	TODO is there a better way to check if connection is live?
-	*/
-	public function isConnected()
-	{
-		if (is_null($this->connection))
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
-	}
-
-	/**
-	*	Retrieves the underlying connection object.
-	*
-	*	@return	connection object if connected, NULL otherwise
-	*/
-	public function getConnection()
-	{
-		return $this->connection;
-	}
-
-	/**
-	*	Closes the connection.
-	*/
-	public function disconnect()
-	{
-		$this->connection = NULL;
-	}
+    /**
+     * Closes the connection.
+     */
+    public function disconnect()
+    {
+        $this->connection = null;
+    }
 
 }
 

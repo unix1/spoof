@@ -19,15 +19,14 @@ namespace spoof\tests\lib360\db\connection;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 class HelperConnection1 extends \spoof\lib360\db\connection\Connection
 {
 
-	public function connect()
-	{
-		$this->connection = 'Fake connection';
-		return $this->connection;
-	}
+    public function connect()
+    {
+        $this->connection = 'Fake connection';
+        return $this->connection;
+    }
 
 }
 

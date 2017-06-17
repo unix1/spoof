@@ -21,37 +21,37 @@ namespace spoof\lib360\db\value;
  */
 
 /**
-*	Database value interface
-*/
+ * Database value interface
+ */
 interface IValue
 {
-	/**
-	*	Constructor creates an instance with specified type and value.
-	*
-	*	Type must match the actual type of the value parameter.
-	*	This object will not explicitly cast the type.
-	*
-	*	@param $value mixed value of the object
-	*	@param $type int type of the value
-	*
-	*	@throw InvalidValueException when specified type and actual type do not match
-	*	@throw UnknownTypeException when invalid type is supplied
-	*/
-	public function __construct($value, $type);
+    /**
+     * Constructor creates an instance with specified type and value.
+     *
+     * Type must match the actual type of the value parameter.
+     * This object will not explicitly cast the type.
+     *
+     * @param $value mixed value of the object
+     * @param $type int type of the value
+     *
+     * @throw InvalidValueException when specified type and actual type do not match
+     * @throw UnknownTypeException when invalid type is supplied
+     */
+    public function __construct($value, $type);
 
-	/**
-	*	Returns the value type.
-	*
-	*	@return integer value type
-	*/
-	public function getType();
+    /**
+     * Returns the value type.
+     *
+     * @return integer value type
+     */
+    public function getType();
 
-	/**
-	*	Returns value.
-	*
-	*	@return mixed value
-	*/
-	public function getValue();
+    /**
+     * Returns value.
+     *
+     * @return mixed value
+     */
+    public function getValue();
 
 }
 

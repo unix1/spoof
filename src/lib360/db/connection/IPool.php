@@ -21,40 +21,40 @@ namespace spoof\lib360\db\connection;
  */
 
 /**
-*	Database connection pool interface.
-*	This interface is used to define database connection pool.
-*/
+ *    Database connection pool interface.
+ *    This interface is used to define database connection pool.
+ */
 interface IPool
 {
 
-	/**
-	*	Adds the specified connection to the connection pool and assigns the
-	*	specified alias.
-	*
-	*	@param IConnection $conn database connection object
-	*	@param string $name name alias for the connection
-	*
-	*	@throw \InvalidArgumentException when supplied alias already exists
-	*/
-	public static function add(IConnection $conn, $name);
+    /**
+     * Adds the specified connection to the connection pool and assigns the
+     * specified alias.
+     *
+     * @param IConnection $conn database connection object
+     * @param string $name name alias for the connection
+     *
+     * @throw \InvalidArgumentException when supplied alias already exists
+     */
+    public static function add(IConnection $conn, $name);
 
-	/**
-	*	Retrieves previously stored database connection object by its alias.
-	*
-	*	@param string $name connection name
-	*	@param boolean $connect if TRUE and not yet connected the database
-	*	connection will be attempted, default TRUE
-	*
-	*	@return Connection object
-	*
-	*	@throw \InvalidArgumentException when supplied alias is not found in the pool
-	*/
-	public static function getByName($name, $connect = TRUE);
+    /**
+     * Retrieves previously stored database connection object by its alias.
+     *
+     * @param string $name connection name
+     * @param boolean $connect if TRUE and not yet connected the database
+     *    connection will be attempted, default TRUE
+     *
+     * @return Connection object
+     *
+     * @throw \InvalidArgumentException when supplied alias is not found in the pool
+     */
+    public static function getByName($name, $connect = true);
 
-	/**
-	*	Closes all active connections in the pool.
-	*/
-	public static function closeAll();
+    /**
+     * Closes all active connections in the pool.
+     */
+    public static function closeAll();
 
 }
 

@@ -21,27 +21,26 @@ namespace spoof\lib360\db\data;
  */
 
 /**
-*	An abstract database table view class.
-*
-*	Provides ability to create logical views across 2 or more database tables.
-*	The actual extending classes need to provide the view name, connection
-*	alias name, default fields, and table join configuration.
-*/
-
+ * An abstract database table view class.
+ *
+ * Provides ability to create logical views across 2 or more database tables.
+ * The actual extending classes need to provide the view name, connection
+ * alias name, default fields, and table join configuration.
+ */
 abstract class View extends Table implements IView
 {
 
-	/**
-	*	Array of joins for the view.
-	*
-	*	Extending classes should define table joins for the implemented view.
-	*	Possible types are \spoof\lib360\db\join\IJoin, ITable, or string table
-	*	name.
-	*
-	*	@see \spoof\lib360\db\join\Join
-	*	@see Table
-	*/
-	public $joins = array();
+    /**
+     * Array of joins for the view.
+     *
+     * Extending classes should define table joins for the implemented view.
+     * Possible types are \spoof\lib360\db\join\IJoin, ITable, or string table
+     * name.
+     *
+     * @see \spoof\lib360\db\join\Join
+     * @see Table
+     */
+    public $joins = array();
 
 }
 

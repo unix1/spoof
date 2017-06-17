@@ -21,71 +21,70 @@ namespace spoof\lib360\db\driver;
  */
 
 /**
-*	This is a template class for a database driver.
-*	Implementing classes should define implementation specific values.
-*/
-
+ * This is a template class for a database driver.
+ * Implementing classes should define implementation specific values.
+ */
 class Driver implements IDriver
 {
 
-	/**
-	*	Quote character prior to table name start
-	*/
-	public $tableQuoteStart;
+    /**
+     * Quote character prior to table name start
+     */
+    public $tableQuoteStart;
 
-	/**
-	*	Quote character after table name end
-	*/
-	public $tableQuoteEnd;
+    /**
+     * Quote character after table name end
+     */
+    public $tableQuoteEnd;
 
-	/**
-	*	Quote character prior to column quote start
-	*/
-	public $columnQuoteStart;
+    /**
+     * Quote character prior to column quote start
+     */
+    public $columnQuoteStart;
 
-	/**
-	*	Quote character after column name end
-	*/
-	public $columnQuoteEnd;
+    /**
+     * Quote character after column name end
+     */
+    public $columnQuoteEnd;
 
-	/**
-	*	Character separator between table name and column name
-	*/
-	public $columnSeparator;
+    /**
+     * Character separator between table name and column name
+     */
+    public $columnSeparator;
 
-	/**
-	*	String language to use with driver
-	*/
-	public $language;
+    /**
+     * String language to use with driver
+     */
+    public $language;
 
-	/**
-	*	String executor to use with driver
-	*/
-	public $executor;
+    /**
+     * String executor to use with driver
+     */
+    public $executor;
 
-	/**
-	*	Features array
-	*
-	*	Used to specify support for specific features.
-	*	Extending classes should specify what features and levels they support.
-	*/
-	protected $features = array();
+    /**
+     * Features array
+     *
+     * Used to specify support for specific features.
+     * Extending classes should specify what features and levels they support.
+     */
+    protected $features = array();
 
-	/**
-	*	Constructor
-	*
-	*	Implementing classes should initialize their values here.
-	*/
-	public function __construct()
-	{
-		$this->tableQuoteStart = '';
-		$this->tableQuoteEnd = '';
-		$this->columnQuoteStart = '';
-		$this->columnQuoteEnd = '';
-		$this->columnSeparator = '';
-		$this->language = '';
-		$this->executor = '';
-	}
+    /**
+     * Constructor
+     *
+     * Implementing classes should initialize their values here.
+     */
+    public function __construct()
+    {
+        $this->tableQuoteStart = '';
+        $this->tableQuoteEnd = '';
+        $this->columnQuoteStart = '';
+        $this->columnQuoteEnd = '';
+        $this->columnSeparator = '';
+        $this->language = '';
+        $this->executor = '';
+    }
 
 }
 

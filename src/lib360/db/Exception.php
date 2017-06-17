@@ -21,9 +21,9 @@ namespace spoof\lib360\db;
  */
 
 /**
-*	Generic database exception class.
-*	All other database exceptions should be derived from this class.
-*/
+ * Generic database exception class.
+ * All other database exceptions should be derived from this class.
+ */
 class Exception extends \Exception
 {
 }

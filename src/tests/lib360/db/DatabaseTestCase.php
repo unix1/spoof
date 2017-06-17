@@ -19,27 +19,24 @@ namespace spoof\tests\lib360\db;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
-	// only instantiate pdo once for test clean-up/fixture load
-	protected static $pdo = NULL;
+    // only instantiate pdo once for test clean-up/fixture load
+    protected static $pdo = null;
 
-	// only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-	private $conn = NULL;
+    // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+    private $conn = null;
 
-	public function getConnection()
-	{
-		if ($this->conn === NULL)
-		{
-			if (self::$pdo == NULL)
-			{
-				self::$pdo = new \PDO($GLOBALS['DB_DSN']);
-			}
-			$this->conn = $this->createDefaultDBConnection(self::$pdo);
-		}
-		return $this->conn;
-	}
+    public function getConnection()
+    {
+        if ($this->conn === null) {
+            if (self::$pdo == null) {
+                self::$pdo = new \PDO($GLOBALS['DB_DSN']);
+            }
+            $this->conn = $this->createDefaultDBConnection(self::$pdo);
+        }
+        return $this->conn;
+    }
 }
 
 ?>

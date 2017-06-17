@@ -20,41 +20,41 @@ namespace spoof\tests\lib360\db\language;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \spoof\lib360\db\condition\Condition;
-use \spoof\lib360\db\join\Join;
-use \spoof\lib360\db\value\Value;
+use spoof\lib360\db\condition\Condition;
+use spoof\lib360\db\join\Join;
+use spoof\lib360\db\value\Value;
 
 class HelperDataView extends \spoof\lib360\db\data\View
 {
 
-	public function __construct()
-	{
-		$this->name = 'commentsview';
-		$table1_base = 'comments';
-		$join1_type1 = Join::JOIN_TYPE_INNER;
-		$table1_join1 = 'user';
-		$cond11 = new Condition(
-			new Value($table1_base . '.user_id', Value::TYPE_COLUMN),
-			Condition::OPERATOR_EQUALS,
-			new Value($table1_join1 . '.id', Value::TYPE_COLUMN)
-		);
-		$join1_type2 = Join::JOIN_TYPE_LEFT_OUTER;
-		$table1_join2 = 'group';
-		$cond12 = new Condition(
-			new Value($table1_join1 . '.group_id', Value::TYPE_COLUMN),
-			Condition::OPERATOR_EQUALS,
-			new Value($table1_join2 . '.id', Value::TYPE_COLUMN)
-		);
-		$j1 = new Join($table1_base, $join1_type1, $table1_join1, $cond11);
-		$j1->addTable($join1_type2, $table1_join2, $cond12);
+    public function __construct()
+    {
+        $this->name = 'commentsview';
+        $table1_base = 'comments';
+        $join1_type1 = Join::JOIN_TYPE_INNER;
+        $table1_join1 = 'user';
+        $cond11 = new Condition(
+            new Value($table1_base . '.user_id', Value::TYPE_COLUMN),
+            Condition::OPERATOR_EQUALS,
+            new Value($table1_join1 . '.id', Value::TYPE_COLUMN)
+        );
+        $join1_type2 = Join::JOIN_TYPE_LEFT_OUTER;
+        $table1_join2 = 'group';
+        $cond12 = new Condition(
+            new Value($table1_join1 . '.group_id', Value::TYPE_COLUMN),
+            Condition::OPERATOR_EQUALS,
+            new Value($table1_join2 . '.id', Value::TYPE_COLUMN)
+        );
+        $j1 = new Join($table1_base, $join1_type1, $table1_join1, $cond11);
+        $j1->addTable($join1_type2, $table1_join2, $cond12);
 
-		$table2_base = new HelperTable();
-		$table3_base = 'test_table3';
+        $table2_base = new HelperTable();
+        $table3_base = 'test_table3';
 
-		$this->joins[] = $j1;
-		$this->joins[] = $table2_base;
-		$this->joins[] = $table3_base;
-	}
+        $this->joins[] = $j1;
+        $this->joins[] = $table2_base;
+        $this->joins[] = $table3_base;
+    }
 
 }
 

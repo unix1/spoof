@@ -21,10 +21,9 @@ namespace spoof\lib360\db\executor;
  */
 
 /**
-*	Prepared query exception class.
-*	Typed exception class to identify exceptions during execution of prepared queries.
-*/
-
+ * Prepared query exception class.
+ * Typed exception class to identify exceptions during execution of prepared queries.
+ */
 class PreparedQueryException extends \spoof\lib360\db\Exception
 {
 }

@@ -21,16 +21,16 @@ namespace spoof\lib360\db\data;
  */
 
 /**
-*	Database record interface.
-*	This interface is used to define database data record.
-*/
+ *    Database record interface.
+ *    This interface is used to define database data record.
+ */
 interface IRecordList
 {
-	/**
-	*	Transforms object into XML representation.
-	*	@return DOMDocument XML document object
-	*/
-	public function toXML();
+    /**
+     * Transforms object into XML representation.
+     * @return \DOMDocument XML document object
+     */
+    public function toXML();
 
 }
 

@@ -19,33 +19,32 @@ namespace spoof\tests\lib360\db\language;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 class HelperDataInvalid implements \spoof\lib360\db\data\IStore
 {
 
-	public function getName()
-	{
-	}
+    public function getName()
+    {
+    }
 
-	public function getDB()
-	{
-	}
+    public function getDB()
+    {
+    }
 
-	public function setName($name)
-	{
-	}
+    public function setName($name)
+    {
+    }
 
-	public function setDB($db)
-	{
-	}
+    public function setDB($db)
+    {
+    }
 
-	public function getExecutor()
-	{
-	}
+    public function getExecutor()
+    {
+    }
 
-	public function getLanguage()
-	{
-	}
+    public function getLanguage()
+    {
+    }
 
 }
 

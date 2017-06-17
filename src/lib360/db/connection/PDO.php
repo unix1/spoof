@@ -21,25 +21,25 @@ namespace spoof\lib360\db\connection;
  */
 
 /**
-*	TODO add class docblock
-*/
+ *    TODO add class docblock
+ */
 class PDO extends Connection
 {
-	/**
-	*	Connects the object to the database.
-	*
-	*	@return PDO connection
-	*/
-	public function connect()
-	{
-		$this->connection = new \PDO(
-			$this->config->dsn,
-			$this->config->username,
-			$this->config->password,
-			$this->config->options
-		);
-		return $this->connection;
-	}
+    /**
+     * Connects the object to the database.
+     *
+     * @return PDO connection
+     */
+    public function connect()
+    {
+        $this->connection = new \PDO(
+            $this->config->dsn,
+            $this->config->username,
+            $this->config->password,
+            $this->config->options
+        );
+        return $this->connection;
+    }
 
 }
 

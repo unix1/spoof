@@ -20,37 +20,37 @@ namespace spoof\tests\lib360\db\connection;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \spoof\lib360\db\connection\Config;
+use spoof\lib360\db\connection\Config;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	*	@covers \spoof\lib360\db\connection\Config::__construct
-	*/
-	public function testConstruct_RequiredArgs()
-	{
-		$dsn = 'mysql:localhost';
-		$config = new Config($dsn);
-		$this->assertEquals($dsn, $config->dsn, "Failed to set dsn during instantiation");
-	}
+    /**
+     * @covers \spoof\lib360\db\connection\Config::__construct
+     */
+    public function testConstruct_RequiredArgs()
+    {
+        $dsn = 'mysql:localhost';
+        $config = new Config($dsn);
+        $this->assertEquals($dsn, $config->dsn, "Failed to set dsn during instantiation");
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\connection\Config::__construct
-	*/
-	public function testConstruct_AllArgs()
-	{
-		$dsn = 'mysql:localhost';
-		$user = 'test';
-		$pass = 'pass';
-		$driver = 'test_driver';
-		$options = array('opt1' => 'option1', 'opt2' => 'option2');
-		$config = new Config($dsn, $user, $pass, $options, $driver);
-		$this->assertEquals(
-		  array($dsn, $user, $pass, $options, $driver),
-		  array($config->dsn, $config->username, $config->password, $config->options, $config->driver),
-		  "Failed to set arguments during instantiation"
-		);
-	}
+    /**
+     * @covers \spoof\lib360\db\connection\Config::__construct
+     */
+    public function testConstruct_AllArgs()
+    {
+        $dsn = 'mysql:localhost';
+        $user = 'test';
+        $pass = 'pass';
+        $driver = 'test_driver';
+        $options = array('opt1' => 'option1', 'opt2' => 'option2');
+        $config = new Config($dsn, $user, $pass, $options, $driver);
+        $this->assertEquals(
+            array($dsn, $user, $pass, $options, $driver),
+            array($config->dsn, $config->username, $config->password, $config->options, $config->driver),
+            "Failed to set arguments during instantiation"
+        );
+    }
 
 }
 

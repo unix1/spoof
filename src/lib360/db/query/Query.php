@@ -21,90 +21,84 @@ namespace spoof\lib360\db\query;
  */
 
 /**
-*	Database query class
-*	This class is used by language implementations to pass instructions
-*	to executor implementations.
-*/
+ *    Database query class
+ *    This class is used by language implementations to pass instructions
+ *    to executor implementations.
+ */
 class Query implements IQuery
 {
 
-	/**
-	*	String query property
-	*/
-	public $query;
+    /**
+     * String query property
+     */
+    public $query;
 
-	/**
-	*	Array values property
-	*/
-	public $values;
+    /**
+     * Array values property
+     */
+    public $values;
 
-	/**
-	*	Constructor
-	*
-	*	@param string $query initial query string, optional, default NULL
-	*	@param array $values initial values associative array, optional, default NULL
-	*/
-	public function __construct($query = NULL, array $values = NULL)
-	{
-		if (!is_null($query))
-		{
-			$this->query = $query;
-		}
-		else
-		{
-			$this->query = '';
-		}
-		if (!is_null($values))
-		{
-			$this->values = $values;
-		}
-		else
-		{
-			$this->values = array();
-		}
-	}
+    /**
+     * Constructor
+     *
+     * @param string $query initial query string, optional, default NULL
+     * @param array $values initial values associative array, optional, default NULL
+     */
+    public function __construct($query = null, array $values = null)
+    {
+        if (!is_null($query)) {
+            $this->query = $query;
+        } else {
+            $this->query = '';
+        }
+        if (!is_null($values)) {
+            $this->values = $values;
+        } else {
+            $this->values = array();
+        }
+    }
 
-	/**
-	*	Adds query object to current query object.
-	*
-	*	@param IQuery $query object to add
-	*/
-	public function addQuery(IQuery $query)
-	{
-		$this->addString($query->query);
-		$this->addValues($query->values);
-	}
+    /**
+     * Adds query object to current query object.
+     *
+     * @param IQuery $query object to add
+     */
+    public function addQuery(IQuery $query)
+    {
+        $this->addString($query->query);
+        $this->addValues($query->values);
+    }
 
-	/**
-	*	Adds string to query object.
-	*
-	*	@param string $query string to add
-	*	@param boolean $hintSpace hints use of space prior to appending, optional, default TRUE
-	*/
-	public function addString($query, $hintSpace = TRUE)
-	{
-		$this->query .= (($this->query === '' || !$hintSpace) ? '' : ' ') . $query;
-	}
+    /**
+     * Adds string to query object.
+     *
+     * @param string $query string to add
+     * @param boolean $hintSpace hints use of space prior to appending, optional, default TRUE
+     */
+    public function addString($query, $hintSpace = true)
+    {
+        $this->query .= (($this->query === '' || !$hintSpace) ? '' : ' ') . $query;
+    }
 
-	/**
-	*	Adds values array to query object.
-	*
-	*	@param array $values array to append
-	*/
-	public function addValues(array $values)
-	{
-		$this->values += $values;
-	}
+    /**
+     * Adds values array to query object.
+     *
+     * @param array $values array to append
+     */
+    public function addValues(array $values)
+    {
+        $this->values += $values;
+    }
 
-	/**
-	*	Sets string query value.
-	*
-	*	@param string $query string to set
-	*/
-	public function setString($query)
-	{
-		$this->query = $query;
-	}
+    /**
+     * Sets string query value.
+     *
+     * @param string $query string to set
+     */
+    public function setString($query)
+    {
+        $this->query = $query;
+    }
 
 }
 

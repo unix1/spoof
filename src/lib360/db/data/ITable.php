@@ -2,7 +2,7 @@
 
 namespace spoof\lib360\db\data;
 
-use \spoof\lib360\db\condition\ICondition;
+use spoof\lib360\db\condition\ICondition;
 
 /**
  *  This is Spoof.
@@ -23,78 +23,86 @@ use \spoof\lib360\db\condition\ICondition;
  */
 
 /**
-*	Data table interface extends data storage interface.
-*	Data table implementations must be based on this interface.
-*/
+ * Data table interface extends data storage interface.
+ * Data table implementations must be based on this interface.
+ */
 interface ITable extends IStore
 {
-	/**
-	*	Gets table records that match the supplied database condition.
-	*
-	*	@param ICondition $condition optional condition
-	*	to apply to the query
-	*	@param array $values optional associative array of values for aliases
-	*	in the condition object
-	*	@param array $fields optional array of fields to return, can be
-	*	associative for (table field) => (select as field) or a simple array
-	*	of table field names, will override default $fields property
-	*
-	*	@return IRecordList a database recordlist object, @see RecordList
-	*	TODO add order/group by support
-	*/
-	public function select(ICondition $condition = NULL, array $values = NULL,
-							array $fields = NULL);
+    /**
+     * Gets table records that match the supplied database condition.
+     *
+     * @param ICondition $condition optional condition
+     *    to apply to the query
+     * @param array $values optional associative array of values for aliases
+     *    in the condition object
+     * @param array $fields optional array of fields to return, can be
+     *    associative for (table field) => (select as field) or a simple array
+     *    of table field names, will override default $fields property
+     *
+     * @return IRecordList a database recordlist object, @see RecordList
+     *    TODO add order/group by support
+     */
+    public function select(
+        ICondition $condition = null,
+        array $values = null,
+        array $fields = null
+    );
 
-	/**
-	*	Gets table records by field criteria.
-	*
-	*	@param array $conditions optional associative array of column names
-	*	and their values to use as conditions, values will explicitly be cast
-	*	as strings
-	*	@param array $fields optional array of fields to return, can be
-	*	associative for (table field) => (select as field) or a simple array
-	*	of table field names, will override default $fields property
-	*
-	*	@return IRecordList object containing matched rows @see RecordList
-	*/
-	public function selectRecords(array $conditions = array(),
-									array $fields = NULL);
+    /**
+     * Gets table records by field criteria.
+     *
+     * @param array $conditions optional associative array of column names
+     *    and their values to use as conditions, values will explicitly be cast
+     *    as strings
+     * @param array $fields optional array of fields to return, can be
+     *    associative for (table field) => (select as field) or a simple array
+     *    of table field names, will override default $fields property
+     *
+     * @return IRecordList object containing matched rows @see RecordList
+     */
+    public function selectRecords(
+        array $conditions = array(),
+        array $fields = null
+    );
 
-	/**
-	*	Updates database record(s) based on supplied criteria and values.
-	*
-	*	@param array $fields associative array of fields to update
-	*	(table field) => (update value)
-	*	@param ICondition $condition optional ICondition object to apply to the
-	*	update
-	*	@param array $values optional associative array of values for aliases
-	*	in the condition object
-	*
-	*	@return integer number of rows updated
-	*/
-	public function update(array $fields, ICondition $condition = NULL,
-							array $values = array());
+    /**
+     * Updates database record(s) based on supplied criteria and values.
+     *
+     * @param array $fields associative array of fields to update
+     *    (table field) => (update value)
+     * @param ICondition $condition optional ICondition object to apply to the
+     *    update
+     * @param array $values optional associative array of values for aliases
+     *    in the condition object
+     *
+     * @return integer number of rows updated
+     */
+    public function update(
+        array $fields,
+        ICondition $condition = null,
+        array $values = array()
+    );
 
-	/**
-	*	Inserts a database record.
-	*
-	*	@param array $fields associative array of fields for insert
-	*	(table field) => (update value)
-	*
-	*	@return integer number of rows inserted
-	*/
-	public function insert(array $fields);
+    /**
+     * Inserts a database record.
+     *
+     * @param array $fields associative array of fields for insert
+     *    (table field) => (update value)
+     *
+     * @return integer number of rows inserted
+     */
+    public function insert(array $fields);
 
-	/**
-	*	Deletes table records that match the supplied database condition.
-	*
-	*	@param ICondition $condition optional condition to apply to the query
-	*	@param array $values optional associative array of values for aliases
-	*	in the condition object
-	*
-	*	@return integer number of rows deleted
-	*/
-	public function delete(ICondition $condition = NULL, array $values = array());
+    /**
+     * Deletes table records that match the supplied database condition.
+     *
+     * @param ICondition $condition optional condition to apply to the query
+     * @param array $values optional associative array of values for aliases
+     *    in the condition object
+     *
+     * @return integer number of rows deleted
+     */
+    public function delete(ICondition $condition = null, array $values = array());
 
 }
 

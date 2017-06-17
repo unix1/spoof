@@ -21,9 +21,8 @@ namespace spoof\lib360\db\data;
  */
 
 /**
-*	Defines interace for database views
-*/
-
+ * Defines interace for database views
+ */
 interface IView extends IStore
 {
 }

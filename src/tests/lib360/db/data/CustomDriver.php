@@ -21,31 +21,31 @@ namespace spoof\tests\lib360\db\data;
  */
 
 /**
-*	Custom driver class for testing.
-*/
+ *    Custom driver class for testing.
+ */
 class CustomDriver extends \spoof\lib360\db\driver\Driver
 {
-	public $tableQuoteStart;
-	public $tableQuoteEnd;
-	public $columnQuoteStart;
-	public $columnQuoteEnd;
-	public $columnSeparator;
-	public $language;
-	public $executor;
+    public $tableQuoteStart;
+    public $tableQuoteEnd;
+    public $columnQuoteStart;
+    public $columnQuoteEnd;
+    public $columnSeparator;
+    public $language;
+    public $executor;
 
-	/**
-	*	Constructor
-	*/
-	public function __construct()
-	{
-		$this->tableQuoteStart = '`';
-		$this->tableQuoteEnd = '`';
-		$this->columnQuoteStart = '`';
-		$this->columnQuoteEnd = '`';
-		$this->columnSeparator = '.';
-		$this->language = 'SQL';
-		$this->executor = 'PDO';
-	}
+    /**
+     *    Constructor
+     */
+    public function __construct()
+    {
+        $this->tableQuoteStart = '`';
+        $this->tableQuoteEnd = '`';
+        $this->columnQuoteStart = '`';
+        $this->columnQuoteEnd = '`';
+        $this->columnSeparator = '.';
+        $this->language = 'SQL';
+        $this->executor = 'PDO';
+    }
 
 }
 

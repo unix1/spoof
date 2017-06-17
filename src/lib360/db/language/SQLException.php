@@ -21,8 +21,8 @@ namespace spoof\lib360\db\language;
  */
 
 /**
-*	Database language exception for SQL
-*/
+ * Database language exception for SQL
+ */
 class SQLException extends Exception
 {
 }

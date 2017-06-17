@@ -21,38 +21,38 @@ namespace spoof\lib360\db\connection;
  */
 
 /**
-*	Database connection interface.
-*	This interface is used to define database connection.
-*/
+ * Database connection interface.
+ * This interface is used to define database connection.
+ */
 interface IConnection
 {
 
-	/**
-	*	Constructor for the database connection object instantiates the object
-	*	but does not connect it to a database.
-	*
-	*	@param $config IDBConfig database connection configuration object
-	*/
-	public function __construct(IConfig $config);
+    /**
+     * Constructor for the database connection object instantiates the object
+     * but does not connect it to a database.
+     *
+     * @param $config IDBConfig database connection configuration object
+     */
+    public function __construct(IConfig $config);
 
-	/**
-	*	Connects the object to the database.
-	*
-	*	@return mixed connection object
-	*/
-	public function connect();
+    /**
+     * Connects the object to the database.
+     *
+     * @return mixed connection object
+     */
+    public function connect();
 
-	/**
-	*	Checks whether the database connection is active.
-	*
-	*	@return	boolean TRUE if connected, FALSE otherwise
-	*/
-	public function isConnected();
+    /**
+     * Checks whether the database connection is active.
+     *
+     * @return    boolean TRUE if connected, FALSE otherwise
+     */
+    public function isConnected();
 
-	/**
-	*	Closes the connection.
-	*/
-	public function disconnect();
+    /**
+     * Closes the connection.
+     */
+    public function disconnect();
 
 }
 

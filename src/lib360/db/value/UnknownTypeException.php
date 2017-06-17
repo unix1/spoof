@@ -21,9 +21,9 @@ namespace spoof\lib360\db\value;
  */
 
 /**
-*	Unknown value type exception class.
-*	Typed exception class for unknown value types.
-*/
+ * Unknown value type exception class.
+ * Typed exception class for unknown value types.
+ */
 class UnknownTypeException extends \spoof\lib360\db\Exception
 {
 }

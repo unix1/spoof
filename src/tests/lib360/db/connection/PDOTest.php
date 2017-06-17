@@ -20,21 +20,21 @@ namespace spoof\tests\lib360\db\connection;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \spoof\lib360\db\connection\Config;
-use \spoof\lib360\db\connection\PDO;
+use spoof\lib360\db\connection\Config;
+use spoof\lib360\db\connection\PDO;
 
 class PDOTest extends \PHPUnit_Framework_TestCase
 {
 
-	/**
-	*	@covers \spoof\lib360\db\connection\PDO::connect
-	*/
-	public function testConnect()
-	{
-		$c = new PDO(new Config($GLOBALS['DB_DSN']));
-		$connection = $c->connect();
-		$this->assertInstanceOf('\PDO', $connection, "Failed to obtain connection object");
-	}
+    /**
+     * @covers \spoof\lib360\db\connection\PDO::connect
+     */
+    public function testConnect()
+    {
+        $c = new PDO(new Config($GLOBALS['DB_DSN']));
+        $connection = $c->connect();
+        $this->assertInstanceOf('\PDO', $connection, "Failed to obtain connection object");
+    }
 
 }
 

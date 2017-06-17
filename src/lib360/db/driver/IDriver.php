@@ -21,14 +21,14 @@ namespace spoof\lib360\db\driver;
  */
 
 /**
-*	This is an interface definition for database drivers to implement.
-*/
+ * This is an interface definition for database drivers to implement.
+ */
 interface IDriver
 {
-	/**
-	*	Constructor
-	*/
-	public function __construct();
+    /**
+     * Constructor
+     */
+    public function __construct();
 
 }
 

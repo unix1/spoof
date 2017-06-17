@@ -21,9 +21,9 @@ namespace spoof\lib360\db\value;
  */
 
 /**
-*	Invalid value type exception class.
-*	Typed exception class for invalid value types.
-*/
+ * Invalid value type exception class.
+ * Typed exception class for invalid value types.
+ */
 class InvalidValueException extends \spoof\lib360\db\Exception
 {
 }

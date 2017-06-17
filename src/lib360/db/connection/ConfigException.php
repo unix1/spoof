@@ -21,9 +21,9 @@ namespace spoof\lib360\db\connection;
  */
 
 /**
-*	Database connection configuration exception class.
-*	Typed exception class for connection configuration.
-*/
+ * Database connection configuration exception class.
+ * Typed exception class for connection configuration.
+ */
 class ConfigException extends \spoof\lib360\db\Exception
 {
 }

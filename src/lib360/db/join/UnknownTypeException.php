@@ -21,9 +21,9 @@ namespace spoof\lib360\db\join;
  */
 
 /**
-*	Unknown join type exception class.
-*	Typed exception class for unknown join types.
-*/
+ * Unknown join type exception class.
+ * Typed exception class for unknown join types.
+ */
 class UnknownTypeException extends \spoof\lib360\db\Exception
 {
 }

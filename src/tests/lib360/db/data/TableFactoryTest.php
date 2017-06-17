@@ -20,40 +20,41 @@ namespace spoof\tests\lib360\db\data;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \spoof\lib360\db\data\TableFactory;
+use spoof\lib360\db\data\TableFactory;
 
 class TableFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
-	protected function getProtectedProperty($class, $property)
-	{
-		$r = new \ReflectionClass($class);
-		$p = $r->getProperty($property);
-		$p->setAccessible(true);
-		return $p;
-	}
+    /**
+     * @covers \spoof\lib360\db\data\TableFactory::cache
+     */
+    public function testCache()
+    {
+        $t1 = new HelperTable();
+        TableFactory::cache($t1);
+        $p = $this->getProtectedProperty('\spoof\lib360\db\data\TableFactory', 'cache')->getValue();
+        $t2 = $p[$t1->getDB()][$t1->getName()];
+        $this->assertEquals($t1, $t2, "Cached value is different from the returned value");
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\data\TableFactory::cache
-	*/
-	public function testCache()
-	{
-		$t1 = new HelperTable();
-		TableFactory::cache($t1);
-		$p = $this->getProtectedProperty('\spoof\lib360\db\data\TableFactory', 'cache')->getValue();
-		$t2 = $p[$t1->getDB()][$t1->getName()];
-		$this->assertEquals($t1, $t2, "Cached value is different from the returned value");
-	}
+    protected function getProtectedProperty($class, $property)
+    {
+        $r = new \ReflectionClass($class);
+        $p = $r->getProperty($property);
+        $p->setAccessible(true);
+        return $p;
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\data\TableFactory::get
-	*	@depends testCache
-	*/
-	public function testGet()
-	{
-		$t = TableFactory::get('test_connection', 'test_table');
-		$this->assertInstanceOf('\spoof\lib360\db\data\Table', $t, "Result was not an instance of \spoof\lib360\db\data\Table");
-	}
+    /**
+     * @covers  \spoof\lib360\db\data\TableFactory::get
+     * @depends testCache
+     */
+    public function testGet()
+    {
+        $t = TableFactory::get('test_connection', 'test_table');
+        $this->assertInstanceOf('\spoof\lib360\db\data\Table', $t,
+            "Result was not an instance of \spoof\lib360\db\data\Table");
+    }
 
 }
 

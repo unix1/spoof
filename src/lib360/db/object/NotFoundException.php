@@ -21,9 +21,9 @@ namespace spoof\lib360\db\object;
  */
 
 /**
-*	Object not found exception class.
-*	Typed exception class for undefined database objects.
-*/
+ * Object not found exception class.
+ * Typed exception class for undefined database objects.
+ */
 class NotFoundException extends \spoof\lib360\db\Exception
 {
 }

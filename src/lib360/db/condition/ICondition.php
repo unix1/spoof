@@ -19,7 +19,6 @@ namespace spoof\lib360\db\condition;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 interface ICondition
 {
 }

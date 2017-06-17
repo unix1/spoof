@@ -21,36 +21,34 @@ namespace spoof\lib360\db\data;
  */
 
 /**
-*	A record list class
-*
-*	This class extends PHP ArrayObject and represents a list of data records.
-*
-*	@see IRecordList
-*	@see Record
-*/
-
+ * A record list class
+ *
+ * This class extends PHP ArrayObject and represents a list of data records.
+ *
+ * @see IRecordList
+ * @see Record
+ */
 class RecordList extends \ArrayObject implements IRecordList
 {
 
-	/**
-	*	Transforms object into XML representation.
-	*
-	*	@return DOMDocument XML document object
-	*/
-	public function toXML()
-	{
-		$class = get_class($this);
-		$xml = new \DOMDocument('1.0', 'utf-8');
-		$xml->formatOutput = TRUE;
-		$recordlistXML = $xml->appendChild($xml->createElement('recordlist'));
-		$recordlistXML->setAttribute('type', $class);
-		foreach ($this as $key => $record)
-		{
-			$recordXML = $this->offsetGet($key)->toXML();
-			$recordlistXML->appendChild($xml->importNode($recordXML->firstChild, TRUE));
-		}
-		return $xml;
-	}
+    /**
+     * Transforms object into XML representation.
+     *
+     * @return \DOMDocument XML document object
+     */
+    public function toXML()
+    {
+        $class = get_class($this);
+        $xml = new \DOMDocument('1.0', 'utf-8');
+        $xml->formatOutput = true;
+        $recordlistXML = $xml->appendChild($xml->createElement('recordlist'));
+        $recordlistXML->setAttribute('type', $class);
+        foreach ($this as $key => $record) {
+            $recordXML = $this->offsetGet($key)->toXML();
+            $recordlistXML->appendChild($xml->importNode($recordXML->firstChild, true));
+        }
+        return $xml;
+    }
 
 }
 

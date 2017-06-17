@@ -21,46 +21,46 @@ namespace spoof\lib360\db\query;
  */
 
 /**
-*	Database query interface
-*/
+ * Database query interface
+ */
 interface IQuery
 {
-	/**
-	*	Constructor
-	*
-	*	@param string $query initial query string, optional, default NULL
-	*	@param array $values initial values associative array, optional, default NULL
-	*/
-	public function __construct($query = NULL, array $values = NULL);
+    /**
+     * Constructor
+     *
+     * @param string $query initial query string, optional, default NULL
+     * @param array $values initial values associative array, optional, default NULL
+     */
+    public function __construct($query = null, array $values = null);
 
-	/**
-	*	Adds query object to current query object.
-	*
-	*	@param IQuery $query object to add
-	*/
-	public function addQuery(IQuery $query);
+    /**
+     * Adds query object to current query object.
+     *
+     * @param IQuery $query object to add
+     */
+    public function addQuery(IQuery $query);
 
-	/**
-	*	Adds string to query object.
-	*
-	*	@param string $query string to add
-	*	@param boolean $hintSpace hints use of space prior to appending, optional, default TRUE
-	*/
-	public function addString($query, $hintSpace = TRUE);
+    /**
+     * Adds string to query object.
+     *
+     * @param string $query string to add
+     * @param boolean $hintSpace hints use of space prior to appending, optional, default TRUE
+     */
+    public function addString($query, $hintSpace = true);
 
-	/**
-	*	Adds values array to query object.
-	*
-	*	@param array $values array to append
-	*/
-	public function addValues(array $values);
+    /**
+     * Adds values array to query object.
+     *
+     * @param array $values array to append
+     */
+    public function addValues(array $values);
 
-	/**
-	*	Sets string query value.
-	*
-	*	@param string $query string to set
-	*/
-	public function setString($query);
+    /**
+     * Sets string query value.
+     *
+     * @param string $query string to set
+     */
+    public function setString($query);
 
 }
 
