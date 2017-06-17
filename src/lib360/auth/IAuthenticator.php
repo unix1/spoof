@@ -2,6 +2,8 @@
 
 namespace spoof\lib360\Auth;
 
+use \spoof\lib360\api;
+
 /**
 * Authentication interface
 *
@@ -17,7 +19,7 @@ interface IAuthenticator
 	*
 	* @return boolean TRUE on success, FALSE otherwise
 	*/
-	public function authenticate(\spoof\lib360\api\Request $request);
+	public function authenticate(api\Request $request);
 
 }
 

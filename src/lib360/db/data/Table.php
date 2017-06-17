@@ -65,8 +65,8 @@ class Table extends Store implements ITable
 	*	associative for (table field) => (select as field) or a simple array of
 	*	table field names, will override default $fields property
 	*
-	*	@return \lib360\db\data\IRecordList a database recordlist object
-	*	@see \lib360\db\data\RecordList
+	*	@return \spoof\lib360\db\data\IRecordList a database recordlist object
+	*	@see \spoof\lib360\db\data\RecordList
 	*
 	*	@todo add order/group by support
 	*/
