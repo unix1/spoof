@@ -1,12 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\executor;
-
-use spoof\lib360\db\connection\IConnection;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +17,10 @@ use spoof\lib360\db\connection\IConnection;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace spoof\lib360\db\executor;
+
+use spoof\lib360\db\connection\IConnection;
 
 /**
  * This defines interface for executor implementations.

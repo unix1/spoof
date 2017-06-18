@@ -1,17 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\data;
-
-use spoof\lib360\db\condition\Condition;
-use spoof\lib360\db\condition\ConditionGroup;
-use spoof\lib360\db\condition\ICondition;
-use spoof\lib360\db\connection\Pool;
-use spoof\lib360\db\object\Factory;
-use spoof\lib360\db\value\Value;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +17,15 @@ use spoof\lib360\db\value\Value;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace spoof\lib360\db\data;
+
+use spoof\lib360\db\condition\Condition;
+use spoof\lib360\db\condition\ConditionGroup;
+use spoof\lib360\db\condition\ICondition;
+use spoof\lib360\db\connection\Pool;
+use spoof\lib360\db\object\Factory;
+use spoof\lib360\db\value\Value;
 
 /**
  * A database table class.

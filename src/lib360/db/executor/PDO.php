@@ -1,15 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\executor;
-
-use spoof\lib360\db\connection\IConnection;
-use spoof\lib360\db\data\RecordList;
-use spoof\lib360\db\value\IValue;
-use spoof\lib360\db\value\Value;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +17,13 @@ use spoof\lib360\db\value\Value;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace spoof\lib360\db\executor;
+
+use spoof\lib360\db\connection\IConnection;
+use spoof\lib360\db\data\RecordList;
+use spoof\lib360\db\value\IValue;
+use spoof\lib360\db\value\Value;
 
 /**
  *    PDO executor implementation

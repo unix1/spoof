@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db\condition;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +17,8 @@ namespace spoof\tests\lib360\db\condition;
  *  You should have received a copy of the GNU General Public License
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace spoof\tests\lib360\db\condition;
 
 use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\condition\ConditionGroup;
