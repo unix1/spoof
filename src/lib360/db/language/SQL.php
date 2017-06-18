@@ -147,8 +147,10 @@ class SQL implements ILanguage
         if (is_numeric($field_key)) {
             $field = $this->getFieldFormatted($driver, $field_value);
         } else {
-            $field = $this->getFieldFormatted($driver,
-                    $field_key) . ' ' . self::SELECT_AS . ' ' . $driver->columnQuoteStart . $field_value . $driver->columnQuoteEnd;
+            $field = $this->getFieldFormatted(
+                    $driver,
+                    $field_key
+                ) . ' ' . self::SELECT_AS . ' ' . $driver->columnQuoteStart . $field_value . $driver->columnQuoteEnd;
         }
         return $field;
     }
@@ -163,9 +165,11 @@ class SQL implements ILanguage
      */
     public function getFieldFormatted(IDriver $driver, $field)
     {
-        return $driver->columnQuoteStart . str_replace($driver->columnSeparator,
+        return $driver->columnQuoteStart . str_replace(
+                $driver->columnSeparator,
                 $driver->columnQuoteEnd . $driver->columnSeparator . $driver->columnQuoteStart,
-                $field) . $driver->columnQuoteEnd;
+                $field
+            ) . $driver->columnQuoteEnd;
     }
 
     /**
@@ -185,7 +189,11 @@ class SQL implements ILanguage
         } elseif ($storage instanceof ITable) {
             $query = new Query($this->getSelectFromTable($driver, $storage));
         } else {
-            throw new \InvalidArgumentException("Storage object of type \spoof\lib360\db\data\IView and \spoof\lib360\db\data\ITable expected, " . get_class($storage) . " given.");
+            throw new \InvalidArgumentException(
+                "Storage object of type \spoof\lib360\db\data\IView and \spoof\lib360\db\data\ITable expected, " . get_class(
+                    $storage
+                ) . " given."
+            );
         }
         return $query;
     }
@@ -217,7 +225,9 @@ class SQL implements ILanguage
             } elseif (is_string($join)) {
                 $query->addString($this->getSelectFromTableName($driver, $join));
             } else {
-                throw new \InvalidArgumentException("View object join element at index $key must be an instance of \spoof\lib360\db\join\IJoin, \spoof\lib360\db\data\ITable, or string");
+                throw new \InvalidArgumentException(
+                    "View object join element at index $key must be an instance of \spoof\lib360\db\join\IJoin, \spoof\lib360\db\data\ITable, or string"
+                );
             }
             $i++;
         }

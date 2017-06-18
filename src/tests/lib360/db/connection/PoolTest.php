@@ -58,9 +58,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
             Pool::add($this->conn2, 'test2');
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertArrayHasKey('test2',
+        $this->assertArrayHasKey(
+            'test2',
             $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections')->getValue(),
-            "Failed to create an internal array key with given label");
+            "Failed to create an internal array key with given label"
+        );
     }
 
     protected function getProtectedProperty($class, $property)
@@ -106,8 +108,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
             Pool::getByName('test', false);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Failed to throw exception when retrieving a non-existent key");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Failed to throw exception when retrieving a non-existent key"
+        );
     }
 
     /**
@@ -136,8 +141,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
             $c = Pool::getByName('test1', false);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertEquals($this->conn1, $c,
-            "Object returned from getByName doesn't match the object that had been set");
+        $this->assertEquals(
+            $this->conn1,
+            $c,
+            "Object returned from getByName doesn't match the object that had been set"
+        );
     }
 
     /**
@@ -181,8 +189,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
             Pool::removeByName('testconnection_that_doesnt_exist');
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Failed to throw an exception when invalid connection name was given to be removed");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Failed to throw an exception when invalid connection name was given to be removed"
+        );
     }
 
     /**
@@ -197,8 +208,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {
             $this->fail("Got an exception when attempting to remove an existing connection from pool");
         }
-        $this->assertEquals(true, $c->isConnected(),
-            "Connection was disconnected during removal when told not to disconnect");
+        $this->assertEquals(
+            true,
+            $c->isConnected(),
+            "Connection was disconnected during removal when told not to disconnect"
+        );
     }
 
 
@@ -214,8 +228,11 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         } catch (\InvalidArgumentException $e) {
             $this->fail("Got an exception when attempting to remove an existing connection from pool");
         }
-        $this->assertEquals(false, $c->isConnected(),
-            "Connection was not disconnected during removal when told to disconnect");
+        $this->assertEquals(
+            false,
+            $c->isConnected(),
+            "Connection was not disconnected during removal when told to disconnect"
+        );
     }
 
     /**

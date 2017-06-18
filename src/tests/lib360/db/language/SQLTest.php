@@ -69,8 +69,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             $v = $this->l->getConditionGroupOperator($this->d, 'asdf');
         } catch (SQLException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\language\SQLException', $e,
-            "Failed to throw exception when invalid condition group operator specified");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\language\SQLException',
+            $e,
+            "Failed to throw exception when invalid condition group operator specified"
+        );
     }
 
     /**
@@ -126,8 +129,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             new Value(null, Value::TYPE_NULL)
         );
         $v = $this->l->getConditionOperator($this->d, $c);
-        $this->assertEquals(SQL::CONDITION_NOT_EQUALS_NULL, $v,
-            "Failed to return SQL 'is not/not equals null' operator");
+        $this->assertEquals(
+            SQL::CONDITION_NOT_EQUALS_NULL,
+            $v,
+            "Failed to return SQL 'is not/not equals null' operator"
+        );
     }
 
     /**
@@ -155,8 +161,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             new Value(5, Value::TYPE_INTEGER)
         );
         $v = $this->l->getConditionOperator($this->d, $c);
-        $this->assertEquals(SQL::CONDITION_GREATER_THAN_OR_EQUAL, $v,
-            "Failed to return SQL 'greater than or equals' operator");
+        $this->assertEquals(
+            SQL::CONDITION_GREATER_THAN_OR_EQUAL,
+            $v,
+            "Failed to return SQL 'greater than or equals' operator"
+        );
     }
 
     /**
@@ -184,8 +193,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             new Value(5, Value::TYPE_INTEGER)
         );
         $v = $this->l->getConditionOperator($this->d, $c);
-        $this->assertEquals(SQL::CONDITION_LESS_THAN_OR_EQUAL, $v,
-            "Failed to return SQL 'less than or equals' operator");
+        $this->assertEquals(
+            SQL::CONDITION_LESS_THAN_OR_EQUAL,
+            $v,
+            "Failed to return SQL 'less than or equals' operator"
+        );
     }
 
     /**
@@ -231,8 +243,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             $v = $this->l->getConditionOperator($this->d, $c);
         } catch (SQLException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\language\SQLException', $e,
-            "Failed to throw an exception for invalid operator");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\language\SQLException',
+            $e,
+            "Failed to throw an exception for invalid operator"
+        );
     }
 
     /**
@@ -244,8 +259,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $separator = $this->d->columnQuoteEnd . $this->d->columnSeparator . $this->d->columnQuoteStart;
         $fieldFormattedExpected = $this->d->columnQuoteStart . 'test_tablespace' . $separator . 'test_table' . $separator . 'test_field' . $this->d->columnQuoteEnd;
         $fieldFormattedActual = $this->l->getFieldFormatted($this->d, $field);
-        $this->assertEquals($fieldFormattedExpected, $fieldFormattedActual,
-            "Failed to format field to driver specifications");
+        $this->assertEquals(
+            $fieldFormattedExpected,
+            $fieldFormattedActual,
+            "Failed to format field to driver specifications"
+        );
     }
 
     /**
@@ -318,8 +336,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $v = new Value($vString, Value::TYPE_STRING);
         $query = $this->l->getValue($this->d, $v);
         $key = substr($query->query, 1);
-        $this->assertArrayHasKey($key, $query->values,
-            "Query object did not have value array element with matching tag");
+        $this->assertArrayHasKey(
+            $key,
+            $query->values,
+            "Query object did not have value array element with matching tag"
+        );
     }
 
     /**
@@ -332,8 +353,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $v = new Value($vString, Value::TYPE_STRING);
         $query = $this->l->getValue($this->d, $v);
         $key = substr($query->query, 1);
-        $this->assertEquals($v, $query->values[$key],
-            "Query object did not have matching value object in corresponding array index");
+        $this->assertEquals(
+            $v,
+            $query->values[$key],
+            "Query object did not have matching value object in corresponding array index"
+        );
     }
 
     /**
@@ -409,8 +433,10 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $field = 'tablespace.table.field';
         $field_as = 'test_field';
         $actual = $this->l->getSelectFieldFormatted($this->d, $field, $field_as);
-        $expected = $this->l->getFieldFormatted($this->d,
-                $field) . ' ' . SQL::SELECT_AS . ' ' . $this->d->columnQuoteStart . $field_as . $this->d->columnQuoteEnd;
+        $expected = $this->l->getFieldFormatted(
+                $this->d,
+                $field
+            ) . ' ' . SQL::SELECT_AS . ' ' . $this->d->columnQuoteStart . $field_as . $this->d->columnQuoteEnd;
         $this->assertEquals($expected, $actual, "Field didn't get formatted correctly for select as");
     }
 
@@ -688,8 +714,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             $result = $this->l->getJoin($this->d, $j);
         } catch (UnknownTypeException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\join\UnknownTypeException', $e,
-            "Failed to throw UnknownException for unknown or invalid join type");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\join\UnknownTypeException',
+            $e,
+            "Failed to throw UnknownException for unknown or invalid join type"
+        );
     }
 
     /**
@@ -728,8 +757,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             $this->l->getSelectFromView($this->d, $v);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Failed to throw \InvalidArgumentException on invalid joins element in DBDataView");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Failed to throw \InvalidArgumentException on invalid joins element in DBDataView"
+        );
     }
 
     /**
@@ -741,8 +773,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $table = new HelperTable();
         $actual = $this->l->getSelectFrom($this->d, $table);
         $expected = new Query($this->l->getSelectFromTable($this->d, $table));
-        $this->assertEquals($expected, $actual,
-            "getSelectFrom with table argument failed to return output of getSelectFromTable");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "getSelectFrom with table argument failed to return output of getSelectFromTable"
+        );
     }
 
     /**
@@ -754,8 +789,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $view = new HelperDataView();
         $actual = $this->l->getSelectFrom($this->d, $view);
         $expected = $this->l->getSelectFromView($this->d, $view);
-        $this->assertEquals($expected, $actual,
-            "getSelectFrom with view argument failed to return output of getSelectFromView");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "getSelectFrom with view argument failed to return output of getSelectFromView"
+        );
     }
 
     /**
@@ -769,8 +807,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
             $this->l->getSelectFrom($this->d, $store);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Failed to throw InvalidArgumentException when invalid storage type given");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Failed to throw InvalidArgumentException when invalid storage type given"
+        );
     }
 
     /**
@@ -784,8 +825,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $actual = $this->l->getSelect($this->d, $t);
         $expected = new Query(SQL::SELECT . ' ' . $this->l->getSelectFields($this->d) . ' ' . SQL::FROM);
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with no condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with no condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -808,8 +852,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -834,8 +881,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -849,8 +899,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $actual = $this->l->getSelect($this->d, $t);
         $expected = new Query(SQL::SELECT . ' ' . $this->l->getSelectFields($this->d) . ' ' . SQL::FROM);
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with no condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with no condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -873,8 +926,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -899,8 +955,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Select query object (from table with condition) didn't match the expected result");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Select query object (from table with condition) didn't match the expected result"
+        );
     }
 
     /**
@@ -918,8 +977,12 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $actual = $this->l->getUpdateFields($this->d, $fields);
         $expected = new Query($this->l->getFieldFormatted($this->d, $field1key) . ' ' . SQL::EQUALS);
         $expected->addQuery($this->l->getValue($this->d, $field1value));
-        $expected->addString(SQL::UPDATE_FIELD_SEPARATOR . ' ' . $this->l->getFieldFormatted($this->d,
-                $field2key) . ' ' . SQL::EQUALS, false);
+        $expected->addString(
+            SQL::UPDATE_FIELD_SEPARATOR . ' ' . $this->l->getFieldFormatted(
+                $this->d,
+                $field2key
+            ) . ' ' . SQL::EQUALS, false
+        );
         $expected->addQuery($this->l->getValue($this->d, $field2value));
         $this->assertEquals($expected, $actual, "Query object didn't match the expected result for update fields");
     }
@@ -950,8 +1013,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addString($this->l->getFieldFormatted($this->d, $field2key) . ' ' . SQL::EQUALS);
         $expected->addString(SQL::BIND_CHAR . $randKeys[1]);
         $expected->addValues(array($randKeys[0] => $field1value, $randKeys[1] => $field2value));
-        $this->assertEquals($expected, $actual,
-            "Query object didn't match the expected result for update (no condition)");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Query object didn't match the expected result for update (no condition)"
+        );
     }
 
     /**
@@ -987,8 +1053,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addValues(array($randKeys[0] => $field1value, $randKeys[1] => $field2value));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Query object didn't match the expected result for update (no condition)");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Query object didn't match the expected result for update (no condition)"
+        );
     }
 
     /**
@@ -1001,8 +1070,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $actual = $this->l->getDelete($this->d, $t);
         $expected = new Query(SQL::DELETE . ' ' . SQL::FROM);
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
-        $this->assertEquals($expected, $actual,
-            "Query object didn't match the expected result for delete (table, no condition)");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Query object didn't match the expected result for delete (table, no condition)"
+        );
     }
 
     /**
@@ -1023,8 +1095,11 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
         $expected->addString(SQL::WHERE);
         $expected->addQuery($this->l->getCondition($this->d, $c));
-        $this->assertEquals($expected, $actual,
-            "Query object didn't match the expected result for delete (table, with condition)");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Query object didn't match the expected result for delete (table, with condition)"
+        );
     }
 
     /**
@@ -1090,20 +1165,25 @@ class SQLTest extends \PHPUnit_Framework_TestCase
         $randKeys = array_keys($actual->values);
         $expected = new Query(SQL::INSERT . ' ' . SQL::INSERT_INTO);
         $expected->addQuery($this->l->getSelectFrom($this->d, $t));
-        $expected->addString(SQL::INSERT_VALUES_WRAPPER_START . ' ' .
+        $expected->addString(
+            SQL::INSERT_VALUES_WRAPPER_START . ' ' .
             $this->l->getInsertFields($this->d, $fields) . ' ' .
             SQL::INSERT_VALUES_WRAPPER_END . ' ' .
             SQL::INSERT_VALUES . ' ' .
-            SQL::INSERT_VALUES_WRAPPER_START);
-        $expected->addString(SQL::BIND_CHAR . $randKeys[0] . SQL::INSERT_FIELD_SEPARATOR . ' ' .
+            SQL::INSERT_VALUES_WRAPPER_START
+        );
+        $expected->addString(
+            SQL::BIND_CHAR . $randKeys[0] . SQL::INSERT_FIELD_SEPARATOR . ' ' .
             SQL::BIND_CHAR . $randKeys[1] . SQL::INSERT_FIELD_SEPARATOR . ' ' .
             SQL::BIND_CHAR . $randKeys[2]
         );
-        $expected->addValues(array(
-            $randKeys[0] => $field1value,
-            $randKeys[1] => $field2value,
-            $randKeys[2] => $field3value
-        ));
+        $expected->addValues(
+            array(
+                $randKeys[0] => $field1value,
+                $randKeys[1] => $field2value,
+                $randKeys[2] => $field3value
+            )
+        );
         $expected->addString(SQL::INSERT_VALUES_WRAPPER_END);
         $this->assertEquals($expected, $actual, "Insert query object didn't match the expected result");
     }

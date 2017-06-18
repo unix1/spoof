@@ -39,7 +39,9 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     {
         if (!self::$tablesCreated) {
             self::$pdo->query('drop table if exists "user"');
-            self::$pdo->query('create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')');
+            self::$pdo->query(
+                'create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')'
+            );
             self::$tablesCreated = true;
         }
         return $this->createXMLDataSet(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'test-data1.xml');
@@ -105,8 +107,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         $resultExpected = $ex->select(Pool::getByName(self::$db), "select * from user where id = " . $valueID);
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select result (with condition and values)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select result (with condition and values)"
+        );
     }
 
     /**
@@ -126,10 +131,15 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $fields
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultExpected = $ex->select(Pool::getByName(self::$db),
-            "select name_first, name_last, id from user where id = 1", array(), $fields);
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select result (with condition and fields)");
+        $resultExpected = $ex->select(
+            Pool::getByName(self::$db),
+            "select name_first, name_last, id from user where id = 1", array(), $fields
+        );
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select result (with condition and fields)"
+        );
     }
 
     /**
@@ -141,8 +151,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $user = new HelperTableUser();
         $resultActual = $user->selectRecords();
         $resultExpected = $user->select();
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select records result (no condition)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select records result (no condition)"
+        );
     }
 
     /**
@@ -161,8 +174,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
                 new Value($paramNameFirst, Value::TYPE_STRING)
             )
         );
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select records result (with one condition)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select records result (with one condition)"
+        );
     }
 
     /**
@@ -188,8 +204,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $cg = new ConditionGroup($c1);
         $cg->addCondition(ConditionGroup::OPERATOR_AND, $c2);
         $resultExpected = $user->select($cg);
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select records result (with many conditions)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select records result (with many conditions)"
+        );
     }
 
     /**
@@ -210,8 +229,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
             array(),
             $fields
         );
-        $this->assertEquals($resultExpected, $resultActual,
-            "Failed to match expected select records result (with condition and fields)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select records result (with condition and fields)"
+        );
     }
 
     /**
@@ -225,15 +247,19 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $resultExpected = array();
         $resultActual = array();
         $user = new HelperTableUser();
-        $resultActual['rows_updated'] = $user->update(array(
-            'name_first' => new Value($valueNameFirst, Value::TYPE_STRING),
-            'name_last' => new Value($valueNameLast, Value::TYPE_STRING)
-        ));
+        $resultActual['rows_updated'] = $user->update(
+            array(
+                'name_first' => new Value($valueNameFirst, Value::TYPE_STRING),
+                'name_last' => new Value($valueNameLast, Value::TYPE_STRING)
+            )
+        );
         // we do this here instead of table->select() because the easiest way to assert is to do select distinct
         // when table->select() has supoprt for select distinct it can be used instead
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActualRecords = $ex->select(Pool::getByName(self::$db),
-            "select distinct name_first, name_last from user");
+        $resultActualRecords = $ex->select(
+            Pool::getByName(self::$db),
+            "select distinct name_first, name_last from user"
+        );
         $resultActual['records_count'] = count($resultActualRecords);
         $resultActual['name_first'] = $resultActualRecords[0]->name_first;
         $resultActual['name_last'] = $resultActualRecords[0]->name_last;
@@ -408,8 +434,11 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
         $user->delete($cond, $values);
         $resultActual = $user->select($cond, $values);
-        $this->assertEquals($resultExpected, $resultActual,
-            "Select wasn't empty after delete (with condition and values)");
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Select wasn't empty after delete (with condition and values)"
+        );
     }
 
 }

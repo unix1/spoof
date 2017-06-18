@@ -40,7 +40,9 @@ class Message
             $format = value\Type::$format[$value->type];
             $values = $value->value;
         } else {
-            throw InvalidArgumentException("Unexpected value type: " . get_class($value) . " is not either value\Collection or value\Primitive");
+            throw InvalidArgumentException(
+                "Unexpected value type: " . get_class($value) . " is not either value\Collection or value\Primitive"
+            );
         }
 
         return array($format, $values);

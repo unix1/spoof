@@ -104,27 +104,37 @@ class Value implements IValue
         switch ($type) {
             case self::TYPE_NULL:
                 if (!is_null($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). NULL was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). NULL was expected."
+                    );
                 }
                 break;
             case self::TYPE_STRING:
                 if (!is_string($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). String was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). String was expected."
+                    );
                 }
                 break;
             case self::TYPE_INTEGER:
                 if (!is_int($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Integer was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). Integer was expected."
+                    );
                 }
                 break;
             case self::TYPE_FLOAT:
                 if (!is_float($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Float was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). Float was expected."
+                    );
                 }
                 break;
             case self::TYPE_BOOLEAN:
                 if (!is_bool($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Boolean was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). Boolean was expected."
+                    );
                 }
                 break;
             case self::TYPE_BINARY:
@@ -136,22 +146,30 @@ class Value implements IValue
                 break;
             case self::TYPE_ARRAY:
                 if (!is_array($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Array was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). Array was expected."
+                    );
                 }
                 break;
             case self::TYPE_COLUMN:
                 if (!is_string($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). String column name was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). String column name was expected."
+                    );
                 }
                 break;
             case self::TYPE_PREPARED:
                 if (!is_string($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). String prepared label was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). String prepared label was expected."
+                    );
                 }
                 break;
             case self::TYPE_FUNCTION:
                 if (!is_array($value)) {
-                    throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Array was expected.");
+                    throw new InvalidValueException(
+                        "Value argument has invalid type (" . gettype($value) . "). Array was expected."
+                    );
                 }
                 break;
             default:

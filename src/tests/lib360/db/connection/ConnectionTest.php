@@ -52,8 +52,11 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
             $c = new HelperConnection1($this->dbconfigBad1);
         } catch (ConfigException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\connection\ConfigException', $e,
-            "Failed to throw a \spoof\lib360\db\connection\ConfigException on invalid DSN during instantiation");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\connection\ConfigException',
+            $e,
+            "Failed to throw a \spoof\lib360\db\connection\ConfigException on invalid DSN during instantiation"
+        );
     }
 
     /**
@@ -66,8 +69,11 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
             $c = new HelperConnection1($this->dbconfigBad2);
         } catch (NotFoundException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\object\NotFoundException', $e,
-            "Failed to throw a \spoof\lib360\db\object\NotFoundException on invalid driver name in DSN during instantiation");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\object\NotFoundException',
+            $e,
+            "Failed to throw a \spoof\lib360\db\object\NotFoundException on invalid driver name in DSN during instantiation"
+        );
     }
 
     /**
@@ -92,8 +98,11 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $driverTypeBackup = Factory::getType('Driver');
         Factory::setType('Driver', '\spoof\tests\lib360\db\connection\\', '\spoof\lib360\db\driver\IDriver');
         $c = new HelperConnection1($this->dbconfigCustomDriver);
-        $this->assertInstanceOf('\spoof\tests\lib360\db\connection\CustomDriver', $c->driver,
-            "Connection driver is not an instance of custom driver class specified");
+        $this->assertInstanceOf(
+            '\spoof\tests\lib360\db\connection\CustomDriver',
+            $c->driver,
+            "Connection driver is not an instance of custom driver class specified"
+        );
         Factory::setType('Driver', $driverTypeBackup['base'], $driverTypeBackup['interface']);
     }
 
@@ -126,8 +135,11 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $c = new HelperConnection1($this->dbconfig1);
         $c->connect();
-        $this->assertEquals($this->getProtectedProperty($c, 'connection')->getValue($c), $c->getConnection(),
-            "Failed to return correct connection property value");
+        $this->assertEquals(
+            $this->getProtectedProperty($c, 'connection')->getValue($c),
+            $c->getConnection(),
+            "Failed to return correct connection property value"
+        );
     }
 
     protected function getProtectedProperty($class, $property)

@@ -73,10 +73,12 @@ class Rest extends api\request\Handler
         // output response
         header($header);
         if (isset($body)) {
-            echo json_encode(array(
-                'status' => $response->status,
-                'message' => $body,
-            ));
+            echo json_encode(
+                array(
+                    'status' => $response->status,
+                    'message' => $body,
+                )
+            );
         }
     }
 

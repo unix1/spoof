@@ -70,13 +70,19 @@ class Table extends Store implements ITable
         $condition_group = null;
         if (count($conditions) == 1) {
             foreach ($conditions as $column => $value) {
-                $condition_group = new Condition(new Value($column, Value::TYPE_COLUMN), Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING));
+                $condition_group = new Condition(
+                    new Value($column, Value::TYPE_COLUMN),
+                    Condition::OPERATOR_EQUALS,
+                    new Value((string)$value, Value::TYPE_STRING)
+                );
             }
         } elseif (count($conditions) > 1) {
             foreach ($conditions as $column => $value) {
-                $condition = new Condition(new Value($column, Value::TYPE_COLUMN), Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING));
+                $condition = new Condition(
+                    new Value($column, Value::TYPE_COLUMN),
+                    Condition::OPERATOR_EQUALS,
+                    new Value((string)$value, Value::TYPE_STRING)
+                );
                 if (is_null($condition_group)) {
                     $condition_group = new ConditionGroup($condition);
                 } else {
@@ -111,11 +117,15 @@ class Table extends Store implements ITable
         $db = Pool::getByName($this->db);
         // get language and query
         $return_fields = is_null($fields) ? $this->fields : $fields;
-        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getSelect($db->driver, $this,
-            $condition, $return_fields);
+        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getSelect(
+            $db->driver, $this,
+            $condition, $return_fields
+        );
         // get executor and execute
-        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->select($db, $query->query,
-            $query->values + $values, $this->name);
+        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->select(
+            $db, $query->query,
+            $query->values + $values, $this->name
+        );
         // return result
         return $result;
     }
@@ -140,11 +150,15 @@ class Table extends Store implements ITable
         // get connection object
         $db = Pool::getByName($this->db);
         // get language and query
-        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getUpdate($db->driver, $this,
-            $fields, $condition);
+        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getUpdate(
+            $db->driver, $this,
+            $fields, $condition
+        );
         // get executor and execute
-        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->update($db, $query->query,
-            $query->values + $values);
+        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->update(
+            $db, $query->query,
+            $query->values + $values
+        );
         // return result
         return $result;
     }
@@ -162,11 +176,15 @@ class Table extends Store implements ITable
         // get connection object
         $db = Pool::getByName($this->db);
         // get language and query
-        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getInsert($db->driver, $this,
-            $fields);
+        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getInsert(
+            $db->driver, $this,
+            $fields
+        );
         // get executor and execute
-        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->insert($db, $query->query,
-            $query->values);
+        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->insert(
+            $db, $query->query,
+            $query->values
+        );
         // return result
         return $result;
     }
@@ -185,11 +203,15 @@ class Table extends Store implements ITable
         // get connection object
         $db = Pool::getByName($this->db);
         // get language and query
-        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getDelete($db->driver, $this,
-            $condition);
+        $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getDelete(
+            $db->driver, $this,
+            $condition
+        );
         // get executor and execute
-        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->delete($db, $query->query,
-            $query->values + $values);
+        $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->delete(
+            $db, $query->query,
+            $query->values + $values
+        );
         // return result
         return $result;
     }

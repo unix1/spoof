@@ -111,7 +111,9 @@ class PDO implements IExecutor
         $sth = $conn->getConnection()->prepare($query);
         if ($sth === false) {
             $error = $conn->getConnection()->errorInfo();
-            throw new PreparedQueryException("SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . ".");
+            throw new PreparedQueryException(
+                "SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . "."
+            );
         }
         return $sth;
     }
@@ -129,7 +131,9 @@ class PDO implements IExecutor
         $this->bindValues($sth, $values);
         if (!$sth->execute()) {
             $error = $sth->errorInfo();
-            throw new PreparedQueryException("SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . ".");
+            throw new PreparedQueryException(
+                "SQLState: " . $error[0] . ". Driver error code: " . $error[1] . ". Driver error message: " . $error[2] . "."
+            );
         }
     }
 

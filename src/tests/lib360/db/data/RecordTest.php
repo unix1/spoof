@@ -41,9 +41,11 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     {
         $type = 'test';
         $record = new Record($type);
-        $this->assertEquals($type,
+        $this->assertEquals(
+            $type,
             $this->getProtectedProperty('\spoof\lib360\db\data\Record', '__type')->getValue($record),
-            "Failed to set custom type");
+            "Failed to set custom type"
+        );
     }
 
     protected function getProtectedProperty($class, $property)
@@ -112,8 +114,12 @@ class RecordTest extends \PHPUnit_Framework_TestCase
         $record->test1 = 'test 1 value';
         $record->test2 = 'test 2 value';
         $resultXML = $record->toXML();
-        $this->assertEqualXMLStructure($expectedXML->firstChild, $resultXML->firstChild, true,
-            "Failed to return correct XML structure");
+        $this->assertEqualXMLStructure(
+            $expectedXML->firstChild,
+            $resultXML->firstChild,
+            true,
+            "Failed to return correct XML structure"
+        );
     }
 
 }

@@ -57,8 +57,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $query_string = 'test string';
         $query = new Query();
         $query->setString($query_string);
-        $this->assertEquals($query_string, $query->query,
-            "The string property of the object didn't match the string that was initially set");
+        $this->assertEquals(
+            $query_string,
+            $query->query,
+            "The string property of the object didn't match the string that was initially set"
+        );
     }
 
     /**
@@ -71,8 +74,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $query = new Query();
         $query->setString('test string 1');
         $query->setString($query_string);
-        $this->assertEquals($query_string, $query->query,
-            "The string property of the object didn't match the string that was set to override existing value");
+        $this->assertEquals(
+            $query_string,
+            $query->query,
+            "The string property of the object didn't match the string that was set to override existing value"
+        );
     }
 
     /**
@@ -110,8 +116,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $query = new Query();
         $query->setString($query_string1);
         $query->addString($query_string2, true);
-        $this->assertEquals($query_string1 . ' ' . $query_string2, $query->query,
-            "Failed to add additional string with space hint");
+        $this->assertEquals(
+            $query_string1 . ' ' . $query_string2,
+            $query->query,
+            "Failed to add additional string with space hint"
+        );
     }
 
     /**
@@ -125,8 +134,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $query = new Query();
         $query->setString($query_string1);
         $query->addString($query_string2, false);
-        $this->assertEquals($query_string1 . $query_string2, $query->query,
-            "Failed to add additional string with no space hint");
+        $this->assertEquals(
+            $query_string1 . $query_string2,
+            $query->query,
+            "Failed to add additional string with no space hint"
+        );
     }
 
     /**
@@ -171,8 +183,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
             array('one' => 'value', 'two' => 'another value', 'key1' => 'value1', 'key2' => 'value2'),
             $query_initial_string . ' ' . $query_additional_string
         );
-        $this->assertEquals($expected, array($query_initial->values, $query_initial->query),
-            "Failed to add query object");
+        $this->assertEquals(
+            $expected,
+            array($query_initial->values, $query_initial->query),
+            "Failed to add query object"
+        );
     }
 
 }

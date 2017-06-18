@@ -48,8 +48,11 @@ class ConditionGroupTest extends \PHPUnit_Framework_TestCase
     public function testConstruct_Condition()
     {
         $cg = new ConditionGroup($this->condition1);
-        $this->assertEquals($this->condition1, $cg->condition,
-            "Failed to set passed initial condition during instantiation");
+        $this->assertEquals(
+            $this->condition1,
+            $cg->condition,
+            "Failed to set passed initial condition during instantiation"
+        );
     }
 
     /**
@@ -58,7 +61,11 @@ class ConditionGroupTest extends \PHPUnit_Framework_TestCase
     public function testConstruct_Conditions()
     {
         $cg = new ConditionGroup($this->condition1);
-        $this->assertEquals(array(), $cg->conditions, "Failed to initialize conditions property during instantiation");
+        $this->assertEquals(
+            array(),
+            $cg->conditions,
+            "Failed to initialize conditions property during instantiation"
+        );
     }
 
     /**
@@ -67,7 +74,11 @@ class ConditionGroupTest extends \PHPUnit_Framework_TestCase
     public function testConstruct_Operators()
     {
         $cg = new ConditionGroup($this->condition1);
-        $this->assertEquals(array(), $cg->operators, "Failed to initialize operators property during instantiation");
+        $this->assertEquals(
+            array(),
+            $cg->operators,
+            "Failed to initialize operators property during instantiation"
+        );
     }
 
     /**
@@ -77,8 +88,11 @@ class ConditionGroupTest extends \PHPUnit_Framework_TestCase
     {
         $cg = new ConditionGroup($this->condition1);
         $cg->addCondition(ConditionGroup::OPERATOR_AND, $this->condition2);
-        $this->assertEquals(array(ConditionGroup::OPERATOR_AND), $cg->operators,
-            "Failed to add given operator to operators array");
+        $this->assertEquals(
+            array(ConditionGroup::OPERATOR_AND),
+            $cg->operators,
+            "Failed to add given operator to operators array"
+        );
     }
 
     /**
@@ -88,7 +102,11 @@ class ConditionGroupTest extends \PHPUnit_Framework_TestCase
     {
         $cg = new ConditionGroup($this->condition1);
         $cg->addCondition(ConditionGroup::OPERATOR_AND, $this->condition2);
-        $this->assertContains($this->condition2, $cg->conditions, "Failed to add given condition to conditions array");
+        $this->assertContains(
+            $this->condition2,
+            $cg->conditions,
+            "Failed to add given condition to conditions array"
+        );
     }
 
 }

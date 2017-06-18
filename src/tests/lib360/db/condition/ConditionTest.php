@@ -37,8 +37,11 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
             $condition = new Condition($value1, Condition::OPERATOR_IN, $value2);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Condition failed to throw exception when instantiated with IN operator and non-array second value");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Condition failed to throw exception when instantiated with IN operator and non-array second value"
+        );
     }
 
     /**
@@ -53,8 +56,11 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
             $condition = new Condition($value1, Condition::OPERATOR_NOT_IN, $value2);
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Condition failed to throw exception when instantiated with NOT IN operator and non-array second value");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Condition failed to throw exception when instantiated with NOT IN operator and non-array second value"
+        );
     }
 
     /**

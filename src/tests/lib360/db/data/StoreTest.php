@@ -56,8 +56,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $actual = $this->s->getName();
-        $this->assertEquals($this->getProtectedProperty($this->s, 'name')->getValue($this->s), $actual,
-            "getName didn't return the value of name property from extending class");
+        $this->assertEquals(
+            $this->getProtectedProperty($this->s, 'name')->getValue($this->s),
+            $actual,
+            "getName didn't return the value of name property from extending class"
+        );
     }
 
     protected function getProtectedProperty($class, $property)
@@ -74,8 +77,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function testGetDB()
     {
         $actual = $this->s->getDB();
-        $this->assertEquals($this->getProtectedProperty($this->s, 'db')->getValue($this->s), $actual,
-            "getName didn't return the value of name property from extending class");
+        $this->assertEquals(
+            $this->getProtectedProperty($this->s, 'db')->getValue($this->s),
+            $actual,
+            "getName didn't return the value of name property from extending class"
+        );
     }
 
     /**
@@ -109,8 +115,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetExecutor_Default()
     {
-        $this->assertEquals($this->d->executor, $this->s->getExecutor(),
-            "Returned executor didn't match default driver executor");
+        $this->assertEquals(
+            $this->d->executor,
+            $this->s->getExecutor(),
+            "Returned executor didn't match default driver executor"
+        );
     }
 
     /**
@@ -118,8 +127,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguage_Default()
     {
-        $this->assertEquals($this->d->language, $this->s->getLanguage(),
-            "Returned language didn't match default driver language");
+        $this->assertEquals(
+            $this->d->language,
+            $this->s->getLanguage(),
+            "Returned language didn't match default driver language"
+        );
     }
 
     /**
@@ -127,8 +139,10 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetExecutor_Custom()
     {
-        $this->assertEquals($this->getProtectedProperty($this->s2, 'executor')->getValue($this->s2),
-            $this->s2->getExecutor(), "Returned executor didn't match local custom executor specified");
+        $this->assertEquals(
+            $this->getProtectedProperty($this->s2, 'executor')->getValue($this->s2),
+            $this->s2->getExecutor(), "Returned executor didn't match local custom executor specified"
+        );
     }
 
     /**
@@ -136,8 +150,10 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguage_Custom()
     {
-        $this->assertEquals($this->getProtectedProperty($this->s2, 'language')->getValue($this->s2),
-            $this->s2->getLanguage(), "Returned language didn't match local custom language specified");
+        $this->assertEquals(
+            $this->getProtectedProperty($this->s2, 'language')->getValue($this->s2),
+            $this->s2->getLanguage(), "Returned language didn't match local custom language specified"
+        );
     }
 
 }

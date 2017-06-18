@@ -87,7 +87,9 @@ class Factory
             }
             $object = new $class();
             if (!($object instanceof self::$types[$type]['interface'])) {
-                throw new UnexpectedObjectTypeException("Database object of type ($class) is not an instance of " . self::$types[$type]['interface'] . ".");
+                throw new UnexpectedObjectTypeException(
+                    "Database object of type ($class) is not an instance of " . self::$types[$type]['interface'] . "."
+                );
             }
             self::$objects[$type][$name] = $object;
         }

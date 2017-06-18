@@ -37,7 +37,9 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
     {
         if (!self::$tablesCreated) {
             self::$pdo->query('drop table if exists "user"');
-            self::$pdo->query('create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')');
+            self::$pdo->query(
+                'create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')'
+            );
             self::$tablesCreated = true;
         }
         return $this->createXMLDataSet(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'test-data1.xml');
@@ -82,8 +84,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $sthExpected->execute();
         $resultExpected = $sthExpected->fetchAll();
         $sthExpected->closeCursor();
-        $this->assertEquals(array($sthExpected, $resultExpected), array($sthActual, $resultActual),
-            "\PDOStatement or result didn't match expected objects");
+        $this->assertEquals(
+            array($sthExpected, $resultExpected),
+            array($sthActual, $resultActual),
+            "\PDOStatement or result didn't match expected objects"
+        );
     }
 
     /**
@@ -103,8 +108,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->select($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid select SQL given");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid select SQL given"
+        );
     }
 
     /**
@@ -125,8 +133,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->select($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid select SQL given for execution");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid select SQL given for execution"
+        );
     }
 
     /**
@@ -178,8 +189,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->update($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid update SQL given");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid update SQL given"
+        );
     }
 
     /**
@@ -203,8 +217,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->update($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid update SQL given for execution");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid update SQL given for execution"
+        );
     }
 
     /**
@@ -257,8 +274,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->insert($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid insert SQL given");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid insert SQL given"
+        );
     }
 
     /**
@@ -282,8 +302,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->insert($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid insert SQL given for execution");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid insert SQL given for execution"
+        );
     }
 
     /**
@@ -344,8 +367,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->delete($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid delete SQL given");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid delete SQL given"
+        );
     }
 
     /**
@@ -367,8 +393,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->delete($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid delete SQL given for execution");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid delete SQL given for execution"
+        );
     }
 
     /**
@@ -416,8 +445,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->query($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid SQL given");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid SQL given"
+        );
     }
 
     /**
@@ -438,8 +470,11 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             $resultActual = $ex->query($this->db, $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e,
-            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid SQL given for execution");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\executor\PreparedQueryException',
+            $e,
+            "Failed to throw \spoof\lib360\db\executor\PreparedQueryException when invalid SQL given for execution"
+        );
     }
 
     /**

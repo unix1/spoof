@@ -72,8 +72,12 @@ class RecordListTest extends \PHPUnit_Framework_TestCase
         $expectedXML = new \DomDocument();
         $expectedXML->loadXML($expectedXMLString);
         $resultXML = $l->toXML();
-        $this->assertEqualXMLStructure($expectedXML->firstChild, $resultXML->firstChild, true,
-            "Failed to return correct XML structure");
+        $this->assertEqualXMLStructure(
+            $expectedXML->firstChild,
+            $resultXML->firstChild,
+            true,
+            "Failed to return correct XML structure"
+        );
     }
 
 }

@@ -1,23 +1,24 @@
 <phpunit verbose="true">
-	<php>
-		<var name="DB_DSN" value="sqlite:test.db" />
-	</php>
-	<testsuites>
-		<testsuite name="lib360">
-			<directory>./</directory>
-		</testsuite>
-	</testsuites>
-	<filter>
-		<whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">../../src/lib360</directory>
-			<exclude>
-				<directory>../../src/tests</directory>
-			</exclude>
-		</whitelist>
-	</filter>
-	<logging>
-		<log type="coverage-html" target="../../build/logs/cover-html" charset="UTF-8" yui="true" highlight="false" lowUpperBound="35" highLowerBound="70"/>
-		<log type="coverage-clover" target="../../build/logs/clover.xml"/>
-		<log type="junit" target="../../build/logs/junit.xml"/>
-	</logging>
+    <php>
+        <var name="DB_DSN" value="sqlite:test.db"/>
+    </php>
+    <testsuites>
+        <testsuite name="lib360">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../../src/lib360</directory>
+            <exclude>
+                <directory>../../src/tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="../../build/logs/cover-html" charset="UTF-8" yui="true" highlight="false"
+             lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="../../build/logs/clover.xml"/>
+        <log type="junit" target="../../build/logs/junit.xml"/>
+    </logging>
 </phpunit>

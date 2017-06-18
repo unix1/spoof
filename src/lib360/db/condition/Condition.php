@@ -96,7 +96,10 @@ class Condition implements ICondition
         if (($operator == self::OPERATOR_IN || $operator == self::OPERATOR_NOT_IN) &&
             $value2->getType() != value\Value::TYPE_ARRAY
         ) {
-            throw new \InvalidArgumentException("Invalid second operand. OPERATOR_IN expects \lib360\db\Value::TYPE_ARRAY (" . value\Value::TYPE_ARRAY . "); " . $value2->getType() . " given.");
+            throw new \InvalidArgumentException(
+                "Invalid second operand. OPERATOR_IN expects \lib360\db\Value::TYPE_ARRAY (" .
+                value\Value::TYPE_ARRAY . "); " . $value2->getType() . " given."
+            );
         }
         $this->value1 = $value1;
         $this->operator = $operator;

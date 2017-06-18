@@ -52,8 +52,11 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         $t = TableFactory::get('test_connection', 'test_table');
-        $this->assertInstanceOf('\spoof\lib360\db\data\Table', $t,
-            "Result was not an instance of \spoof\lib360\db\data\Table");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\data\Table',
+            $t,
+            "Result was not an instance of \spoof\lib360\db\data\Table"
+        );
     }
 
 }

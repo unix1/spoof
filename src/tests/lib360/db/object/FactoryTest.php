@@ -38,8 +38,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             Factory::get('invalidtype', 'test');
         } catch (TypeNotFoundException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\object\TypeNotFoundException', $e,
-            "Failed to throw TypeNotFoundException on invalid object type");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\object\TypeNotFoundException',
+            $e,
+            "Failed to throw TypeNotFoundException on invalid object type"
+        );
     }
 
     /**
@@ -52,8 +55,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             Factory::get(Factory::OBJECT_TYPE_LANGUAGE, 'invalid');
         } catch (ClassNotFoundException $e) {
         }
-        $this->assertInstanceOf('\spoof\lib360\db\object\ClassNotFoundException', $e,
-            "Failed to throw ClassNotFoundException on invalid object name/class");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\object\ClassNotFoundException',
+            $e,
+            "Failed to throw ClassNotFoundException on invalid object name/class"
+        );
     }
 
     /**
@@ -70,8 +76,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         } catch (UnexpectedObjectTypeException $e) {
         }
         Factory::setType('Driver', $driverTypeBackup['base'], $driverTypeBackup['interface']);
-        $this->assertInstanceOf('\spoof\lib360\db\object\UnexpectedObjectTypeException', $e,
-            "Failed to throw UnexpectedObjectTypeException on object not extending expected base");
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\object\UnexpectedObjectTypeException',
+            $e,
+            "Failed to throw UnexpectedObjectTypeException on object not extending expected base"
+        );
     }
 
     /**
@@ -119,8 +128,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         Factory::flushCache();
         $actual = Factory::get(Factory::OBJECT_TYPE_DRIVER, 'CustomDriver');
         $expected = new CustomDriver();
-        $this->assertEquals($expected, $actual,
-            "Returned object from factory didn't match the newly instantiated object of same type");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Returned object from factory didn't match the newly instantiated object of same type"
+        );
         Factory::setType('Driver', $driverTypeBackup['base'], $driverTypeBackup['interface']);
     }
 
@@ -135,8 +147,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         Factory::flushCache();
         $actual = Factory::get(Factory::OBJECT_TYPE_DRIVER, 'CustomDriver');
         $expected = new CustomDriver();
-        $this->assertEquals($expected, $actual,
-            "Returned object from factory didn't match the newly instantiated object of same type");
+        $this->assertEquals(
+            $expected,
+            $actual,
+            "Returned object from factory didn't match the newly instantiated object of same type"
+        );
         Factory::setType('Driver', $driverTypeBackup['base'], $driverTypeBackup['interface']);
     }
 
@@ -165,8 +180,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             Factory::getType('nonexistent-type');
         } catch (\InvalidArgumentException $e) {
         }
-        $this->assertInstanceOf('\InvalidArgumentException', $e,
-            "Failed to throw an exception on invalid object type definition");
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Failed to throw an exception on invalid object type definition"
+        );
     }
 
     /**
