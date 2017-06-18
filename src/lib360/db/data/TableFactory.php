@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\data;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,46 +18,47 @@ namespace spoof\lib360\db\data;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\data;
+
 /**
-*	Static factory class for loading tables on-the-fly
-*/
+ * Static factory class for loading tables on-the-fly
+ */
 class TableFactory
 {
-	/**
-	*	Internal object cache for table objects
-	*/
-	protected static $cache = array();
+    /**
+     * Internal object cache for table objects
+     */
+    protected static $cache = array();
 
-	/**
-	*	Creates and returns a new instance of Table object, or retrieves it
-	*	from cache if previously accessed.
-	*
-	*	@param string $db database alias
-	*	@param string $table table name
-	*
-	*	@return Table object
-	*/
-	public static function get($db, $table)
-	{
-		if (!(isset(self::$cache[$db]) && isset(self::$cache[$db][$table])))
-		{
-			$tbl = new Table();
-			$tbl->setDB($db);
-			$tbl->setName($table);
-			self::cache($tbl);
-		}
-		return self::$cache[$db][$table];
-	}
+    /**
+     * Creates and returns a new instance of Table object, or retrieves it
+     * from cache if previously accessed.
+     *
+     * @param string $db database alias
+     * @param string $table table name
+     *
+     * @return Table object
+     */
+    public static function get($db, $table)
+    {
+        if (!(isset(self::$cache[$db]) && isset(self::$cache[$db][$table]))) {
+            $tbl = new Table();
+            $tbl->setDB($db);
+            $tbl->setName($table);
+            self::cache($tbl);
+        }
+        return self::$cache[$db][$table];
+    }
 
-	/**
-	*	Caches supplied table object.
-	*
-	*	@param IStore $table object to cache
-	*/
-	public static function cache(IStore $table)
-	{
-		self::$cache[$table->getDB()][$table->getName()] = $table;
-	}
+    /**
+     * Caches supplied table object.
+     *
+     * @param IStore $table object to cache
+     */
+    public static function cache(IStore $table)
+    {
+        self::$cache[$table->getDB()][$table->getName()] = $table;
+    }
 
 }
 

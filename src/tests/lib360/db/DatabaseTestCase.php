@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,26 +18,26 @@ namespace spoof\tests\lib360\db;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\tests\lib360\db;
+
 abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
-	// only instantiate pdo once for test clean-up/fixture load
-	protected static $pdo = NULL;
+    // only instantiate pdo once for test clean-up/fixture load
+    protected static $pdo = null;
 
-	// only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-	private $conn = NULL;
+    // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+    private $conn = null;
 
-	public function getConnection()
-	{
-		if ($this->conn === NULL)
-		{
-			if (self::$pdo == NULL)
-			{
-				self::$pdo = new \PDO($GLOBALS['DB_DSN']);
-			}
-			$this->conn = $this->createDefaultDBConnection(self::$pdo);
-		}
-		return $this->conn;
-	}
+    public function getConnection()
+    {
+        if ($this->conn === null) {
+            if (self::$pdo == null) {
+                self::$pdo = new \PDO($GLOBALS['DB_DSN']);
+            }
+            $this->conn = $this->createDefaultDBConnection(self::$pdo);
+        }
+        return $this->conn;
+    }
 }
 
 ?>

@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\executor;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,11 +18,12 @@ namespace spoof\lib360\db\executor;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
-*	Prepared query exception class.
-*	Typed exception class to identify exceptions during execution of prepared queries.
-*/
+namespace spoof\lib360\db\executor;
 
+/**
+ * Prepared query exception class.
+ * Typed exception class to identify exceptions during execution of prepared queries.
+ */
 class PreparedQueryException extends \spoof\lib360\db\Exception
 {
 }

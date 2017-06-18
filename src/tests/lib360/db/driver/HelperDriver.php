@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db\driver;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +18,11 @@ namespace spoof\tests\lib360\db\driver;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\tests\lib360\db\driver;
+
 /**
-*	This is a test helper class for testing DBDriver abstract class
-*/
+ *    This is a test helper class for testing DBDriver abstract class
+ */
 class HelperDriver extends \spoof\lib360\db\driver\Driver
 {
 }

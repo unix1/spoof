@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\data;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,17 +18,19 @@ namespace spoof\lib360\db\data;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\data;
+
 /**
-*	Database record interface.
-*	This interface is used to define database data record.
-*/
+ *    Database record interface.
+ *    This interface is used to define database data record.
+ */
 interface IRecordList
 {
-	/**
-	*	Transforms object into XML representation.
-	*	@return DOMDocument XML document object
-	*/
-	public function toXML();
+    /**
+     * Transforms object into XML representation.
+     * @return \DOMDocument XML document object
+     */
+    public function toXML();
 
 }
 

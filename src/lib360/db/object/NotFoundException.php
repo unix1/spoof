@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\object;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +18,12 @@ namespace spoof\lib360\db\object;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\object;
+
 /**
-*	Object not found exception class.
-*	Typed exception class for undefined database objects.
-*/
+ * Object not found exception class.
+ * Typed exception class for undefined database objects.
+ */
 class NotFoundException extends \spoof\lib360\db\Exception
 {
 }

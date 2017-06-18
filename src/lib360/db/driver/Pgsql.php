@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\driver;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,24 +18,26 @@ namespace spoof\lib360\db\driver;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\driver;
+
 /**
-*	This class implements a driver for PostgreSQL connections.
-*/
+ * This class implements a driver for PostgreSQL connections.
+ */
 class Pgsql extends Driver
 {
-	/**
-	*	Constructor
-	*/
-	public function __construct()
-	{
-		$this->tableQuoteStart = '"';
-		$this->tableQuoteEnd = '"';
-		$this->columnQuoteStart = '"';
-		$this->columnQuoteEnd = '"';
-		$this->columnSeparator = '.';
-		$this->language = 'SQL';
-		$this->executor = 'PDO';
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tableQuoteStart = '"';
+        $this->tableQuoteEnd = '"';
+        $this->columnQuoteStart = '"';
+        $this->columnQuoteEnd = '"';
+        $this->columnSeparator = '.';
+        $this->language = 'SQL';
+        $this->executor = 'PDO';
+    }
 
 }
 

@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\data;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +18,11 @@ namespace spoof\lib360\db\data;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
-*	Defines interace for database views
-*/
+namespace spoof\lib360\db\data;
 
+/**
+ * Defines interace for database views
+ */
 interface IView extends IStore
 {
 }

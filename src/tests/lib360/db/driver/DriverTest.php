@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db\driver;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,27 +18,29 @@ namespace spoof\tests\lib360\db\driver;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\tests\lib360\db\driver;
+
 class DriverTest extends \PHPUnit_Framework_TestCase
 {
 
-	/**
-	*	@covers \spoof\lib360\db\driver\Driver::__construct
-	*/
-	public function testConstruct()
-	{
-		$d = new HelperDriver();
-		$expected = array('', '', '', '', '', '', '');
-		$actual = array(
-				$d->tableQuoteStart,
-				$d->tableQuoteEnd,
-				$d->columnQuoteStart,
-				$d->columnQuoteEnd,
-				$d->columnSeparator,
-				$d->language,
-				$d->executor
-		);
-		$this->assertEquals($expected, $actual, "Class failed to instantiate with default values");
-	}
+    /**
+     * @covers \spoof\lib360\db\driver\Driver::__construct
+     */
+    public function testConstruct()
+    {
+        $d = new HelperDriver();
+        $expected = array('', '', '', '', '', '', '');
+        $actual = array(
+            $d->tableQuoteStart,
+            $d->tableQuoteEnd,
+            $d->columnQuoteStart,
+            $d->columnQuoteEnd,
+            $d->columnSeparator,
+            $d->language,
+            $d->executor
+        );
+        $this->assertEquals($expected, $actual, "Class failed to instantiate with default values");
+    }
 
 }
 

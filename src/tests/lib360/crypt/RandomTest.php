@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\crypt;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2013  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,24 +18,25 @@ namespace spoof\tests\lib360\crypt;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\tests\lib360\crypt;
+
 class RandomTest extends \PHPUnit_Framework_TestCase
 {
 
-	/**
-	*	@covers \spoof\lib360\crypt\Random::getString
-	*/
-	public function testGetString()
-	{
-		$tries = 1000;
-		$result = array();
-		for ($i = 0; $i < $tries; ++$i)
-		{
-			$key = \spoof\lib360\crypt\Random::getString(4, TRUE, TRUE);
-			$result[$key] = 1;
-		}
-		$actual = count($result);
-		$this->assertEquals($tries, $actual, "Expected $tries result, but got $actual");
-	}
+    /**
+     * @covers \spoof\lib360\crypt\Random::getString
+     */
+    public function testGetString()
+    {
+        $tries = 1000;
+        $result = array();
+        for ($i = 0; $i < $tries; ++$i) {
+            $key = \spoof\lib360\crypt\Random::getString(4, true, true);
+            $result[$key] = 1;
+        }
+        $actual = count($result);
+        $this->assertEquals($tries, $actual, "Expected $tries result, but got $actual");
+    }
 
 }
 

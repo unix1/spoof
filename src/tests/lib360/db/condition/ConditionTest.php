@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db\condition;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,119 +18,111 @@ namespace spoof\tests\lib360\db\condition;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \spoof\lib360\db\condition\Condition;
-use \spoof\lib360\db\value\Value;
+namespace spoof\tests\lib360\db\condition;
+
+use spoof\lib360\db\condition\Condition;
+use spoof\lib360\db\value\Value;
 
 class ConditionTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_InvalidValue2OperatorIn()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		try
-		{
-			$condition = new Condition($value1, Condition::OPERATOR_IN, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertInstanceOf('\InvalidArgumentException', $e, "Condition failed to throw exception when instantiated with IN operator and non-array second value");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_InvalidValue2OperatorIn()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        try {
+            $condition = new Condition($value1, Condition::OPERATOR_IN, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Condition failed to throw exception when instantiated with IN operator and non-array second value"
+        );
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_InvalidValue2OperatorNotIn()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		try
-		{
-			$condition = new Condition($value1, Condition::OPERATOR_NOT_IN, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertInstanceOf('\InvalidArgumentException', $e, "Condition failed to throw exception when instantiated with NOT IN operator and non-array second value");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_InvalidValue2OperatorNotIn()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        try {
+            $condition = new Condition($value1, Condition::OPERATOR_NOT_IN, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertInstanceOf(
+            '\InvalidArgumentException',
+            $e,
+            "Condition failed to throw exception when instantiated with NOT IN operator and non-array second value"
+        );
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_SuccessNoException()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		try
-		{
-			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertEquals(NULL, $e, "Threw an exception when none should have occurred");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_SuccessNoException()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        try {
+            $condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertEquals(null, $e, "Threw an exception when none should have occurred");
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_SuccessValue1()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		try
-		{
-			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertEquals($value1, $condition->value1, "Threw an exception when none should have occurred");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_SuccessValue1()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        try {
+            $condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertEquals($value1, $condition->value1, "Threw an exception when none should have occurred");
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_SuccessValue2()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		try
-		{
-			$condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertEquals($value2, $condition->value2, "Threw an exception when none should have occurred");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_SuccessValue2()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        try {
+            $condition = new Condition($value1, Condition::OPERATOR_EQUALS, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertEquals($value2, $condition->value2, "Threw an exception when none should have occurred");
+    }
 
-	/**
-	*	@covers \spoof\lib360\db\condition\Condition::__construct
-	*/
-	public function testConstruct_SuccessOperator()
-	{
-		$e = NULL;
-		$value1 = new Value('test1', Value::TYPE_STRING);
-		$value2 = new Value('test2', Value::TYPE_STRING);
-		$operator = Condition::OPERATOR_EQUALS;
-		try
-		{
-			$condition = new Condition($value1, $operator, $value2);
-		}
-		catch (\InvalidArgumentException $e)
-		{
-		}
-		$this->assertEquals($operator, $condition->operator, "Threw an exception when none should have occurred");
-	}
+    /**
+     * @covers \spoof\lib360\db\condition\Condition::__construct
+     */
+    public function testConstruct_SuccessOperator()
+    {
+        $e = null;
+        $value1 = new Value('test1', Value::TYPE_STRING);
+        $value2 = new Value('test2', Value::TYPE_STRING);
+        $operator = Condition::OPERATOR_EQUALS;
+        try {
+            $condition = new Condition($value1, $operator, $value2);
+        } catch (\InvalidArgumentException $e) {
+        }
+        $this->assertEquals($operator, $condition->operator, "Threw an exception when none should have occurred");
+    }
 
 }
 

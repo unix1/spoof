@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\join;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +18,12 @@ namespace spoof\lib360\db\join;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\join;
+
 /**
-*	Unknown join type exception class.
-*	Typed exception class for unknown join types.
-*/
+ * Unknown join type exception class.
+ * Typed exception class for unknown join types.
+ */
 class UnknownTypeException extends \spoof\lib360\db\Exception
 {
 }

@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\lib360\db\language;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +18,11 @@ namespace spoof\lib360\db\language;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\lib360\db\language;
+
 /**
-*	Database language exception
-*/
+ * Database language exception
+ */
 class Exception extends \spoof\lib360\db\Exception
 {
 }

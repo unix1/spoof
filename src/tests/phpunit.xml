@@ -1,10 +1,10 @@
 <phpunit verbose="true" backupGlobals="false" backupStaticAttributes="false">
-	<php>
-		<var name="DB_DSN" value="sqlite:test.db" />
-	</php>
-	<testsuites>
-		<testsuite name="lib360">
-			<directory>./</directory>
-		</testsuite>
-	</testsuites>
+    <php>
+        <var name="DB_DSN" value="sqlite:test.db"/>
+    </php>
+    <testsuites>
+        <testsuite name="lib360">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

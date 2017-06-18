@@ -1,10 +1,8 @@
 <?php
 
-namespace spoof\tests\lib360\db\data;
-
 /**
  *  This is Spoof.
- *  Copyright (C) 2011-2012  Spoof project.
+ *  Copyright (C) 2011-2017  Spoof project.
  *
  *  Spoof is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,32 +18,34 @@ namespace spoof\tests\lib360\db\data;
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace spoof\tests\lib360\db\data;
+
 /**
-*	Custom driver class for testing.
-*/
+ *    Custom driver class for testing.
+ */
 class CustomDriver extends \spoof\lib360\db\driver\Driver
 {
-	public $tableQuoteStart;
-	public $tableQuoteEnd;
-	public $columnQuoteStart;
-	public $columnQuoteEnd;
-	public $columnSeparator;
-	public $language;
-	public $executor;
+    public $tableQuoteStart;
+    public $tableQuoteEnd;
+    public $columnQuoteStart;
+    public $columnQuoteEnd;
+    public $columnSeparator;
+    public $language;
+    public $executor;
 
-	/**
-	*	Constructor
-	*/
-	public function __construct()
-	{
-		$this->tableQuoteStart = '`';
-		$this->tableQuoteEnd = '`';
-		$this->columnQuoteStart = '`';
-		$this->columnQuoteEnd = '`';
-		$this->columnSeparator = '.';
-		$this->language = 'SQL';
-		$this->executor = 'PDO';
-	}
+    /**
+     *    Constructor
+     */
+    public function __construct()
+    {
+        $this->tableQuoteStart = '`';
+        $this->tableQuoteEnd = '`';
+        $this->columnQuoteStart = '`';
+        $this->columnQuoteEnd = '`';
+        $this->columnSeparator = '.';
+        $this->language = 'SQL';
+        $this->executor = 'PDO';
+    }
 
 }
 
