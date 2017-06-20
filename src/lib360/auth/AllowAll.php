@@ -20,7 +20,7 @@
 
 namespace spoof\lib360\auth;
 
-use spoof\lib360\api;
+use spoof\lib360\api\Request;
 
 /**
  * Request authenticator that allows all requests
@@ -35,7 +35,7 @@ class AllowAll implements IAuthenticator
      *
      * @return boolean TRUE
      */
-    public function authenticate(api\Request $request)
+    public function authenticate(Request $request)
     {
         return true;
     }

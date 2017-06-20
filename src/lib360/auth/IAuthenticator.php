@@ -18,9 +18,9 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\Auth;
+namespace spoof\lib360\auth;
 
-use spoof\lib360\api;
+use spoof\lib360\api\Request;
 
 /**
  * Authentication interface
@@ -37,7 +37,7 @@ interface IAuthenticator
      *
      * @return boolean TRUE on success, FALSE otherwise
      */
-    public function authenticate(api\Request $request);
+    public function authenticate(Request $request);
 
 }
 
