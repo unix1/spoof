@@ -70,7 +70,7 @@ interface IRecord
     public function get($key);
 
     /**
-     * Gets modified fields and their original values.
+     * Gets modified fields and their updated values.
      *
      * @return array Associative array containing string keys and mixed
      *     associated original values

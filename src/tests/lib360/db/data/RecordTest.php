@@ -163,6 +163,82 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Record::getModified
+     * @depends testSet_Success
+     */
+    public function testGetModified()
+    {
+        $value1 = 'value 1';
+        $value3 = 'value 3';
+        $record = new Record();
+        $record->key1 = 'value 1 original';
+        $record->key2 = 'value 2 original';
+        $record->key3 = 'value 3 original';
+        $record->set('key1', $value1);
+        $record->set('key3', $value3);
+        $expected = array('key1' => $value1, 'key3' => $value3);
+        $actual = $record->getModified();
+        $this->assertEquals($expected, $actual, "Modified record array is incorrect");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Record::getOriginal
+     * @depends testSet_Success
+     */
+    public function testGetOriginal()
+    {
+        $value1 = 'value 1 original';
+        $value2 = 'value 2 original';
+        $record = new Record();
+        $record->key1 = $value1;
+        $record->key2 = $value2;
+        $record->set('key1', 'value 1 updated');
+        $expected = array('key1' => $value1, 'key2' => $value2);
+        $actual = array('key1' => $record->getOriginal('key1'), 'key2' => $record->getOriginal('key2'));
+        $this->assertEquals($expected, $actual, "Original value incorrect after update");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Record::isModified
+     * @depends testSet_Success
+     */
+    public function testIsModified_False()
+    {
+        $record = new Record();
+        $record->key1 = 'value 1';
+        $record->key2 = 'value 2';
+        $record->key1 = 'value 1 updated';
+        $this->assertFalse($record->isModified(), "Modified flag was not false");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Record::isModified
+     * @depends testSet_Success
+     */
+    public function testIsModified_True()
+    {
+        $record = new Record();
+        $record->key1 = 'value 1';
+        $record->set('key1', 'value 1 updated');
+        $this->assertTrue($record->isModified(), "Modified flag was not true");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Record::clearModified()
+     * @depends testIsModified_True
+     */
+    public function testClearModified()
+    {
+        $record = new Record();
+        $record->key1 = 'value 1';
+        $record->set('key1', 'value 1 updated');
+        $record->clearModified();
+        $expected = array(false, array());
+        $actual = array($record->isModified(), $record->getModified());
+        $this->assertEquals($expected, $actual, "Modified flag and/or array didn't reset");
+    }
+
+    /**
      * @covers  \spoof\lib360\db\data\Record::toXML
      * @depends test__Set
      * @depends test__Get_Success
