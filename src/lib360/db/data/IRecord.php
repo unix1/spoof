@@ -40,17 +40,81 @@ interface IRecord
      *
      * @return mixed associated value
      *
-     * @throw OutOfBoundsException when key doesn't exist
+     * @throws \OutOfBoundsException when key doesn't exist
      */
     public function __get($key);
 
     /**
      * Sets key-value association.
      *
+     * Creates new key if necessary, doesn't track the modification and doesn't
+     * store the original value. This is primarily useful for setting original
+     * values from data source, or other default values.
+     *
      * @param string $key
      * @param mixed $value
+     *
+     * @see set
      */
     public function __set($key, $value);
+
+    /**
+     * Gets associated value of the supplied key.
+     *
+     * @param string $key
+     *
+     * @return mixed associated value
+     *
+     * @throws \OutOfBoundsException when key doesn't exist
+     */
+    public function get($key);
+
+    /**
+     * Gets modified fields and their original values.
+     *
+     * @return array Associative array containing string keys and mixed
+     *     associated original values
+     */
+    public function getModified();
+
+    /**
+     * Gets original value associated with the key.
+     *
+     * @param string $key
+     *
+     * @return mixed associated original value
+     */
+    public function getOriginal($key);
+
+    /**
+     * Sets key-value association.
+     *
+     * The difference between this and @see __set is that this function tracks
+     * the modification, stores the original value, and doesn't create new
+     * keys.
+     *
+     * @param $key
+     * @param $value
+     *
+     * @throws \OutOfBoundsException when key doesn't exist
+     *
+     * @see __set
+     */
+    public function set($key, $value);
+
+    /**
+     * Returns whether the record was modified.
+     *
+     * @return bool true if record was modified, false otherwise
+     *
+     * @see set
+     */
+    public function isModified();
+
+    /**
+     * Clears the modified fields and their original values.
+     */
+    public function clearModified();
 
     /**
      * Transforms object into XML representation.

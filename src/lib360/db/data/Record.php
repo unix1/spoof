@@ -39,6 +39,12 @@ class Record extends \ArrayObject implements IRecord
     protected $__type;
 
     /**
+     * Internal storage for modified keys and their associated original values
+     * @var array
+     */
+    protected $__modified = array();
+
+    /**
      * Constructor
      *
      * @param string $type optional type, default 'Record'
@@ -55,7 +61,7 @@ class Record extends \ArrayObject implements IRecord
      *
      * @return mixed associated value
      *
-     * @throw \OutOfBoundsException when key doesn't exist
+     * @throws \OutOfBoundsException when key doesn't exist
      */
     public function __get($key)
     {
@@ -68,12 +74,104 @@ class Record extends \ArrayObject implements IRecord
     /**
      * Sets key-value association.
      *
+     * Creates new key if necessary, doesn't track the modification and doesn't
+     * store the original value. This is primarily useful for setting original
+     * values from data source, or other default values.
+     *
      * @param string $key
      * @param mixed $value
+     *
+     * @see set
      */
     public function __set($key, $value)
     {
         $this->offsetSet($key, $value);
+    }
+
+    /**
+     * Gets associated value of the supplied key.
+     *
+     * @param string $key
+     *
+     * @return mixed associated value
+     *
+     * @throws \OutOfBoundsException when key doesn't exist
+     */
+    public function get($key)
+    {
+        return $this->__get($key);
+    }
+
+    /**
+     * Gets modified fields and their original values.
+     *
+     * @return array Associative array containing string keys and mixed
+     *     associated original values
+     */
+    public function getModified()
+    {
+        $modified = array();
+        foreach ($this->__modified as $key => $unused) {
+            $modified[$key] = $this->__get($key);
+        }
+        return $modified;
+    }
+
+    /**
+     * Gets original value associated with the key.
+     *
+     * @param string $key
+     *
+     * @return mixed associated original value
+     */
+    public function getOriginal($key)
+    {
+        return isset($this->__modified[$key]) ? $this->__modified[$key] : $this->get($key);
+    }
+
+    /**
+     * Sets key-value association.
+     *
+     * The difference between this and @see __set is that this function tracks
+     * the modification, stores the original value, and doesn't create new
+     * keys.
+     *
+     * @param $key
+     * @param $value
+     *
+     * @throws \OutOfBoundsException when key doesn't exist
+     *
+     * @see __set
+     */
+    public function set($key, $value)
+    {
+        if (!$this->offsetExists($key)) {
+            throw new \OutOfBoundsException("Offset $key does not exist.");
+        }
+        if (!isset($this->__modified[$key])) {
+            $this->__modified[$key] = $this->__get($key);
+        }
+        $this->__set($key, $value);
+    }
+
+    /**
+     * Returns whether the record was modified.
+     *
+     * @return bool true if record was modified, false otherwise
+     *
+     * @see set
+     */
+    public function isModified()
+    {
+        return (count($this->__modified) > 0);
+    }
+
+    /**
+     * Clears the modified fields and their original values.
+     */
+    public function clearModified()
+    {
+        $this->__modified = array();
     }
 
     /**

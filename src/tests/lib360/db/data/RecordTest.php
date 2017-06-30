@@ -48,6 +48,9 @@ class RecordTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers \spoof\lib360\db\data\Record::__construct
+     */
     protected function getProtectedProperty($class, $property)
     {
         $r = new \ReflectionClass($class);
@@ -59,7 +62,7 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \spoof\lib360\db\data\Record::__set
      */
-    public function testSet()
+    public function test__Set()
     {
         $testValue = 'test1';
         $record = new Record();
@@ -69,9 +72,9 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \spoof\lib360\db\data\Record::__get
-     * @depends testSet
+     * @depends test__Set
      */
-    public function testGet_Fail()
+    public function test__Get_Fail()
     {
         $record = new Record();
         $e = null;
@@ -84,9 +87,9 @@ class RecordTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers  \spoof\lib360\db\data\Record::__get
-     * @depends testSet
+     * @depends test__Set
      */
-    public function testGet_Success()
+    public function test__Get_Success()
     {
         $record = new Record();
         $e = null;
@@ -101,9 +104,68 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Record::set
+     * @depends test__Set
+     */
+    public function testSet_Success()
+    {
+        $testValue = 'test value';
+        $record = new Record();
+        $record->test1 = 'original value';
+        $record->set('test1', $testValue);
+        $this->assertEquals($testValue, $record->offsetGet('test1'), "Failed to set value");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Record::set
+     */
+    public function testSet_Fail()
+    {
+        $testValue = 'test value';
+        $record = new Record();
+        try {
+            $record->set('test', $testValue);
+        } catch (\OutOfBoundsException $e) {
+        }
+        $this->assertInstanceOf('\OutOfBoundsException', $e, "Failed to throw exception when offset doesn't exist");
+    }
+    /**
+     * @covers  \spoof\lib360\db\data\Record::get
+     * @depends testSet_Success
+     */
+    public function testGet_Fail()
+    {
+        $record = new Record();
+        $e = null;
+        try {
+            $v = $record->get('test');
+        } catch (\OutOfBoundsException $e) {
+        }
+        $this->assertInstanceOf('\OutOfBoundsException', $e, "Failed to throw exception when offset doesn't exist");
+    }
+
+    /**
+     * @covers  \spoof\lib360\db\data\Record::get
+     * @depends test__Set
+     */
+    public function testGet_Success()
+    {
+        $record = new Record();
+        $e = null;
+        $v = null;
+        $testValue = 'test value';
+        $record->test = $testValue;
+        try {
+            $v = $record->get('test');
+        } catch (\OutOfBoundsException $e) {
+        }
+        $this->assertEquals($testValue, $v, "Retrieved value doesn't match the value set");
+    }
+
+    /**
      * @covers  \spoof\lib360\db\data\Record::toXML
-     * @depends testSet
-     * @depends testGet_Success
+     * @depends test__Set
+     * @depends test__Get_Success
      */
     public function testToXML()
     {
