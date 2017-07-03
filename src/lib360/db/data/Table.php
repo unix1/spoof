@@ -44,15 +44,11 @@ class Table extends Store implements ITable
      * in the select method.
      */
     public $fields = array();
+
     /**
-     * Table keys array.
-     *
-     * Extending classes will need to define a simple array listing table's
-     * primary keys as element values.
-     * NOTE currently not used
-     * NOTE this will be useful when implementing selectRecord/updateRecord methods
+     * Table primary key.
      */
-    protected $keys;
+    protected $key;
 
     /**
      * Gets table records by field criteria.
@@ -67,30 +63,34 @@ class Table extends Store implements ITable
      */
     public function selectRecords(array $conditions = array(), array $fields = null)
     {
-        $condition_group = null;
-        if (count($conditions) == 1) {
-            foreach ($conditions as $column => $value) {
-                $condition_group = new Condition(
-                    new Value($column, Value::TYPE_COLUMN),
-                    Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING)
-                );
-            }
-        } elseif (count($conditions) > 1) {
-            foreach ($conditions as $column => $value) {
-                $condition = new Condition(
-                    new Value($column, Value::TYPE_COLUMN),
-                    Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING)
-                );
-                if (is_null($condition_group)) {
-                    $condition_group = new ConditionGroup($condition);
-                } else {
-                    $condition_group->addCondition(ConditionGroup::OPERATOR_AND, $condition);
-                }
-            }
-        }
+        $condition_group = $this->getCondition($conditions);
         return $this->select($condition_group, array(), $fields);
+    }
+
+    /**
+     * Gets table record by primary key.
+     *
+     * @param mixed $id primary key to retrieve the record
+     * @param array $fields optional array of fields to return, can be
+     *    associative for (table field) => (select as field) or a simple array of
+     *    table field names, will override default $fields property
+     *
+     * @return Record object
+     *
+     * @throws RecordNotFoundException when no records found for given primary key
+     * @throws RecordPrimaryKeyException when more than 1 record is found
+     */
+    public function selectRecord($id, array $fields = null)
+    {
+        $conditions = array($this->key => $id);
+        $results = $this->selectRecords($conditions, $fields);
+        if (count($results) == 0) {
+            throw new RecordNotFoundException('Record not found.');
+        }
+        if (count($results) > 1) {
+            throw new RecordPrimaryKeyException('More than 1 row found for primary key');
+        }
+        return $results[0];
     }
 
     /**
@@ -164,6 +164,37 @@ class Table extends Store implements ITable
     }
 
     /**
+     * Stores record modifications in the table by record's primary key.
+     *
+     * @param IRecord $record
+     *
+     * @return int Number of rows updated
+     *
+     * @throws RecordNotFoundException when no rows are updated
+     * @todo this function probably shouldn't throw an exception when an update
+     *     results in 0 rows affected
+     */
+    public function updateRecord(IRecord $record)
+    {
+        $updated = 0;
+        if ($record->isModified()) {
+            $fields = array();
+            foreach($record->getModified() as $key => $value) {
+                $fields[$key] = new Value($value, Value::TYPE_STRING);
+            }
+            $condition = $this->getCondition(
+                array($this->key => $record->getOriginal($this->key))
+            );
+            $updated = $this->update($fields, $condition);
+            $record->clearModified();
+        }
+        if ($updated == 0) {
+            throw new RecordNotFoundException('Record not found for updated');
+        }
+        return $updated;
+    }
+
+    /**
      * Inserts a database record.
      *
      * @param array $fields associative array of fields for insert
@@ -214,6 +245,33 @@ class Table extends Store implements ITable
         );
         // return result
         return $result;
+    }
+
+    protected function getCondition(array $conditions) {
+        $condition_group = null;
+        if (count($conditions) == 1) {
+            foreach ($conditions as $column => $value) {
+                $condition_group = new Condition(
+                    new Value($column, Value::TYPE_COLUMN),
+                    Condition::OPERATOR_EQUALS,
+                    new Value((string)$value, Value::TYPE_STRING)
+                );
+            }
+        } elseif (count($conditions) > 1) {
+            foreach ($conditions as $column => $value) {
+                $condition = new Condition(
+                    new Value($column, Value::TYPE_COLUMN),
+                    Condition::OPERATOR_EQUALS,
+                    new Value((string)$value, Value::TYPE_STRING)
+                );
+                if (is_null($condition_group)) {
+                    $condition_group = new ConditionGroup($condition);
+                } else {
+                    $condition_group->addCondition(ConditionGroup::OPERATOR_AND, $condition);
+                }
+            }
+        }
+        return $condition_group;
     }
 
 }

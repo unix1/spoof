@@ -20,12 +20,12 @@
 
 namespace spoof\tests\lib360\db\data;
 
-class HelperTableUser extends \spoof\lib360\db\data\Table
+class HelperTableUserBadPrimaryKey extends \spoof\lib360\db\data\Table
 {
 
     protected $name = 'user';
     protected $db = 'test';
-    protected $key = 'id';
+    protected $key = 'name_first';
 
 }
 

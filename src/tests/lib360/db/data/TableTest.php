@@ -26,6 +26,8 @@ use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\PDO;
 use spoof\lib360\db\connection\Pool;
 use spoof\lib360\db\data\RecordList;
+use spoof\lib360\db\data\RecordNotFoundException;
+use spoof\lib360\db\data\RecordPrimaryKeyException;
 use spoof\lib360\db\object\Factory;
 use spoof\lib360\db\value\Value;
 
@@ -143,7 +145,8 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::getCondition
      * @depends testSelect_NoCondition
      */
     public function testSelectRecords_NoCondition()
@@ -159,7 +162,8 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::getCondition
      * @depends testSelect_Condition
      */
     public function testSelectRecords_ConditionOne()
@@ -182,7 +186,8 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::getCondition
      * @depends testSelect_Condition
      */
     public function testSelectRecords_ConditionMany()
@@ -213,6 +218,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
     /**
      * @covers \spoof\lib360\db\data\Table::selectRecords
+     * @covers \spoof\lib360\db\data\Table::getCondition
      */
     public function testSelectRecords_ConditionFields()
     {
@@ -237,7 +243,78 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::update
+     * @covers \spoof\lib360\db\data\Table::selectRecord
+     * @covers \spoof\lib360\db\data\Table::getCondition
+     */
+    public function testSelectRecord_Success()
+    {
+        $userId = 1;
+        $user = new HelperTableUser();
+        $fields = array('name_first', 'name_last', 'id');
+        $resultActual = $user->selectRecord($userId, $fields);
+        $resultExpected = $user->select(
+            new Condition(
+                new Value('id', Value::TYPE_COLUMN),
+                Condition::OPERATOR_EQUALS,
+                new Value($userId, Value::TYPE_INTEGER)
+            ),
+            array(),
+            $fields
+        )[0];
+        $this->assertEquals(
+            $resultExpected,
+            $resultActual,
+            "Failed to match expected select records result (with condition and fields)"
+        );
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::selectRecord
+     * @covers \spoof\lib360\db\data\Table::getCondition
+     */
+    public function testSelectRecord_Fail_NotFound()
+    {
+        $userId = 999999; // doesn't exist
+        $user = new HelperTableUser();
+        $fields = array('name_first', 'name_last', 'id');
+        try {
+            $user->selectRecord($userId, $fields);
+        } catch (RecordNotFoundException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\data\RecordNotFoundException', $e);
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::selectRecord
+     * @covers \spoof\lib360\db\data\Table::getCondition
+     * @note Adding depends testInsert makes phpunit skip this test altogether
+     */
+    public function testSelectRecord_Fail_BadPrimaryKey()
+    {
+        $valueNameFirst = 'First Name as PK';
+        $valueNameLast1 = 'test last 1';
+        $valueNameLast2 = 'test last 2';
+        $values1 = array(
+            'name_first' => new Value($valueNameFirst, Value::TYPE_STRING),
+            'name_last' => new Value($valueNameLast1, Value::TYPE_STRING)
+        );
+        $values2 = array(
+            'name_first' => new Value($valueNameFirst, Value::TYPE_STRING),
+            'name_last' => new Value($valueNameLast2, Value::TYPE_STRING)
+        );
+        $user = new HelperTableUserBadPrimaryKey();
+        $user->insert($values1);
+        $user->insert($values2);
+        $fields = array('name_first', 'name_last', 'id');
+        try {
+            $user->selectRecord($valueNameFirst, $fields);
+        } catch (RecordPrimaryKeyException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\data\RecordPrimaryKeyException', $e);
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::update
      * @depends testSelect_NoCondition
      */
     public function testUpdate_NoCondition()
@@ -271,7 +348,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::update
+     * @covers \spoof\lib360\db\data\Table::update
      * @depends testSelect_ConditionFields
      */
     public function testUpdate_Condition()
@@ -308,7 +385,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::select
+     * @covers \spoof\lib360\db\data\Table::select
      * @depends testSelect_ConditionFields
      */
     public function testUpdate_ConditionValues()
@@ -347,7 +424,73 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::insert
+     * @covers \spoof\lib360\db\data\Table::updateRecord
+     * @covers \spoof\lib360\db\data\Table::getCondition
+     * @depends testUpdate_Condition
+     * @depends testSelectRecord_Success
+     */
+    public function testUpdateRecord_Success()
+    {
+        $userId = 1;
+        $firstNameUpdated = 'test first updated';
+        $lastNameUpdated = 'test last updated';
+        $user = new HelperTableUser();
+        $fields = array('name_first', 'name_last', 'id');
+        $userRecord = $user->selectRecord($userId, $fields);
+        $userRecord->set('name_first', $firstNameUpdated);
+        $userRecord->set('name_last', $lastNameUpdated);
+        $user->updateRecord($userRecord);
+        $userRecordAfterUpdate = $user->selectRecord($userId, $fields);
+        $this->assertEquals(
+            array(
+                $userId,
+                $firstNameUpdated,
+                $lastNameUpdated
+            ),
+            array(
+                $userRecordAfterUpdate->get('id'),
+                $userRecordAfterUpdate->get('name_first'),
+                $userRecordAfterUpdate->get('name_last')
+            ),
+            "Failed to match expected updated record values"
+        );
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::updateRecord
+     * @depends testUpdate_Condition
+     * @depends testSelectRecord_Success
+     */
+    public function testUpdateRecord_Fail()
+    {
+        $userId = 1;
+        $user = new HelperTableUser();
+        $fields = array('name_first', 'name_last', 'id');
+        $userRecord = $user->selectRecord($userId, $fields);
+        $firstName = $userRecord->get('name_first');
+        $lastName = $userRecord->get('name_last');
+        try {
+            $user->updateRecord($userRecord);
+        } catch (RecordNotFoundException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\data\RecordNotFoundException', $e);
+        $userRecordAfterUpdate = $user->selectRecord($userId, $fields);
+        $this->assertEquals(
+            array(
+                $userId,
+                $firstName,
+                $lastName
+            ),
+            array(
+                $userRecordAfterUpdate->get('id'),
+                $userRecordAfterUpdate->get('name_first'),
+                $userRecordAfterUpdate->get('name_last')
+            ),
+            "Updated record should not have had any changes"
+        );
+    }
+    /**
+     * @covers \spoof\lib360\db\data\Table::insert
      * @depends testSelect_ConditionFields
      */
     public function testInsert()
@@ -386,7 +529,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::delete
+     * @covers \spoof\lib360\db\data\Table::delete
      * @depends testSelect_NoCondition
      */
     public function testDelete_NoCondition()
@@ -399,7 +542,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::delete
+     * @covers \spoof\lib360\db\data\Table::delete
      * @depends testSelect_Condition
      */
     public function testDelete_Condition()
@@ -418,7 +561,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\data\Table::delete
+     * @covers \spoof\lib360\db\data\Table::delete
      * @depends testSelect_ConditionValues
      */
     public function testDelete_ConditionValues()

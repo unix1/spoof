@@ -65,6 +65,8 @@ interface ITable extends IStore
         array $fields = null
     );
 
+    public function selectRecord($id, array $fields = null);
+
     /**
      * Updates database record(s) based on supplied criteria and values.
      *
@@ -82,6 +84,8 @@ interface ITable extends IStore
         ICondition $condition = null,
         array $values = array()
     );
+
+    public function updateRecord(IRecord $record);
 
     /**
      * Inserts a database record.

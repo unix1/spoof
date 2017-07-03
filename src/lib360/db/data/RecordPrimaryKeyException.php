@@ -18,15 +18,13 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\tests\lib360\db\data;
+namespace spoof\lib360\db\data;
 
-class HelperTableUser extends \spoof\lib360\db\data\Table
+/**
+ * RecordNotFoundException class
+ */
+class RecordPrimaryKeyException extends \spoof\lib360\db\Exception
 {
-
-    protected $name = 'user';
-    protected $db = 'test';
-    protected $key = 'id';
-
 }
 
 ?>
