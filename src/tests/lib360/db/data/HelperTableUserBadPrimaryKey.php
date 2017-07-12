@@ -25,7 +25,7 @@ class HelperTableUserBadPrimaryKey extends \spoof\lib360\db\data\Table
 
     protected $name = 'user';
     protected $db = 'test';
-    protected $key = 'name_first';
+    public $key = 'name_first';
 
 }
 
