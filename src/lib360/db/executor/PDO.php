@@ -191,6 +191,20 @@ class PDO implements IExecutor
     }
 
     /**
+     * Executes query and returns last inserted ID.
+     *
+     * @param IConnection $conn database connection object
+     * @param string $query prepared query statement
+     * @param array $values optional array of values for prepared statement
+     *
+     * @return mixed inserted row ID
+     */
+    private function queryLastInsertId(IConnection $conn, $query, array $values = null)
+    {
+        $sth = $this->queryStatementClose($conn, $query, $values);
+        return $conn->getConnection()->lastInsertId();
+    }
+    /**
      *    Executes query and gets closed statement handle.
      *
      * @param IConnection $conn database connection object
@@ -213,13 +227,13 @@ class PDO implements IExecutor
      * @param string $query prepared query statement
      * @param array $values optional array of values for prepared statement
      *
-     * @return integer number of rows inserted
+     * @return mixed inserted row ID
      *
      * @throw PreparedQueryException when database error occurs during query execution
      */
     public function insert(IConnection $conn, $query, array $values = null)
     {
-        return $this->queryAffectedCount($conn, $query, $values);
+        return $this->queryLastInsertId($conn, $query, $values);
     }
 
     /**

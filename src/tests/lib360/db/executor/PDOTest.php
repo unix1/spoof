@@ -311,7 +311,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 
     /**
      * @covers  \spoof\lib360\db\executor\PDO::insert
-     * @covers  \spoof\lib360\db\executor\PDO::queryAffectedCount
+     * @covers  \spoof\lib360\db\executor\PDO::queryLastInsertId
      * @covers  \spoof\lib360\db\executor\PDO::queryStatementClose
      * @covers  \spoof\lib360\db\executor\PDO::queryStatementLive
      * @covers  \spoof\lib360\db\executor\PDO::getStatement
@@ -331,9 +331,9 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             'name_last' => new Value($paramNameLast, Value::TYPE_STRING)
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActualNumRows = $ex->insert($this->db, $queryString, $queryValues);
+        $resultActualInsertedID = $ex->insert($this->db, $queryString, $queryValues);
         $resultActualID = $this->db->getConnection()->lastInsertId();
-        $resultActual = array($resultActualNumRows, $resultActualID, $paramNameFirst, $paramNameLast);
+        $resultActual = array($resultActualInsertedID, $resultActualID, $paramNameFirst, $paramNameLast);
         $sthExpected = self::$pdo->prepare("select id, name_first, name_last from user where id = :id");
         $sthExpected->bindValue(':id', $resultActualID, \PDO::PARAM_INT);
         $sthExpected->execute();
@@ -341,7 +341,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $resultExpectedArray = $sthExpected->fetchAll();
         $sthExpected->closeCursor();
         $resultExpected = array(
-            1,
+            $resultExpectedArray[0]->id,
             $resultExpectedArray[0]->id,
             $resultExpectedArray[0]->name_first,
             $resultExpectedArray[0]->name_last

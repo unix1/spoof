@@ -93,7 +93,7 @@ interface ITable extends IStore
      * @param array $fields associative array of fields for insert
      *    (table field) => (update value)
      *
-     * @return integer number of rows inserted
+     * @return mixed inserted row ID
      */
     public function insert(array $fields);
 

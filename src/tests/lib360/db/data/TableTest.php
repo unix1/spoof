@@ -505,12 +505,13 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
         $resultExpected = array(
             'rows' => 1,
+            'inserted_id' => $valueID,
             'id' => $valueID,
             'name_first' => $valueNameFirst,
             'name_last' => $valueNameLast
         );
         $user = new HelperTableUser();
-        $user->insert($values);
+        $resultActualInsertedID = $user->insert($values);
         $resultActualRows = $user->select(
             new Condition(
                 new Value('id', Value::TYPE_COLUMN),
@@ -522,6 +523,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
         $resultActual = array();
         $resultActual['rows'] = count($resultActualRows);
+        $resultActual['inserted_id'] = $resultActualInsertedID;
         $resultActual['id'] = $resultActualRows[0]->id;
         $resultActual['name_first'] = $resultActualRows[0]->name_first;
         $resultActual['name_last'] = $resultActualRows[0]->name_last;
