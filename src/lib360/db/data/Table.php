@@ -48,7 +48,7 @@ class Table extends Store implements ITable
     /**
      * Table primary key.
      */
-    protected $key;
+    public $key;
 
     /**
      * Gets table records by field criteria.
@@ -200,7 +200,7 @@ class Table extends Store implements ITable
      * @param array $fields associative array of fields for insert
      *    (table field) => (insert value)
      *
-     * @return integer number of rows inserted
+     * @return mixed inserted row ID
      */
     public function insert(array $fields)
     {

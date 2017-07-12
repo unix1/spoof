@@ -62,7 +62,7 @@ interface IExecutor
      * @param string $query prepared query statement
      * @param array $values optional array of values for prepared statement
      *
-     * @return integer number of rows inserted
+     * @return mixed inserted row ID
      *
      * @throw \spoof\lib360\db\Exception when database error occurs during query execution
      */
