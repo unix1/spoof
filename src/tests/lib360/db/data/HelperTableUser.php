@@ -25,7 +25,8 @@ class HelperTableUser extends \spoof\lib360\db\data\Table
 
     protected $name = 'user';
     protected $db = 'test';
-    protected $key = 'id';
+    public $key = 'id';
+    public $fields = array('id', 'date_created', 'name_first', 'name_last', 'status');
 
 }
 
