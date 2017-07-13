@@ -15,7 +15,7 @@ jobs:
 #          command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
       - run:
           name: Create test reports directory
-          command: 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
+          command: 'mkdir -p /phpunit'
       - run:
           name: Update composer
           command: 'composer self-update'
@@ -35,7 +35,11 @@ jobs:
           command: 'vendor/bin/phpunit -c src/tests/phpunit-log.xml'
       - run:
           name: Copy test results
-          command: 'cp build/logs/junit.xml $CIRCLE_TEST_REPORTS/phpunit/junit.xml'
+          command: 'cp build/logs/junit.xml /phpunit/junit.xml'
+      - store_test_results:
+          path: /phpunit
+      - store_artifacts:
+          path: /phpunit
       - run:
           name: Report test results
           command: 'vendor/bin/test-reporter'
