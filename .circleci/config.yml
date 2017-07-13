@@ -11,6 +11,9 @@ jobs:
           name: Install and enable xdebug
           command: 'sudo pecl install xdebug && sudo docker-php-ext-enable xdebug'
       - run:
+          name: Make default timezone UTC
+          command: 'echo "date.timezone = UTC" > /usr/local/etc/php/conf.d/date.ini'
+      - run:
           name: Install Composer
           command: |
             php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
