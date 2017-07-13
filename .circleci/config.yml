@@ -10,9 +10,9 @@ jobs:
       - run:
           name: Update apt, install xdebug
           command: 'sudo apt-get update; sudo apt-get install -y php5-xdebug'
-      - run:
-          name: Set timezone to UTC
-          command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
+#      - run:
+#          name: Set timezone to UTC
+#          command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
       - run:
           name: Create test reports directory
           command: 'mkdir -p $CIRCLE_TEST_REPORTS/phpunit'
