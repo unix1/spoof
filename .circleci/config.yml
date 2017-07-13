@@ -14,8 +14,12 @@ jobs:
 #          name: Set timezone to UTC
 #          command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
       - run:
-          name: Update composer
-          command: 'composer self-update'
+          name: Install Composer
+          command: |
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer invalid'; unlink('composer-setup.php'); } echo PHP_EOL;"
+            php composer-setup.php
+            php -r "unlink('composer-setup.php');"
       - restore_cache:
           keys:
             - composer-v1-{{ checksum "composer.json" }}
@@ -32,14 +36,14 @@ jobs:
           command: 'vendor/bin/phpunit -c src/tests/phpunit-log.xml'
       - run:
           name: Create test reports directory
-          command: 'mkdir -p /phpunit'
+          command: 'sudo mkdir -p /phpunit'
       - run:
-          name: Copy test results
-          command: 'cp build/logs/junit.xml /phpunit/junit.xml'
+          name: Copy test results for circleci use
+          command: 'sudo cp build/logs/junit.xml /phpunit/junit.xml'
       - store_test_results:
           path: /phpunit
       - store_artifacts:
           path: /phpunit
       - run:
-          name: Report test results
+          name: Report test results to codeclimate
           command: 'vendor/bin/test-reporter'
