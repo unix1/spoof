@@ -12,7 +12,7 @@ jobs:
           command: 'sudo pecl install xdebug && sudo docker-php-ext-enable xdebug'
       - run:
           name: Make default timezone UTC
-          command: 'sudo echo "date.timezone = UTC" > /usr/local/etc/php/conf.d/date.ini'
+          command: 'echo "date.timezone = UTC" | sudo tee /usr/local/etc/php/conf.d/date.ini > /dev/null'
       - run:
           name: Install Composer
           command: |
