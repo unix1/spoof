@@ -31,7 +31,7 @@ interface IConnection
      * Constructor for the database connection object instantiates the object
      * but does not connect it to a database.
      *
-     * @param $config IDBConfig database connection configuration object
+     * @param $config IConfig database connection configuration object
      */
     public function __construct(IConfig $config);
 
@@ -45,7 +45,7 @@ interface IConnection
     /**
      * Checks whether the database connection is active.
      *
-     * @return    boolean TRUE if connected, FALSE otherwise
+     * @return boolean TRUE if connected, FALSE otherwise
      */
     public function isConnected();
 

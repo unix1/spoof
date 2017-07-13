@@ -329,7 +329,7 @@ class SQL implements ILanguage
     }
 
     /**
-     * Returns Query object for given IDBValue.
+     * Returns Query object for given IValue.
      *
      * @param IDriver $driver database driver object
      * @param IValue $value database value object
@@ -466,7 +466,7 @@ class SQL implements ILanguage
      *
      * @param IDriver $driver database driver
      * @param IStore $storage database storage object
-     * @param array $fields associative array of field => IDBValue to update
+     * @param array $fields associative array of field => IValue to update
      * @param ICondition $condition optional database condition object, default NULL
      *
      * @return Query database query object
