@@ -26,7 +26,7 @@ jobs:
             - composer-v1-
       - run:
           name: Install composer dependencies
-          command: 'composer install'
+          command: 'php composer.phar install'
       - save_cache:
           key: composer-v1-{{ checksum "composer.json" }}
           paths:
