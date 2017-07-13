@@ -6,35 +6,35 @@ jobs:
       - image: circleci/php:5.6
     steps:
       - checkout
-      - run
+      - run:
         name: Update apt
         command: 'sudo apt-get update; sudo apt-get install -y php5-xdebug'
-      - run
+      - run:
         name: Set timezone to UTC
         command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
-      - run
+      - run:
         name: Create test reports directory
         command: mkdir -p $CIRCLE_TEST_REPORTS/phpunit
-      - run
+      - run:
         name: Update composer
         command: composer self-update
       - restore_cache:
         keys:
           - composer-v1-{{ checksum "composer.json" }}
           - composer-v1-
-      - run
+      - run:
         name: "Install composer dependencies"
         command: composer install
       - save_cache:
         key: composer-v1-{{ checksum "composer.json" }}
         paths:
           - vendor
-      - run
+      - run:
         name: Run Tests
         command: vendor/bin/phpunit -c src/tests/phpunit-log.xml
-      - run
+      - run:
         name: Copy test results
         command: cp build/logs/junit.xml $CIRCLE_TEST_REPORTS/phpunit/junit.xml
-      - run
+      - run:
         name: Report test results
         command: vendor/bin/test-reporter
