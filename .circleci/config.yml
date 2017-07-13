@@ -8,11 +8,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update apt, install xdebug
-          command: 'sudo apt-get update; sudo apt-get install -y php5-xdebug'
-#      - run:
-#          name: Set timezone to UTC
-#          command: 'echo "date.timezone = UTC" > /opt/circleci/php/$(phpenv global)/etc/conf.d/date.ini'
+          name: Install and enable xdebug
+          command: 'sudo pecl install xdebug && sudo docker-php-ext-enable xdebug'
       - run:
           name: Install Composer
           command: |
@@ -23,7 +20,6 @@ jobs:
       - restore_cache:
           keys:
             - composer-v1-{{ checksum "composer.json" }}
-            - composer-v1-
       - run:
           name: Install composer dependencies
           command: 'php composer.phar install'
