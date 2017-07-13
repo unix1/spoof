@@ -22,10 +22,18 @@ namespace spoof\tests\lib360\db;
 
 abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
-    // only instantiate pdo once for test clean-up/fixture load
+    /**
+     * PDO object, instantiated once per test
+     *
+     * @var \PDO
+     */
     protected static $pdo = null;
 
-    // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+    /**
+     * PHPUnit's database connection, instantiated once per test
+     *
+     * @var \PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     */
     private $conn = null;
 
     public function getConnection()

@@ -26,6 +26,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \spoof\lib360\db\connection\Config::__construct
+     * @covers \spoof\lib360\db\connection\Config::setDSN
      */
     public function testConstruct_RequiredArgs()
     {
@@ -36,6 +37,11 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \spoof\lib360\db\connection\Config::__construct
+     * @covers \spoof\lib360\db\connection\Config::setDSN
+     * @covers \spoof\lib360\db\connection\Config::setUsername
+     * @covers \spoof\lib360\db\connection\Config::setPassword
+     * @covers \spoof\lib360\db\connection\Config::setOptions
+     * @covers \spoof\lib360\db\connection\Config::setDriver
      */
     public function testConstruct_AllArgs()
     {

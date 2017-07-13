@@ -21,7 +21,8 @@
 namespace spoof\lib360\db\data;
 
 /**
- * Defines interace for database views
+ * Defines interface for database views
+ * @todo consider making this extend ITable, or getting rid of it altogether
  */
 interface IView extends IStore
 {
