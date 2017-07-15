@@ -105,7 +105,7 @@ interface IRecord
     /**
      * Returns whether the record was modified.
      *
-     * @return bool true if record was modified, false otherwise
+     * @return boolean true if record was modified, false otherwise
      *
      * @see set
      */
