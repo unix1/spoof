@@ -538,26 +538,27 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
      * @covers \spoof\lib360\db\data\Table::insertRecord
      * @depends testSelectRecord_Success
      */
-    public function testInsertRecord_Success()
+    public function testInsertRecord()
     {
         $userRecord = new Record();
-        $userRecord->__set('name_first', 'test first');
-        $userRecord->__set('name_last', 'test last');
+        $userRecord->name_first = 'test first';
+        $userRecord->name_last = 'test last';
         $userTable = new HelperTableUser();
         $insertedId = $userTable->insertRecord($userRecord);
         $userRecordSelected = $userTable->selectRecord($insertedId);
         $expected = array(
-            'id' => $userRecord->id,
-            'name_last' => $userRecord->name_last,
-            'name_first' => $userRecord->name_first,
+            'id' => $userRecord->get('id'),
+            'name_last' => $userRecord->get('name_last'),
+            'name_first' => $userRecord->get('name_first'),
         );
         $actual = array(
-            'id' => $userRecordSelected->id,
-            'name_last' => $userRecordSelected->name_last,
-            'name_first' => $userRecordSelected->name_first,
+            'id' => $userRecordSelected->get('id'),
+            'name_last' => $userRecordSelected->get('name_last'),
+            'name_first' => $userRecordSelected->get('name_first'),
         );
         $this->assertEquals($expected, $actual, "Inserted record didn't match expected values");
     }
+
     /**
      * @covers \spoof\lib360\db\data\Table::delete
      * @depends testSelect_NoCondition
