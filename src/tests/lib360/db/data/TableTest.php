@@ -25,6 +25,7 @@ use spoof\lib360\db\condition\ConditionGroup;
 use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\PDO;
 use spoof\lib360\db\connection\Pool;
+use spoof\lib360\db\data\Record;
 use spoof\lib360\db\data\RecordList;
 use spoof\lib360\db\data\RecordNotFoundException;
 use spoof\lib360\db\data\RecordPrimaryKeyException;
@@ -469,6 +470,9 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $userRecord = $user->selectRecord($userId, $fields);
         $firstName = $userRecord->get('name_first');
         $lastName = $userRecord->get('name_last');
+        $userRecord->set('name_first', 'first name updated that will not work');
+        $userRecord->__set('id', 999999); // doesn't exist
+        $e = null;
         try {
             $user->updateRecord($userRecord);
         } catch (RecordNotFoundException $e) {
@@ -530,6 +534,30 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $this->assertEquals($resultExpected, $resultActual, "Select result didn't match the inserted values");
     }
 
+    /**
+     * @covers \spoof\lib360\db\data\Table::insertRecord
+     * @depends testSelectRecord_Success
+     */
+    public function testInsertRecord_Success()
+    {
+        $userRecord = new Record();
+        $userRecord->__set('name_first', 'test first');
+        $userRecord->__set('name_last', 'test last');
+        $userTable = new HelperTableUser();
+        $insertedId = $userTable->insertRecord($userRecord);
+        $userRecordSelected = $userTable->selectRecord($insertedId);
+        $expected = array(
+            'id' => $userRecord->id,
+            'name_last' => $userRecord->name_last,
+            'name_first' => $userRecord->name_first,
+        );
+        $actual = array(
+            'id' => $userRecordSelected->id,
+            'name_last' => $userRecordSelected->name_last,
+            'name_first' => $userRecordSelected->name_first,
+        );
+        $this->assertEquals($expected, $actual, "Inserted record didn't match expected values");
+    }
     /**
      * @covers \spoof\lib360\db\data\Table::delete
      * @depends testSelect_NoCondition

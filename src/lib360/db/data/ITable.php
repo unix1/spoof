@@ -85,6 +85,15 @@ interface ITable extends IStore
         array $values = array()
     );
 
+    /**
+     * Stores record modifications in the table by record's primary key.
+     *
+     * @param IRecord $record
+     *
+     * @return int Number of rows updated
+     *
+     * @throws RecordNotFoundException when record to update is not found
+     */
     public function updateRecord(IRecord $record);
 
     /**
@@ -96,6 +105,15 @@ interface ITable extends IStore
      * @return mixed inserted row ID
      */
     public function insert(array $fields);
+
+    /**
+     * Inserts a database record.
+     *
+     * @param IRecord $record
+     *
+     * @return mixed inserted row ID
+     */
+    public function insertRecord(IRecord $record);
 
     /**
      * Deletes table records that match the supplied database condition.

@@ -170,9 +170,7 @@ class Table extends Store implements ITable
      *
      * @return int Number of rows updated
      *
-     * @throws RecordNotFoundException when no rows are updated
-     * @todo this function probably shouldn't throw an exception when an update
-     *     results in 0 rows affected
+     * @throws RecordNotFoundException when record to update is not found
      */
     public function updateRecord(IRecord $record)
     {
@@ -186,10 +184,10 @@ class Table extends Store implements ITable
                 array($this->key => $record->getOriginal($this->key))
             );
             $updated = $this->update($fields, $condition);
+            if ($updated == 0) {
+                throw new RecordNotFoundException('Record not found for update');
+            }
             $record->clearModified();
-        }
-        if ($updated == 0) {
-            throw new RecordNotFoundException('Record not found for updated');
         }
         return $updated;
     }
@@ -218,6 +216,25 @@ class Table extends Store implements ITable
         );
         // return result
         return $result;
+    }
+
+    /**
+     * Inserts a database record.
+     *
+     * @param IRecord $record
+     *
+     * @return mixed inserted row ID
+     */
+    public function insertRecord(IRecord $record)
+    {
+        $fields = array();
+        foreach ($record as $key => $value) {
+            $fields[$key] = new Value($value, Value::TYPE_STRING);
+        }
+        $insertedId = $this->insert($fields);
+        $record->__set($this->key, $insertedId);
+        $record->clearModified();
+        return $insertedId;
     }
 
     /**
