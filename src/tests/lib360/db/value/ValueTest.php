@@ -27,6 +27,14 @@ use spoof\lib360\db\value\Value;
 class ValueTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function getProtectedProperty($class, $property)
+    {
+        $r = new \ReflectionClass($class);
+        $p = $r->getProperty($property);
+        $p->setAccessible(true);
+        return $p;
+    }
+
     public function test_ConstantsUnique()
     {
         $a = array(
@@ -65,6 +73,24 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \spoof\lib360\db\value\Value::__construct
+     * @covers \spoof\lib360\db\value\Value::determineType
+     */
+    public function testConstruct_InvalidAuto()
+    {
+        $e = null;
+        try {
+            $v = new Value(new \stdClass());
+        } catch (UnknownTypeException $e) {
+        }
+        $this->assertInstanceOf(
+            '\spoof\lib360\db\value\UnknownTypeException',
+            $e,
+            "Failed to throw UnknownTypeException when invalid value type given"
+        );
+    }
+
+    /**
+     * @covers \spoof\lib360\db\value\Value::__construct
      */
     public function testConstruct_NullInvalid()
     {
@@ -86,11 +112,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     public function testConstruct_NullSuccess()
     {
         $e = null;
-        try {
-            $v = new Value(null, Value::TYPE_NULL);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value(null, Value::TYPE_NULL);
         $this->assertEquals(
             array(null, Value::TYPE_NULL),
             array(
@@ -101,12 +123,22 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    protected function getProtectedProperty($class, $property)
+    /**
+     * @covers \spoof\lib360\db\value\Value::__construct
+     * @covers \spoof\lib360\db\value\Value::determineType
+     */
+    public function testConstruct_NullAuto()
     {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
+        $e = null;
+        $v = new Value(null);
+        $this->assertEquals(
+            array(null, Value::TYPE_NULL),
+            array(
+                $this->getProtectedProperty($v, 'value')->getValue($v),
+                $this->getProtectedProperty($v, 'type')->getValue($v)
+            ),
+            "Failed to set null type and value"
+        );
     }
 
     /**
@@ -116,11 +148,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     public function testGetType()
     {
         $e = null;
-        try {
-            $v = new Value(null, Value::TYPE_NULL);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value(null, Value::TYPE_NULL);
         $this->assertEquals(Value::TYPE_NULL, $v->getType(), "Failed to match expected result for null type");
     }
 
@@ -131,11 +159,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     public function testGetValue()
     {
         $e = null;
-        try {
-            $v = new Value(null, Value::TYPE_NULL);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value(null, Value::TYPE_NULL);
         $this->assertEquals(null, $v->getValue(), "Failed to match expected result for null value");
     }
 
@@ -167,11 +191,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = 'test string';
-        try {
-            $v = new Value($s, Value::TYPE_STRING);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_STRING);
         $this->assertEquals(
             array($s, Value::TYPE_STRING),
             array($v->getValue(), $v->getType()),
@@ -179,6 +199,23 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers  \spoof\lib360\db\value\Value::__construct
+     * @covers  \spoof\lib360\db\value\Value::determineType
+     * @depends testGetType
+     * @depends testGetValue
+     */
+    public function testConstruct_StringAuto()
+    {
+        $e = null;
+        $s = 'test string';
+        $v = new Value($s);
+        $this->assertEquals(
+            array($s, Value::TYPE_STRING),
+            array($v->getValue(), $v->getType()),
+            "Failed to set string type and value"
+        );
+    }
     /**
      * @covers  \spoof\lib360\db\value\Value::__construct
      * @depends testGetType
@@ -207,11 +244,25 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = 1234;
-        try {
-            $v = new Value($s, Value::TYPE_INTEGER);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_INTEGER);
+        $this->assertEquals(
+            array($s, Value::TYPE_INTEGER),
+            array($v->getValue(), $v->getType()),
+            "Failed to set integer type and value"
+        );
+    }
+
+    /**
+     * @covers  \spoof\lib360\db\value\Value::__construct
+     * @covers  \spoof\lib360\db\value\Value::determineType
+     * @depends testGetType
+     * @depends testGetValue
+     */
+    public function testConstruct_IntegerAuto()
+    {
+        $e = null;
+        $s = 1234;
+        $v = new Value($s);
         $this->assertEquals(
             array($s, Value::TYPE_INTEGER),
             array($v->getValue(), $v->getType()),
@@ -247,11 +298,25 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = 123.45;
-        try {
-            $v = new Value($s, Value::TYPE_FLOAT);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_FLOAT);
+        $this->assertEquals(
+            array($s, Value::TYPE_FLOAT),
+            array($v->getValue(), $v->getType()),
+            "Failed to set float type and value"
+        );
+    }
+
+    /**
+     * @covers  \spoof\lib360\db\value\Value::__construct
+     * @covers  \spoof\lib360\db\value\Value::determineType
+     * @depends testGetType
+     * @depends testGetValue
+     */
+    public function testConstruct_FloatAuto()
+    {
+        $e = null;
+        $s = 123.45;
+        $v = new Value($s);
         $this->assertEquals(
             array($s, Value::TYPE_FLOAT),
             array($v->getValue(), $v->getType()),
@@ -287,11 +352,25 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = true;
-        try {
-            $v = new Value($s, Value::TYPE_BOOLEAN);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_BOOLEAN);
+        $this->assertEquals(
+            array($s, Value::TYPE_BOOLEAN),
+            array($v->getValue(), $v->getType()),
+            "Failed to set boolean type and value"
+        );
+    }
+
+    /**
+     * @covers  \spoof\lib360\db\value\Value::__construct
+     * @covers  \spoof\lib360\db\value\Value::determineType
+     * @depends testGetType
+     * @depends testGetValue
+     */
+    public function testConstruct_BooleanAuto()
+    {
+        $e = null;
+        $s = true;
+        $v = new Value($s);
         $this->assertEquals(
             array($s, Value::TYPE_BOOLEAN),
             array($v->getValue(), $v->getType()),
@@ -308,11 +387,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = b'Hello';
-        try {
-            $v = new Value($s, Value::TYPE_BINARY);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_BINARY);
         $this->assertEquals(
             array($s, Value::TYPE_BINARY),
             array($v->getValue(), $v->getType()),
@@ -348,11 +423,25 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = array(1, 2, 3);
-        try {
-            $v = new Value($s, Value::TYPE_ARRAY);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_ARRAY);
+        $this->assertEquals(
+            array($s, Value::TYPE_ARRAY),
+            array($v->getValue(), $v->getType()),
+            "Failed to set array type and value"
+        );
+    }
+
+    /**
+     * @covers  \spoof\lib360\db\value\Value::__construct
+     * @covers  \spoof\lib360\db\value\Value::determineType
+     * @depends testGetType
+     * @depends testGetValue
+     */
+    public function testConstruct_ArrayAuto()
+    {
+        $e = null;
+        $s = array(1, 2, 3);
+        $v = new Value($s);
         $this->assertEquals(
             array($s, Value::TYPE_ARRAY),
             array($v->getValue(), $v->getType()),
@@ -388,11 +477,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = 'test';
-        try {
-            $v = new Value($s, Value::TYPE_COLUMN);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_COLUMN);
         $this->assertEquals(
             array($s, Value::TYPE_COLUMN),
             array($v->getValue(), $v->getType()),
@@ -428,11 +513,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = 'asdf';
-        try {
-            $v = new Value($s, Value::TYPE_PREPARED);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_PREPARED);
         $this->assertEquals(
             array($s, Value::TYPE_PREPARED),
             array($v->getValue(), $v->getType()),
@@ -468,11 +549,7 @@ class ValueTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         $s = array('function', 'arg1', 'arg2');
-        try {
-            $v = new Value($s, Value::TYPE_FUNCTION);
-        } catch (InvalidValueException $e) {
-            $this->fail("Got an exception of type " . get_class($e));
-        }
+        $v = new Value($s, Value::TYPE_FUNCTION);
         $this->assertEquals(
             array($s, Value::TYPE_FUNCTION),
             array($v->getValue(), $v->getType()),

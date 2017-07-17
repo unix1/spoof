@@ -178,7 +178,7 @@ class Table extends Store implements ITable
         if ($record->isModified()) {
             $fields = array();
             foreach($record->getModified() as $key => $value) {
-                $fields[$key] = new Value($value, Value::TYPE_STRING);
+                $fields[$key] = new Value($value);
             }
             $condition = $this->getCondition(
                 array($this->key => $record->getOriginal($this->key))
@@ -229,7 +229,7 @@ class Table extends Store implements ITable
     {
         $fields = array();
         foreach ($record as $key => $value) {
-            $fields[$key] = new Value($value, Value::TYPE_STRING);
+            $fields[$key] = new Value($value);
         }
         $insertedId = $this->insert($fields);
         $record->__set($this->key, $insertedId);
@@ -271,7 +271,7 @@ class Table extends Store implements ITable
                 $condition_group = new Condition(
                     new Value($column, Value::TYPE_COLUMN),
                     Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING)
+                    new Value((string)$value)
                 );
             }
         } elseif (count($conditions) > 1) {
@@ -279,7 +279,7 @@ class Table extends Store implements ITable
                 $condition = new Condition(
                     new Value($column, Value::TYPE_COLUMN),
                     Condition::OPERATOR_EQUALS,
-                    new Value((string)$value, Value::TYPE_STRING)
+                    new Value((string)$value)
                 );
                 if (is_null($condition_group)) {
                     $condition_group = new ConditionGroup($condition);

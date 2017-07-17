@@ -91,15 +91,18 @@ class Value implements IValue
      * Type must match the actual type of the value parameter.
      * This object will not explicitly cast the type.
      *
-     * @param $value mixed value of the object
-     * @param $type int type of the value
+     * @param mixed $value value of the object
+     * @param int $type type of the value, use one of the class TYPE_* constants
      *
-     * @throw InvalidValueException when specified type and actual type do not match
-     * @throw UnknownTypeException when invalid type is supplied
+     * @throws InvalidValueException when specified type and actual type do not match
+     * @throws UnknownTypeException when invalid type is supplied
      */
-    public function __construct($value, $type)
+    public function __construct($value, $type = null)
     {
         // validate type and value
+        if (is_null($type)) {
+            $type = $this->determineType($value);
+        }
         /// NOTE use of gettype is not recommended in PHP to determine types. We use it only to provide information in exceptions.
         switch ($type) {
             case self::TYPE_NULL:
@@ -141,7 +144,7 @@ class Value implements IValue
                 /// NOTE this is only valid for PHP >= 6
                 //if (!is_binary($value))
                 //{
-                //	throw new InvalidValueExceptionv("Value argument has invalid type (" . gettype($value) . "). Binary was expected.");
+                //	throw new InvalidValueException("Value argument has invalid type (" . gettype($value) . "). Binary was expected.");
                 //}
                 break;
             case self::TYPE_ARRAY:
@@ -197,6 +200,35 @@ class Value implements IValue
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Determine the type of a value given
+     *
+     * @param mixed $value
+     *
+     * @return int type class constant
+     *
+     * @throws UnknownTypeException when type of the value cannot be determined
+     */
+    private function determineType($value) {
+        $type = null;
+        if (is_array($value)) {
+            $type = self::TYPE_ARRAY;
+        } elseif (is_bool($value)) {
+            $type = self::TYPE_BOOLEAN;
+        } elseif (is_float($value)) {
+            $type = self::TYPE_FLOAT;
+        } elseif (is_int($value)) {
+            $type = self::TYPE_INTEGER;
+        } elseif (is_null($value)) {
+            $type = self::TYPE_NULL;
+        } elseif (is_string($value)) {
+            $type = self::TYPE_STRING;
+        } else {
+            throw new UnknownTypeException("Invalid value type " . gettype($value));
+        }
+        return $type;
     }
 
 }
