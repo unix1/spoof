@@ -31,7 +31,7 @@ class RandomTest extends \PHPUnit_Framework_TestCase
         $tries = 1000;
         $result = array();
         for ($i = 0; $i < $tries; ++$i) {
-            $key = \spoof\lib360\crypt\Random::getString(4, true, true);
+            $key = \spoof\lib360\crypt\Random::getString(2, true, true);
             $result[$key] = 1;
         }
         $actual = count($result);
