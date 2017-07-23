@@ -278,6 +278,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $userId = 999999; // doesn't exist
         $user = new HelperTableUser();
         $fields = array('name_first', 'name_last', 'id');
+        $e = null;
         try {
             $user->selectRecord($userId, $fields);
         } catch (RecordNotFoundException $e) {
@@ -307,6 +308,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $user->insert($values1);
         $user->insert($values2);
         $fields = array('name_first', 'name_last', 'id');
+        $e = null;
         try {
             $user->selectRecord($valueNameFirst, $fields);
         } catch (RecordPrimaryKeyException $e) {
@@ -645,6 +647,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
                 $userRecord->get('status'),
             )
         );
+        $e = null;
         try {
             $userRecordNotFound = $userTable->selectRecord($userId);
         } catch (RecordNotFoundException $e) {
@@ -665,6 +668,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $userRecord = $userTable->selectRecord($userId);
         $userRecord->__set('id', 999999); // doesn't exist
         $userRecord->set('name_first', $userFirstNameUpdated);
+        $e = null;
         try {
             $userTable->deleteRecord($userRecord);
         } catch (RecordNotFoundException $e) {
