@@ -445,6 +445,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $this->assertEquals(
             array(
                 $userId,
+                false,
                 $firstNameUpdated,
                 $lastNameUpdated,
                 $firstNameUpdated,
@@ -452,6 +453,7 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
             ),
             array(
                 $userRecordAfterUpdate->get('id'),
+                $userRecord->isModified(),
                 $userRecord->get('name_first'),
                 $userRecord->get('name_last'),
                 $userRecordAfterUpdate->get('name_first'),
