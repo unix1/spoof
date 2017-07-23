@@ -24,7 +24,7 @@ namespace spoof\lib360\db\data;
  *    Database record interface.
  *    This interface is used to define database data record.
  */
-interface IRecordList
+interface IRecordList extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
 {
     /**
      * Transforms object into XML representation.
