@@ -28,6 +28,7 @@ interface IRecordList extends \IteratorAggregate, \ArrayAccess, \Serializable, \
 {
     /**
      * Transforms object into XML representation.
+     *
      * @return \DOMDocument XML document object
      */
     public function toXML();

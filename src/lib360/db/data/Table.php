@@ -264,6 +264,20 @@ class Table extends Store implements ITable
         return $result;
     }
 
+    /**
+     * Gets condition object for given array of field names and values.
+     *
+     * This is a convenience function that returns a Condition or
+     * ConditionGroup object containing conditions of database table fields
+     * (represented as condition keys) equal literal values represented by
+     * as condition array values. If more than one element is present, the
+     * condition group will be returned and conditions will be joined with the
+     * AND operator.
+     *
+     * @param array $conditions Array containing fields as keys and their values
+     *
+     * @return Condition|ConditionGroup|null
+     */
     protected function getCondition(array $conditions) {
         $condition_group = null;
         if (count($conditions) == 1) {

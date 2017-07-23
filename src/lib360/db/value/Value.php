@@ -203,7 +203,7 @@ class Value implements IValue
     }
 
     /**
-     * Determine the type of a value given
+     * Determines the type of a value given.
      *
      * @param mixed $value
      *
