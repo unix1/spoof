@@ -19,7 +19,7 @@ In your `composer.json` make sure you have this repository:
 and this package:
 ```
     "require": {
-        "spoof/spoof": "~0.5"
+        "spoof/spoof": "~0.7"
     }
 ```
 

@@ -4,6 +4,11 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and new important features.
 
+0.7
+---
+
+- `ITable::deleteRecord` added
+
 0.6
 ---
 
