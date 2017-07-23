@@ -20,8 +20,7 @@
 
 namespace spoof\tests\lib360\db\executor;
 
-use spoof\lib360\db\connection\Config;
-use spoof\lib360\db\connection\PDO;
+use spoof\lib360\db\connection\Pool;
 use spoof\lib360\db\data\RecordList;
 use spoof\lib360\db\executor\PreparedQueryException;
 use spoof\lib360\db\object\Factory;
@@ -30,32 +29,9 @@ use spoof\lib360\db\value\Value;
 class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
 {
 
-    protected static $tablesCreated = false;
-    protected $db;
-
-    public function getDataSet()
+    private function getDB()
     {
-        if (!self::$tablesCreated) {
-            self::$pdo->query('drop table if exists "user"');
-            self::$pdo->query(
-                'create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')'
-            );
-            self::$tablesCreated = true;
-        }
-        return $this->createXMLDataSet(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'test-data1.xml');
-    }
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->db = new PDO(new Config($GLOBALS['DB_DSN']));
-        $this->db->connect();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-        $this->db->disconnect();
+        return Pool::getByName(static::$db);
     }
 
     /**
@@ -105,7 +81,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array();
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->select($this->db, $queryString, $queryValues);
+            $resultActual = $ex->select($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -130,7 +106,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array('l' => 'this index does not exist and should fail during execution');
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->select($this->db, $queryString, $queryValues);
+            $resultActual = $ex->select($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -159,7 +135,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             'name_first' => new Value($paramName, Value::TYPE_STRING)
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActual = $ex->select($this->db, $queryString, $queryValues);
+        $resultActual = $ex->select($this->getDB(), $queryString, $queryValues);
         $sthExpected = self::$pdo->prepare($queryString);
         $sthExpected->bindValue(':id', $paramID, \PDO::PARAM_INT);
         $sthExpected->bindValue(':name_first', $paramName, \PDO::PARAM_STR);
@@ -186,7 +162,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array();
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->update($this->db, $queryString, $queryValues);
+            $resultActual = $ex->update($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -214,7 +190,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array('l' => 'this index does not exist and should fail during execution');
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->update($this->db, $queryString, $queryValues);
+            $resultActual = $ex->update($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -244,7 +220,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             'name_last' => new Value($paramName, Value::TYPE_STRING)
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActualNumRows = $ex->update($this->db, $queryString, $queryValues);
+        $resultActualNumRows = $ex->update($this->getDB(), $queryString, $queryValues);
         $resultActual = array($resultActualNumRows, $paramName);
         $sthExpected = self::$pdo->prepare("select name_last from user where id = :id");
         $sthExpected->bindValue(':id', $paramID, \PDO::PARAM_INT);
@@ -271,7 +247,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array();
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->insert($this->db, $queryString, $queryValues);
+            $resultActual = $ex->insert($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -299,7 +275,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array('id' => 1, 'name_first' => 'test first', 'name_last' => 'test last');
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->insert($this->db, $queryString, $queryValues);
+            $resultActual = $ex->insert($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -331,8 +307,8 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
             'name_last' => new Value($paramNameLast, Value::TYPE_STRING)
         );
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActualInsertedID = $ex->insert($this->db, $queryString, $queryValues);
-        $resultActualID = $this->db->getConnection()->lastInsertId();
+        $resultActualInsertedID = $ex->insert($this->getDB(), $queryString, $queryValues);
+        $resultActualID = $this->getDB()->getConnection()->lastInsertId();
         $resultActual = array($resultActualInsertedID, $resultActualID, $paramNameFirst, $paramNameLast);
         $sthExpected = self::$pdo->prepare("select id, name_first, name_last from user where id = :id");
         $sthExpected->bindValue(':id', $resultActualID, \PDO::PARAM_INT);
@@ -364,7 +340,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array();
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->delete($this->db, $queryString, $queryValues);
+            $resultActual = $ex->delete($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -390,7 +366,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array('l' => 'this index does not exist and should fail during execution');
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->delete($this->db, $queryString, $queryValues);
+            $resultActual = $ex->delete($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -416,7 +392,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryString = "delete from user where id = :id";
         $queryValues = array('id' => new Value($paramID, Value::TYPE_INTEGER));
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $resultActualNumRows = $ex->delete($this->db, $queryString, $queryValues);
+        $resultActualNumRows = $ex->delete($this->getDB(), $queryString, $queryValues);
         $resultActual = array($resultActualNumRows, 0);
         $sthExpected = self::$pdo->prepare("select id from user where id = :id");
         $sthExpected->bindValue(':id', $paramID, \PDO::PARAM_INT);
@@ -442,7 +418,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array();
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->query($this->db, $queryString, $queryValues);
+            $resultActual = $ex->query($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -467,7 +443,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryValues = array('l' => 'this index does not exist and should fail during execution');
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
         try {
-            $resultActual = $ex->query($this->db, $queryString, $queryValues);
+            $resultActual = $ex->query($this->getDB(), $queryString, $queryValues);
         } catch (PreparedQueryException $e) {
         }
         $this->assertInstanceOf(
@@ -492,7 +468,7 @@ class PDOTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $queryString = "delete from user where id = :id";
         $queryValues = array('id' => new Value($paramID, Value::TYPE_INTEGER));
         $ex = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, 'PDO');
-        $ex->query($this->db, $queryString, $queryValues);
+        $ex->query($this->getDB(), $queryString, $queryValues);
         $sthExpected = self::$pdo->prepare("select id from user where id = :id");
         $sthExpected->bindValue(':id', $paramID, \PDO::PARAM_INT);
         $sthExpected->execute();

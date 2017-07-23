@@ -22,8 +22,6 @@ namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\condition\ConditionGroup;
-use spoof\lib360\db\connection\Config;
-use spoof\lib360\db\connection\PDO;
 use spoof\lib360\db\connection\Pool;
 use spoof\lib360\db\data\Record;
 use spoof\lib360\db\data\RecordList;
@@ -34,33 +32,6 @@ use spoof\lib360\db\value\Value;
 
 class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
 {
-
-    protected static $tablesCreated = false;
-    protected static $db = 'test';
-
-    public function getDataSet()
-    {
-        if (!self::$tablesCreated) {
-            self::$pdo->query('drop table if exists "user"');
-            self::$pdo->query(
-                'create table user (id integer primary key autoincrement, date_created datetime null default null, name_first varchar(50), name_last varchar(50), status varchar(10) not null default \'\')'
-            );
-            self::$tablesCreated = true;
-        }
-        return $this->createXMLDataSet(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'test-data1.xml');
-    }
-
-    public function setUp()
-    {
-        parent::setUp();
-        Pool::add(new PDO(new Config($GLOBALS['DB_DSN'])), self::$db);
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-        Pool::removeByName('test');
-    }
 
     /**
      * @covers \spoof\lib360\db\data\Table::select
