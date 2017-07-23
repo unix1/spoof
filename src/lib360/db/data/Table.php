@@ -63,8 +63,8 @@ class Table extends Store implements ITable
      */
     public function selectRecords(array $conditions = array(), array $fields = null)
     {
-        $condition_group = $this->getCondition($conditions);
-        return $this->select($condition_group, array(), $fields);
+        $conditionGroup = $this->getCondition($conditions);
+        return $this->select($conditionGroup, array(), $fields);
     }
 
     /**
@@ -116,10 +116,10 @@ class Table extends Store implements ITable
         // get connection object
         $db = Pool::getByName($this->db);
         // get language and query
-        $return_fields = is_null($fields) ? $this->fields : $fields;
+        $returnFields = is_null($fields) ? $this->fields : $fields;
         $query = Factory::get(Factory::OBJECT_TYPE_LANGUAGE, $this->getLanguage())->getSelect(
             $db->driver, $this,
-            $condition, $return_fields
+            $condition, $returnFields
         );
         // get executor and execute
         $result = Factory::get(Factory::OBJECT_TYPE_EXECUTOR, $this->getExecutor())->select(
@@ -301,10 +301,10 @@ class Table extends Store implements ITable
      * @return Condition|ConditionGroup|null
      */
     protected function getCondition(array $conditions) {
-        $condition_group = null;
+        $conditionGroup = null;
         if (count($conditions) == 1) {
             foreach ($conditions as $column => $value) {
-                $condition_group = new Condition(
+                $conditionGroup = new Condition(
                     new Value($column, Value::TYPE_COLUMN),
                     Condition::OPERATOR_EQUALS,
                     new Value((string)$value)
@@ -317,14 +317,14 @@ class Table extends Store implements ITable
                     Condition::OPERATOR_EQUALS,
                     new Value((string)$value)
                 );
-                if (is_null($condition_group)) {
-                    $condition_group = new ConditionGroup($condition);
+                if (is_null($conditionGroup)) {
+                    $conditionGroup = new ConditionGroup($condition);
                 } else {
-                    $condition_group->addCondition(ConditionGroup::OPERATOR_AND, $condition);
+                    $conditionGroup->addCondition(ConditionGroup::OPERATOR_AND, $condition);
                 }
             }
         }
-        return $condition_group;
+        return $conditionGroup;
     }
 
 }
