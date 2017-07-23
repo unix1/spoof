@@ -1,0 +1,105 @@
+<?php
+
+/**
+ *  This is Spoof.
+ *  Copyright (C) 2011-2017  Spoof project.
+ *
+ *  Spoof is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Spoof is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace spoof\lib360\db\data;
+
+/**
+ * Database model class
+ */
+interface IModel
+{
+
+    /**
+     * Creates new empty model instance.
+     *
+     * @return IModel instance of model implementation
+     */
+    public static function create();
+
+    /**
+     * Creates model from record.
+     *
+     * @param IRecord $record
+     *
+     * @return IModel instance of model implementation
+     */
+    public static function createFromRecord(IRecord $record);
+
+    /**
+     * Gets model by key.
+     *
+     * @param mixed $key
+     *
+     * @return IModel instance of model implementation
+     */
+    public static function getByKey($key);
+
+    public static function getByAttributes(array $attributes);
+
+//    public static function getByAttributeValues(array $attributes);
+
+    /**
+     * Gets attribute value.
+     *
+     * @param string $name Attribute name
+     *
+     * @return mixed Attribute value
+     */
+    public function get($name);
+
+    /**
+     * Returns whether the record has a value set for primary key.
+     *
+     * @return boolean
+     */
+    public function hasKey();
+
+    /**
+     * Sets attribute value.
+     *
+     * @param string $name Attribute name
+     * @param mixed $value Attribute value
+     */
+    public function set($name, $value);
+
+//    public function setValues();
+
+    /**
+     * Stores updated model attributes in the database.
+     *
+     * @return boolean true
+     */
+    public function store();
+
+    /**
+     * Deletes model from the database.
+     *
+     * @return boolean
+     */
+    public function delete();
+
+    /**
+     * Sets implementation specific ITable object to static::$table property.
+     */
+    public function setTable();
+
+}
+
+?>
