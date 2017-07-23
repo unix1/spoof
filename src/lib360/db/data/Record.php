@@ -175,6 +175,17 @@ class Record extends \ArrayObject implements IRecord
     }
 
     /**
+     * Clears all fields by setting their values to null.
+     */
+    public function clear()
+    {
+        $this->clearModified();
+        foreach ($this as $key => $value) {
+            $this->$key = null;
+        }
+    }
+
+    /**
      * Transforms object into XML representation.
      *
      * @return \DOMDocument XML document object

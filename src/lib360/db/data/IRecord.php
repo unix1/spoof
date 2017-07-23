@@ -117,6 +117,11 @@ interface IRecord
     public function clearModified();
 
     /**
+     * Clears all fields by setting their values to null.
+     */
+    public function clear();
+
+    /**
      * Transforms object into XML representation.
      *
      * @return \DOMDocument XML document object

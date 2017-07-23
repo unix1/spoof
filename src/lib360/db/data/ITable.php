@@ -126,6 +126,17 @@ interface ITable extends IStore
      */
     public function delete(ICondition $condition = null, array $values = array());
 
+    /**
+     * Deletes a record from the table.
+     *
+     * @param IRecord $record
+     *
+     * @return integer number of rows deleted
+     *
+     * @throws RecordNotFoundException when record to delete is not found
+     */
+    public function deleteRecord(IRecord $record);
+
 }
 
 ?>

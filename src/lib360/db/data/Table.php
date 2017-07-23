@@ -265,6 +265,28 @@ class Table extends Store implements ITable
     }
 
     /**
+     * Deletes a record from the table.
+     *
+     * @param IRecord $record
+     *
+     * @return integer number of rows deleted
+     *
+     * @throws RecordNotFoundException when record to delete is not found
+     */
+    public function deleteRecord(IRecord $record)
+    {
+        $condition = $this->getCondition(
+            array($this->key => $record->getOriginal($this->key))
+        );
+        $deleted = $this->delete($condition);
+        if ($deleted == 0) {
+            throw new RecordNotFoundException('Record not found for delete');
+        }
+        $record->clear();
+        return $deleted;
+    }
+
+    /**
      * Gets condition object for given array of field names and values.
      *
      * This is a convenience function that returns a Condition or

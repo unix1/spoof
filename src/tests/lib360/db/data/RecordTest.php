@@ -239,6 +239,28 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Record::clear
+     * @depends testClearModified
+     */
+    public function testClear()
+    {
+        $record = new Record();
+        $record->key1 = 'value 1';
+        $record->key2 = 'value 2';
+        $record->set('key1', 'value 1 updated');
+        $record->clear();
+        $this->assertEquals(
+            array(false, array(), null, null),
+            array(
+                $record->isModified(),
+                $record->getModified(),
+                $record->get('key1'),
+                $record->get('key2'),
+            )
+        );
+    }
+
+    /**
      * @covers  \spoof\lib360\db\data\Record::toXML
      * @depends test__Set
      * @depends test__Get_Success

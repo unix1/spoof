@@ -621,6 +621,90 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
     }
 
+    /**
+     * @covers \spoof\lib360\db\data\Table::deleteRecord
+     * @depends testDelete_Condition
+     * @depends testSelectRecord_Success
+     */
+    public function testDeleteRecord_Success()
+    {
+        $userId = 4;
+        $userTable = new HelperTableUser();
+        $userRecord = $userTable->selectRecord($userId);
+        $userRecord->set('name_first', 'first name update but should not matter');
+        $userTable->deleteRecord($userRecord);
+        $this->assertEquals(
+            array(false, array(), null, null, null, null, null),
+            array(
+                $userRecord->isModified(),
+                $userRecord->getModified(),
+                $userRecord->get('id'),
+                $userRecord->get('date_created'),
+                $userRecord->get('name_first'),
+                $userRecord->get('name_last'),
+                $userRecord->get('status'),
+            )
+        );
+        try {
+            $userRecordNotFound = $userTable->selectRecord($userId);
+        } catch (RecordNotFoundException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\data\RecordNotFoundException', $e);
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::deleteRecord
+     * @depends testDelete_Condition
+     * @depends testSelectRecord_Success
+     */
+    public function testDeleteRecord_Fail()
+    {
+        $userId = 4;
+        $userFirstNameUpdated = 'first name update that should not matter';
+        $userTable = new HelperTableUser();
+        $userRecord = $userTable->selectRecord($userId);
+        $userRecord->__set('id', 999999); // doesn't exist
+        $userRecord->set('name_first', $userFirstNameUpdated);
+        try {
+            $userTable->deleteRecord($userRecord);
+        } catch (RecordNotFoundException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\data\RecordNotFoundException', $e);
+        $userRecordAfterDelete = $userTable->selectRecord($userId);
+        $this->assertEquals(
+            array(
+                0 => array(4, '2008-10-28 18:22:55', 'Mono', 'Sailor', 'active'),
+                1 => array(
+                    true,
+                    array('name_first' => $userFirstNameUpdated),
+                    999999,
+                    '2008-10-28 18:22:55',
+                    $userFirstNameUpdated,
+                    'Sailor',
+                    'active',
+                )
+            ),
+            array(
+                0 => array(
+                    $userRecordAfterDelete->get('id'),
+                    $userRecordAfterDelete->get('date_created'),
+                    $userRecordAfterDelete->get('name_first'),
+                    $userRecordAfterDelete->get('name_last'),
+                    $userRecordAfterDelete->get('status'),
+                ),
+                1 => array(
+                    $userRecord->isModified(),
+                    $userRecord->getModified(),
+                    $userRecord->get('id'),
+                    $userRecord->get('date_created'),
+                    $userRecord->get('name_first'),
+                    $userRecord->get('name_last'),
+                    $userRecord->get('status'),
+                ),
+            )
+        );
+    }
+
 }
 
 ?>
