@@ -119,15 +119,15 @@ class SQL implements ILanguage
     public function getSelectFields(IDriver $driver, array $fields = null)
     {
         if (!is_null($fields) && is_array($fields) && count($fields) > 0) {
-            $fields_select = array();
-            foreach ($fields as $field_key => $field_value) {
-                $fields_select[] = $this->getSelectFieldFormatted($driver, $field_key, $field_value);
+            $fieldsSelect = array();
+            foreach ($fields as $fieldKey => $fieldValue) {
+                $fieldsSelect[] = $this->getSelectFieldFormatted($driver, $fieldKey, $fieldValue);
             }
-            $fields_string = implode(self::SELECT_FIELD_SEPARATOR, $fields_select);
+            $fieldsString = implode(self::SELECT_FIELD_SEPARATOR, $fieldsSelect);
         } else {
-            $fields_string = self::SELECT_FIELDS_ALL;
+            $fieldsString = self::SELECT_FIELDS_ALL;
         }
-        return $fields_string;
+        return $fieldsString;
     }
 
     /**
@@ -137,20 +137,20 @@ class SQL implements ILanguage
      * If non-associative array given element value will be used as the field name.
      *
      * @param IDriver $driver database driver
-     * @param mixed $field_key can be associative string key or integer
-     * @param string $field_value field name
+     * @param mixed $fieldKey can be associative string key or integer
+     * @param string $fieldValue field name
      *
      * @return string formatted field
      */
-    public function getSelectFieldFormatted(IDriver $driver, $field_key, $field_value)
+    public function getSelectFieldFormatted(IDriver $driver, $fieldKey, $fieldValue)
     {
-        if (is_numeric($field_key)) {
-            $field = $this->getFieldFormatted($driver, $field_value);
+        if (is_numeric($fieldKey)) {
+            $field = $this->getFieldFormatted($driver, $fieldValue);
         } else {
             $field = $this->getFieldFormatted(
                     $driver,
-                    $field_key
-                ) . ' ' . self::SELECT_AS . ' ' . $driver->columnQuoteStart . $field_value . $driver->columnQuoteEnd;
+                    $fieldKey
+                ) . ' ' . self::SELECT_AS . ' ' . $driver->columnQuoteStart . $fieldValue . $driver->columnQuoteEnd;
         }
         return $field;
     }
@@ -249,24 +249,24 @@ class SQL implements ILanguage
         foreach ($join->tableJoin as $i => $table) {
             switch ($join->type[$i]) {
                 case $join::JOIN_TYPE_LEFT_OUTER:
-                    $join_string = self::JOIN_TYPE_LEFT_OUTER;
+                    $joinString = self::JOIN_TYPE_LEFT_OUTER;
                     break;
                 case $join::JOIN_TYPE_INNER:
-                    $join_string = self::JOIN_TYPE_INNER;
+                    $joinString = self::JOIN_TYPE_INNER;
                     break;
                 case $join::JOIN_TYPE_JOIN:
-                    $join_string = self::JOIN_TYPE_JOIN;
+                    $joinString = self::JOIN_TYPE_JOIN;
                     break;
                 case $join::JOIN_TYPE_RIGHT_OUTER:
-                    $join_string = self::JOIN_TYPE_RIGHT_OUTER;
+                    $joinString = self::JOIN_TYPE_RIGHT_OUTER;
                     break;
                 case $join::JOIN_TYPE_FULL:
-                    $join_string = self::JOIN_TYPE_FULL;
+                    $joinString = self::JOIN_TYPE_FULL;
                     break;
                 default:
                     throw new UnknownTypeException("Unsupported join type " . $join->type[$i]);
             }
-            $query->addString($join_string);
+            $query->addString($joinString);
             $query->addString($driver->tableQuoteStart . $table . $driver->tableQuoteEnd);
             $query->addString(self::SELECT_JOIN_ON);
             $query->addQuery($this->getCondition($driver, $join->condition[$i]));
@@ -305,7 +305,7 @@ class SQL implements ILanguage
      * Returns SQL operator for given condition group object operator.
      *
      * @param IDriver $driver database driver object
-     * @param integer $group_operator one of ConditionGroup operator constants' values
+     * @param integer $groupOperator one of ConditionGroup operator constants' values
      *
      * @return string SQL operator
      *
@@ -313,9 +313,9 @@ class SQL implements ILanguage
      *
      * @see ConditionGroup
      */
-    public function getConditionGroupOperator(IDriver $driver, $group_operator)
+    public function getConditionGroupOperator(IDriver $driver, $groupOperator)
     {
-        switch ($group_operator) {
+        switch ($groupOperator) {
             case ConditionGroup::OPERATOR_AND:
                 $operator = self::CONDITIONGROUP_AND;
                 break;
@@ -323,7 +323,7 @@ class SQL implements ILanguage
                 $operator = self::CONDITIONGROUP_OR;
                 break;
             default:
-                throw new SQLException("Unsupported or illegal condition group operator (" . $group_operator . ").");
+                throw new SQLException("Unsupported or illegal condition group operator (" . $groupOperator . ").");
         }
         return $operator;
     }
@@ -354,13 +354,13 @@ class SQL implements ILanguage
 
             case Value::TYPE_ARRAY:
                 $query->addString(self::CONDITION_VALUES_WRAPPER_START);
-                $first_value = true;
+                $firstValue = true;
                 foreach ($value->getValue() as $v) {
-                    if (!$first_value) {
+                    if (!$firstValue) {
                         $query->addString(self::CONDITION_VALUES_SEPARATOR, false);
                     }
                     $query->addQuery($this->getValue($driver, $v));
-                    $first_value = false;
+                    $firstValue = false;
                 }
                 $query->addString(self::CONDITION_VALUES_WRAPPER_END);
                 break;
@@ -376,7 +376,6 @@ class SQL implements ILanguage
             case Value::TYPE_BINARY:
             default:
                 $tag = (string)Random::getString(4, true, true);
-                //$tag = (string)$this->getRandomTag();
                 $query->addString(self::BIND_CHAR . $tag);
                 $query->values[$tag] = $value;
                 break;
