@@ -245,8 +245,8 @@ class SQL implements ILanguage
     public function getJoin(IDriver $driver, IJoin $join)
     {
         $query = new Query();
-        $query->setString($driver->tableQuoteStart . $join->table_base . $driver->tableQuoteEnd);
-        foreach ($join->table_join as $i => $table) {
+        $query->setString($driver->tableQuoteStart . $join->tableBase . $driver->tableQuoteEnd);
+        foreach ($join->tableJoin as $i => $table) {
             switch ($join->type[$i]) {
                 case $join::JOIN_TYPE_LEFT_OUTER:
                     $join_string = self::JOIN_TYPE_LEFT_OUTER;

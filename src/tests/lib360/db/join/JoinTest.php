@@ -43,7 +43,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
         $j = new Join($t1_name, $join, $t2_name, $cond);
         $this->assertEquals(
             array($t1_name, array($join), array($t2_name), array($cond)),
-            array($j->table_base, $j->type, $j->table_join, $j->condition),
+            array($j->tableBase, $j->type, $j->tableJoin, $j->condition),
             "Constructor failed to set given values to join object properties"
         );
     }
@@ -73,7 +73,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
         $j->addTable($join23, $t3_name, $cond23);
         $this->assertEquals(
             array($t1_name, array($join12, $join23), array($t2_name, $t3_name), array($cond12, $cond23)),
-            array($j->table_base, $j->type, $j->table_join, $j->condition),
+            array($j->tableBase, $j->type, $j->tableJoin, $j->condition),
             "Failed to set given values to join object properties"
         );
     }

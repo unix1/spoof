@@ -53,13 +53,13 @@ class Join implements IJoin
      *
      * Property used to store name of the base table for the join.
      */
-    public $table_base;
+    public $tableBase;
     /**
      * Array of joined table names
      *
      * Property used to store names of joined tables.
      */
-    public $table_join;
+    public $tableJoin;
     /**
      * Array of join types
      *
@@ -76,18 +76,18 @@ class Join implements IJoin
     /**
      * Constructor.
      *
-     * @param string $table_base string base table name
+     * @param string $tableBase string base table name
      * @param integer $type join type, one of defined class join type constants should be used
      * @param string $table_join joined table name
      * @param ICondition $condition database condition object
      */
-    public function __construct($table_base, $type, $table_join, ICondition $condition)
+    public function __construct($tableBase, $type, $table_join, ICondition $condition)
     {
-        $this->table_base = $table_base;
-        $this->table_join = array();
+        $this->tableBase = $tableBase;
+        $this->tableJoin = array();
         $this->type = array();
         $this->condition = array();
-        $this->table_join[] = $table_join;
+        $this->tableJoin[] = $table_join;
         $this->type[] = $type;
         $this->condition[] = $condition;
     }
@@ -101,7 +101,7 @@ class Join implements IJoin
      */
     public function addTable($type, $table_join, ICondition $condition)
     {
-        $this->table_join[] = $table_join;
+        $this->tableJoin[] = $table_join;
         $this->type[] = $type;
         $this->condition[] = $condition;
     }
