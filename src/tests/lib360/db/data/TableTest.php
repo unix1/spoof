@@ -446,12 +446,16 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
             array(
                 $userId,
                 $firstNameUpdated,
-                $lastNameUpdated
+                $lastNameUpdated,
+                $firstNameUpdated,
+                $lastNameUpdated,
             ),
             array(
                 $userRecordAfterUpdate->get('id'),
+                $userRecord->get('name_first'),
+                $userRecord->get('name_last'),
                 $userRecordAfterUpdate->get('name_first'),
-                $userRecordAfterUpdate->get('name_last')
+                $userRecordAfterUpdate->get('name_last'),
             ),
             "Failed to match expected updated record values"
         );
