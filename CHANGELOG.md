@@ -2,16 +2,24 @@ Changelog
 =========
 
 This document will list any non-backward compatible breaking changes between
-versions, and new important features.
+versions, and notable new features.
+
+0.8
+---
+
+new features:
+- `Model` and `ModelList` classes added
 
 0.7
 ---
 
+new features:
 - `ITable::deleteRecord` added
 
 0.6
 ---
 
+potentially breaking changes:
 - `ITable::insert` now returns last inserted ID of the record instead of the
   number of rows affected
 
