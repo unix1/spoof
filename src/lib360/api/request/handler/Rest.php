@@ -53,7 +53,7 @@ class Rest extends api\request\Handler
         } else {
             $request->parts = explode('/', strstr($_SERVER['REQUEST_URI'], '?', true));
         }
-        // Remove part 0 genearated as a result of initial `/`
+        // Remove part 0 generated as a result of initial `/`
         if (isset($request->parts[0]) && $request->parts[0] == '') {
             array_shift($request->parts);
         }

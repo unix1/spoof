@@ -34,11 +34,13 @@ abstract class Handler implements IHandler
 
     /**
      * Internal storage for authenticator
+     * @var auth\IAuthenticator
      */
     protected $authenticator;
 
     /**
      * Internal storage for request router
+     * @var api\IRouter
      */
     protected $router;
 
