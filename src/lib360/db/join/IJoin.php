@@ -30,21 +30,21 @@ interface IJoin
     /**
      * Constructor.
      *
-     * @param string $table_base string base table name
+     * @param string $tableBase string base table name
      * @param integer $type join type, one of defined class join type constants should be used
-     * @param string $table_join joined table name
+     * @param string $tableJoin joined table name
      * @param ICondition $condition database condition object
      */
-    public function __construct($table_base, $type, $table_join, ICondition $condition);
+    public function __construct($tableBase, $type, $tableJoin, ICondition $condition);
 
     /**
      * Adds a table to the join.
      *
      * @param integer $type join type, one of defined class join type constants should be used
-     * @param string $table_join joined table name
+     * @param string $tableJoin joined table name
      * @param ICondition $condition database condition object
      */
-    public function addTable($type, $table_join, ICondition $condition);
+    public function addTable($type, $tableJoin, ICondition $condition);
 
 }
 

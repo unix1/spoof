@@ -78,16 +78,16 @@ class Join implements IJoin
      *
      * @param string $tableBase string base table name
      * @param integer $type join type, one of defined class join type constants should be used
-     * @param string $table_join joined table name
+     * @param string $tableJoin joined table name
      * @param ICondition $condition database condition object
      */
-    public function __construct($tableBase, $type, $table_join, ICondition $condition)
+    public function __construct($tableBase, $type, $tableJoin, ICondition $condition)
     {
         $this->tableBase = $tableBase;
         $this->tableJoin = array();
         $this->type = array();
         $this->condition = array();
-        $this->tableJoin[] = $table_join;
+        $this->tableJoin[] = $tableJoin;
         $this->type[] = $type;
         $this->condition[] = $condition;
     }
@@ -96,12 +96,12 @@ class Join implements IJoin
      * Adds a table to the join.
      *
      * @param integer $type join type, one of defined class join type constants should be used
-     * @param string $table_join joined table name
+     * @param string $tableJoin joined table name
      * @param ICondition $condition database condition object
      */
-    public function addTable($type, $table_join, ICondition $condition)
+    public function addTable($type, $tableJoin, ICondition $condition)
     {
-        $this->tableJoin[] = $table_join;
+        $this->tableJoin[] = $tableJoin;
         $this->type[] = $type;
         $this->condition[] = $condition;
     }
