@@ -201,7 +201,7 @@ class PDO implements IExecutor
      */
     private function queryLastInsertId(IConnection $conn, $query, array $values = null)
     {
-        $sth = $this->queryStatementClose($conn, $query, $values);
+        $this->queryStatementClose($conn, $query, $values);
         return $conn->getConnection()->lastInsertId();
     }
 
