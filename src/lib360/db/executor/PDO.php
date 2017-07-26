@@ -52,7 +52,7 @@ class PDO implements IExecutor
      *
      * @return \spoof\lib360\db\data\RecordList object
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     public function select(IConnection $conn, $query, array $values = null, $name = null)
     {
@@ -104,7 +104,7 @@ class PDO implements IExecutor
      *
      * @return \PDOStatement PDO statement handle object
      *
-     * @throw PreparedQueryException when database error occurs during statement creation
+     * @throws PreparedQueryException when database error occurs during statement creation
      */
     private function getStatement(IConnection $conn, $query)
     {
@@ -124,7 +124,7 @@ class PDO implements IExecutor
      * @param \PDOStatement $sth
      * @param array $values
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     private function execute(\PDOStatement $sth, array $values = null)
     {
@@ -168,7 +168,7 @@ class PDO implements IExecutor
      *
      * @return integer number of rows updated
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     public function update(IConnection $conn, $query, array $values = null)
     {
@@ -229,7 +229,7 @@ class PDO implements IExecutor
      *
      * @return mixed inserted row ID
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     public function insert(IConnection $conn, $query, array $values = null)
     {
@@ -245,7 +245,7 @@ class PDO implements IExecutor
      *
      * @return integer number of rows deleted
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     public function delete(IConnection $conn, $query, array $values = null)
     {
@@ -259,7 +259,7 @@ class PDO implements IExecutor
      * @param string $query prepared query statement
      * @param array $values optional array of values for prepared statement
      *
-     * @throw PreparedQueryException when database error occurs during query execution
+     * @throws PreparedQueryException when database error occurs during query execution
      */
     public function query(IConnection $conn, $query, array $values = null)
     {

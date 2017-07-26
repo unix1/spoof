@@ -180,7 +180,7 @@ class SQL implements ILanguage
      *
      * @return Query object
      *
-     * @throw \InvalidArgumentException when invalid or unsupported storage object type is given
+     * @throws \InvalidArgumentException when invalid or unsupported storage object type is given
      */
     public function getSelectFrom(IDriver $driver, IStore $storage)
     {
@@ -206,7 +206,7 @@ class SQL implements ILanguage
      *
      * @return Query object
      *
-     * @throw \InvalidArgumentException when any of the view joins are not \spoof\lib360\db\join\IJoin, ITable, or string table name
+     * @throws \InvalidArgumentException when any of the view joins are not \spoof\lib360\db\join\IJoin, ITable, or string table name
      *
      * @see \spoof\lib360\db\data\View
      */
@@ -309,7 +309,7 @@ class SQL implements ILanguage
      *
      * @return string SQL operator
      *
-     * @throw SQLException when illegal or unsupported operator given
+     * @throws SQLException when illegal or unsupported operator given
      *
      * @see ConditionGroup
      */
@@ -391,7 +391,7 @@ class SQL implements ILanguage
      *
      * @return string SQL operator
      *
-     * @throw SQLException when condition operator is invalid or unsupported
+     * @throws SQLException when condition operator is invalid or unsupported
      */
     public function getConditionOperator(IDriver $driver, ICondition $condition)
     {

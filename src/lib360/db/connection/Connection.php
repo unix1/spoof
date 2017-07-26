@@ -63,9 +63,9 @@ abstract class Connection implements IConnection
      *
      * @param IConfig $config database connection configuration object
      *
-     * @throw ConfigException when DSN specified with $config object has
+     * @throws ConfigException when DSN specified with $config object has
      *    invalid format
-     * @throw NotFoundException when driver specified with $config
+     * @throws NotFoundException when driver specified with $config
      *    cannot be loaded
      *
      * @todo extra logging when \spoof\lib360\db\object\Factory throws exception?
@@ -94,7 +94,7 @@ abstract class Connection implements IConnection
     /**
      * Checks whether the database connection is active.
      *
-     * @return    boolean TRUE if connected, boolean FALSE otherwise
+     * @return boolean TRUE if connected, boolean FALSE otherwise
      *    TODO is there a better way to check if connection is live?
      */
     public function isConnected()

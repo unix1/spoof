@@ -34,8 +34,8 @@ interface IValue
      * @param $value mixed value of the object
      * @param $type int type of the value
      *
-     * @throw InvalidValueException when specified type and actual type do not match
-     * @throw UnknownTypeException when invalid type is supplied
+     * @throws InvalidValueException when specified type and actual type do not match
+     * @throws UnknownTypeException when invalid type is supplied
      */
     public function __construct($value, $type);
 

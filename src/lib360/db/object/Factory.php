@@ -69,9 +69,9 @@ class Factory
      *
      * @return mixed DB object requested
      *
-     * @throw TypeNotFoundException when $type is invalid
-     * @throw ClassNotFoundException when cannot find class definition for valid object type
-     * @throw NotFoundException when object gets created but fails the check of implementing a pre-defined interface
+     * @throws TypeNotFoundException when $type is invalid
+     * @throws ClassNotFoundException when cannot find class definition for valid object type
+     * @throws NotFoundException when object gets created but fails the check of implementing a pre-defined interface
      */
     public static function get($type, $name)
     {
@@ -112,7 +112,7 @@ class Factory
      * Gets object type configuration
      * @param string $type type of object
      * @return array configuration
-     * @throw \InvalidArgumentException when $type is not defined
+     * @throws \InvalidArgumentException when $type is not defined
      */
     public static function getType($type)
     {

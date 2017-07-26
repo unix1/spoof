@@ -64,7 +64,7 @@ interface IExecutor
      *
      * @return mixed inserted row ID
      *
-     * @throw \spoof\lib360\db\Exception when database error occurs during query execution
+     * @throws \spoof\lib360\db\Exception when database error occurs during query execution
      */
     public function insert(IConnection $conn, $query, array $values = null);
 
@@ -77,7 +77,7 @@ interface IExecutor
      *
      * @return integer number of rows deleted
      *
-     * @throw \lib360\db\Exception when database error occurs during query execution
+     * @throws \spoof\lib360\db\Exception when database error occurs during query execution
      */
     public function delete(IConnection $conn, $query, array $values = null);
 
@@ -88,7 +88,7 @@ interface IExecutor
      * @param string $query prepared query statement
      * @param array $values optional array of values for prepared statement
      *
-     * @throw \lib360\db\Exception when database error occurs during query execution
+     * @throws \spoof\lib360\db\Exception when database error occurs during query execution
      */
     public function query(IConnection $conn, $query, array $values = null);
 

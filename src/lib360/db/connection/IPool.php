@@ -34,7 +34,7 @@ interface IPool
      * @param IConnection $conn database connection object
      * @param string $name name alias for the connection
      *
-     * @throw \InvalidArgumentException when supplied alias already exists
+     * @throws \InvalidArgumentException when supplied alias already exists
      */
     public static function add(IConnection $conn, $name);
 
@@ -47,7 +47,7 @@ interface IPool
      *
      * @return Connection object
      *
-     * @throw \InvalidArgumentException when supplied alias is not found in the pool
+     * @throws \InvalidArgumentException when supplied alias is not found in the pool
      */
     public static function getByName($name, $connect = true);
 

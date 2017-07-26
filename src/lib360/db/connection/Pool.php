@@ -41,7 +41,7 @@ class Pool implements IPool
      * @param IConnection $conn database connection object
      * @param string $name name alias for the connection
      *
-     * @throw InvalidArgumentException when supplied alias already exists
+     * @throws InvalidArgumentException when supplied alias already exists
      */
     public static function add(IConnection $conn, $name)
     {
@@ -57,7 +57,7 @@ class Pool implements IPool
      * @param string $name connection name
      * @param boolean $disconnect whether to disconnect (if connected) first, default TRUE
      *
-     * @throw \InvalidArgumentException when supplied alias is not found in the pool
+     * @throws \InvalidArgumentException when supplied alias is not found in the pool
      */
     public static function removeByName($name, $disconnect = true)
     {
@@ -81,7 +81,7 @@ class Pool implements IPool
      *
      * @return Connection object
      *
-     * @throw InvalidArgumentException when supplied alias is not found in the pool
+     * @throws InvalidArgumentException when supplied alias is not found in the pool
      */
     public static function getByName($name, $connect = true)
     {
