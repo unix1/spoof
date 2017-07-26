@@ -24,9 +24,10 @@ use spoof\lib360\db\object\Factory;
 use spoof\lib360\db\object\NotFoundException;
 
 /**
- * A database connection class
+ * Abstract database connection class
  *
- * This class is a wrapper around PHP's PDO database connection object.
+ * Implementing connection classes must extend this and implement the connect
+ * method.
  */
 abstract class Connection implements IConnection
 {

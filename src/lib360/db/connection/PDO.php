@@ -21,7 +21,9 @@
 namespace spoof\lib360\db\connection;
 
 /**
- *    TODO add class docblock
+ * A PDO database connection class
+ *
+ * This class is a wrapper around PHP's PDO database connection object.
  */
 class PDO extends Connection
 {
