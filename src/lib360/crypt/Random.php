@@ -35,18 +35,18 @@ class Random
      * Returns a random and optionally unique (per process) alphanumeric
      * string of a specified length.
      *
-     * @param int $n length
+     * @param int $length length
      * @param boolean $unique whether value should be unique
      * @param boolean $addToUniqueList whether to add to unique list
      *
      * @return random string
      */
-    public static function getString($n, $unique, $addToUniqueList)
+    public static function getString($length, $unique, $addToUniqueList)
     {
-        $result = base_convert(mt_rand(base_convert(pow(10, $n - 1), 36, 10), pow(36, $n)), 10, 36);
+        $result = base_convert(mt_rand(base_convert(pow(10, $length - 1), 36, 10), pow(36, $length)), 10, 36);
         if ($unique) {
             while (isset(self::$randomValues[$result])) {
-                $result = base_convert(mt_rand(base_convert(pow(10, $n - 1), 36, 10), pow(36, $n)), 10, 36);
+                $result = base_convert(mt_rand(base_convert(pow(10, $length - 1), 36, 10), pow(36, $length)), 10, 36);
             }
         }
         if ($addToUniqueList) {
