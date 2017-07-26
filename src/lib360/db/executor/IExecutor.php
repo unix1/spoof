@@ -38,7 +38,7 @@ interface IExecutor
      *
      * @return \spoof\lib360\db\data\IRecordList object
      *
-     * @throw \spoof\lib360\db\Exception when database error occurs during query execution
+     * @throws \spoof\lib360\db\Exception when database error occurs during query execution
      */
     public function select(IConnection $conn, $query, array $values = null, $name = null);
 
@@ -51,7 +51,7 @@ interface IExecutor
      *
      * @return integer number of rows updated
      *
-     * @throw \spoof\lib360\db\Exception when database error occurs during query execution
+     * @throws \spoof\lib360\db\Exception when database error occurs during query execution
      */
     public function update(IConnection $conn, $query, array $values = null);
 
