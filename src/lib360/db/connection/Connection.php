@@ -109,7 +109,7 @@ abstract class Connection implements IConnection
     /**
      * Retrieves the underlying connection object.
      *
-     * @return    connection object if connected, NULL otherwise
+     * @return mixed connection object if connected, NULL otherwise
      */
     public function getConnection()
     {

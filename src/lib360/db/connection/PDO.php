@@ -28,7 +28,7 @@ class PDO extends Connection
     /**
      * Connects the object to the database.
      *
-     * @return PDO connection
+     * @return \PDO connection
      */
     public function connect()
     {

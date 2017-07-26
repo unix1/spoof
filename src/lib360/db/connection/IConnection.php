@@ -50,6 +50,13 @@ interface IConnection
     public function isConnected();
 
     /**
+     * Retrieves the underlying connection object.
+     *
+     * @return mixed connection object if connected, NULL otherwise
+     */
+    public function getConnection();
+
+    /**
      * Closes the connection.
      */
     public function disconnect();

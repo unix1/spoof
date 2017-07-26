@@ -204,6 +204,7 @@ class PDO implements IExecutor
         $sth = $this->queryStatementClose($conn, $query, $values);
         return $conn->getConnection()->lastInsertId();
     }
+
     /**
      *    Executes query and gets closed statement handle.
      *
