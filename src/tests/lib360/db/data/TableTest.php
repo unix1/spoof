@@ -27,6 +27,7 @@ use spoof\lib360\db\data\Record;
 use spoof\lib360\db\data\RecordList;
 use spoof\lib360\db\data\RecordNotFoundException;
 use spoof\lib360\db\data\RecordPrimaryKeyException;
+use spoof\lib360\db\executor\PreparedQueryException;
 use spoof\lib360\db\object\Factory;
 use spoof\lib360\db\value\Value;
 
@@ -472,11 +473,12 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
             "Updated record should not have had any changes"
         );
     }
+
     /**
      * @covers \spoof\lib360\db\data\Table::insert
      * @depends testSelect_ConditionFields
      */
-    public function testInsert()
+    public function testInsert_Success()
     {
         $valueNameFirst = 'test first';
         $valueNameLast = 'test last';
@@ -511,6 +513,29 @@ class TableTest extends \spoof\tests\lib360\db\DatabaseTestCase
         $resultActual['name_first'] = $resultActualRows[0]->name_first;
         $resultActual['name_last'] = $resultActualRows[0]->name_last;
         $this->assertEquals($resultExpected, $resultActual, "Select result didn't match the inserted values");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Table::insert
+     * @depends testSelect_ConditionFields
+     */
+    public function testInsert_Fail()
+    {
+        $valueNameFirst = 'test first';
+        $valueNameLast = 'test last';
+        $valueID = 1;
+        $values = array(
+            'id' => new Value($valueID, Value::TYPE_INTEGER),
+            'name_first' => new Value($valueNameFirst, Value::TYPE_STRING),
+            'name_last' => new Value($valueNameLast, Value::TYPE_STRING)
+        );
+        $user = new HelperTableUser();
+        $e = null;
+        try {
+            $user->insert($values);
+        } catch (PreparedQueryException $e) {
+        }
+        $this->assertInstanceOf('\spoof\lib360\db\executor\PreparedQueryException', $e);
     }
 
     /**
