@@ -4,6 +4,12 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and notable new features.
 
+0.8.1
+-----
+
+potentially breaking bug fix:
+- `ModelList::offsetGet` now always returns an instance of a `Model`
+
 0.8
 ---
 
