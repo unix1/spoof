@@ -138,7 +138,9 @@ class ModelList implements IModelList
      */
     public function offsetGet($offset)
     {
-        return $this->recordList->offsetGet($offset);
+        $record = $this->recordList->offsetGet($offset);
+        $class = $this->modelClass;
+        return $class::createFromRecord($record);
     }
 
     /**

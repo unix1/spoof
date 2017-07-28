@@ -21,6 +21,7 @@
 namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\data\ModelList;
+use spoof\lib360\db\data\Record;
 use spoof\lib360\db\data\RecordList;
 
 class ModelListTest extends \spoof\tests\lib360\db\DatabaseTestCase
@@ -142,6 +143,7 @@ class ModelListTest extends \spoof\tests\lib360\db\DatabaseTestCase
     public function testOffsetGet()
     {
         $users = HelperModelUser::getByAttributes(array('status' => 'inactive'));
+        $this->assertInstanceOf('\spoof\lib360\db\data\Model', $users[1]);
         $this->assertEquals(
             array(3, 'Steep', 'Pinata', 'inactive'),
             array(
@@ -163,11 +165,13 @@ class ModelListTest extends \spoof\tests\lib360\db\DatabaseTestCase
     public function testOffsetSet()
     {
         $users = HelperModelUser::getByAttributes(array('status' => 'inactive'));
-        $users[1] = '123';
+        $record = new Record();
+        $record->id = 123;
+        $users[1] = $record;
         $this->assertEquals(
             array('123', 1, 'Juno', 'Jiana', 'inactive'),
             array(
-                $users[1],
+                $users[1]->get('id'),
                 $users[0]->get('id'),
                 $users[0]->get('name_first'),
                 $users[0]->get('name_last'),
