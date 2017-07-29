@@ -31,9 +31,9 @@ class AllowAll implements IAuthenticator
     /**
      * Authenticate a request
      *
-     * @param \lib\Web\Request $request Request object
+     * @param Request $request Request object
      *
-     * @return boolean TRUE
+     * @return boolean true
      */
     public function authenticate(Request $request)
     {

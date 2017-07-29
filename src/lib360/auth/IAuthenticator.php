@@ -33,9 +33,9 @@ interface IAuthenticator
     /**
      * Authenticate a request
      *
-     * @param \lib\Web\Request $request Request object
+     * @param Request $request Request object
      *
-     * @return boolean TRUE on success, FALSE otherwise
+     * @return boolean true on success, false otherwise
      */
     public function authenticate(Request $request);
 
