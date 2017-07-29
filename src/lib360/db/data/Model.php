@@ -210,6 +210,16 @@ abstract class Model implements IModel
         $this->record = $record;
     }
 
+    /**
+     * Exports model to array representation.
+     *
+     * @return array associative array with field names as indexes
+     */
+    public function toArray()
+    {
+        return $this->record->toArray();
+    }
+
 }
 
 ?>

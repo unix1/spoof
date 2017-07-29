@@ -248,6 +248,26 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
     }
 
+    /**
+     * @covers \spoof\lib360\db\data\Model::toArray
+     * @depends testSet_Success
+     */
+    public function testToArray()
+    {
+        $model = HelperModelUser::create();
+        $model->set('name_first', 'value 1');
+        $model->set('name_last', 'value 2');
+        $model->set('status', 'value 3');
+        $expected = array(
+            'id' => null,
+            'date_created' => null,
+            'name_first' => 'value 1',
+            'name_last' => 'value 2',
+            'status' => 'value 3',
+        );
+        $this->assertEquals($expected, $model->toArray(), "Array conversion didn't match expected");
+    }
+
 }
 
 ?>
