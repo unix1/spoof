@@ -35,8 +35,10 @@ class Rest extends api\request\Handler
         api\Response::STATUS_OK => '200 OK',
         api\Response::STATUS_OK_CREATED => '201 Created',
         api\Response::STATUS_BAD_REQUEST => '400 Bad Request',
+        api\Response::STATUS_AUTH_FAILED => '401 Unauthorized',
         api\Response::STATUS_RESOURCE_NOT_FOUND => '404 Not Found',
         api\Response::STATUS_ERROR => '500 Internal Server Error',
+        api\Response::STATUS_METHOD_NOT_DEFINED => '501 Not Implemented',
         api\Response::STATUS_METHOD_NOT_IMPLEMENTED => '501 Not Implemented',
     );
 
