@@ -4,6 +4,12 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and notable new features.
 
+0.8.2
+-----
+
+new features:
+- added `Model::toArray()` and `Record::toArray()` methods
+
 0.8.1
 -----
 
