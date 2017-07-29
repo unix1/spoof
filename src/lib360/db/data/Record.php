@@ -186,7 +186,7 @@ class Record extends \ArrayObject implements IRecord
     }
 
     /**
-     * Transforms object into array representation.
+     * Exports record to array representation.
      *
      * @return array associative array, field names as indexes
      */
@@ -196,7 +196,7 @@ class Record extends \ArrayObject implements IRecord
     }
 
     /**
-     * Transforms object into XML representation.
+     * Exports record to XML representation.
      *
      * @return \DOMDocument XML document object
      */

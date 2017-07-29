@@ -100,6 +100,13 @@ interface IModel
      */
     public function setTable();
 
+    /**
+     * Exports model to array representation.
+     *
+     * @return array associative array with field names as indexes
+     */
+    public function toArray();
+
 }
 
 ?>
