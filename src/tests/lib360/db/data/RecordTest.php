@@ -261,6 +261,20 @@ class RecordTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Record::toArray
+     * @depends test__Set
+     * @depends test__Get_Success
+     */
+    public function testToArray()
+    {
+        $record = new Record();
+        $record->key1 = 'value 1';
+        $record->key2 = 'value 2';
+        $expected = array('key1' => 'value 1', 'key2' => 'value 2');
+        $this->assertEquals($expected, $record->toArray(), "Array conversion didn't match expected");
+    }
+
+    /**
      * @covers  \spoof\lib360\db\data\Record::toXML
      * @depends test__Set
      * @depends test__Get_Success

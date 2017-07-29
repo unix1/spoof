@@ -122,6 +122,13 @@ interface IRecord
     public function clear();
 
     /**
+     * Transforms object into array representation.
+     *
+     * @return array associative array, field names as indexes
+     */
+    public function toArray();
+
+    /**
      * Transforms object into XML representation.
      *
      * @return \DOMDocument XML document object

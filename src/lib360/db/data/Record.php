@@ -186,6 +186,16 @@ class Record extends \ArrayObject implements IRecord
     }
 
     /**
+     * Transforms object into array representation.
+     *
+     * @return array associative array, field names as indexes
+     */
+    public function toArray()
+    {
+        return (array)$this;
+    }
+
+    /**
      * Transforms object into XML representation.
      *
      * @return \DOMDocument XML document object
