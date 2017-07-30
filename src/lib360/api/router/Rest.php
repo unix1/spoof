@@ -144,6 +144,12 @@ class Rest implements api\IRouter
 
     /**
      * Internal function that translates request method to object method
+     *
+     * @param string $operation HTTP request method
+     *
+     * @return string Method name mapped to the given HTTP method
+     *
+     * @throws \BadMethodCallException when unimplemented method is given
      */
     protected function translateOperation($operation)
     {
