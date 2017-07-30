@@ -84,7 +84,7 @@ class Rest implements api\IRouter
             }
             $module = new $class($this->config);
             // execute called function
-            $response->body = call_user_func_array(array($module, $method), $args);
+            $response->body = call_user_func_array(array($module, $method), array($args));
             //TODO this needs to be different 2xx status based on what happened
             $response->status = api\Response::STATUS_OK;
         } catch (\InvalidArgumentException $e) {
