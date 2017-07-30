@@ -231,6 +231,34 @@ class SQLTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \spoof\lib360\db\language\SQL::getConditionOperator
      */
+    public function testGetConditionOperator_Like()
+    {
+        $c = new Condition(
+            new Value('test', Value::TYPE_COLUMN),
+            Condition::OPERATOR_LIKE,
+            new Value('test value', Value::TYPE_STRING)
+        );
+        $v = $this->l->getConditionOperator($this->d, $c);
+        $this->assertEquals(SQL::CONDITION_LIKE, $v, "Failed to return SQL 'like' operator");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\language\SQL::getConditionOperator
+     */
+    public function testGetConditionOperator_NotLike()
+    {
+        $c = new Condition(
+            new Value('test', Value::TYPE_COLUMN),
+            Condition::OPERATOR_NOT_LIKE,
+            new Value('test value', Value::TYPE_STRING)
+        );
+        $v = $this->l->getConditionOperator($this->d, $c);
+        $this->assertEquals(SQL::CONDITION_NOT_LIKE, $v, "Failed to return SQL 'not like' operator");
+    }
+
+    /**
+     * @covers \spoof\lib360\db\language\SQL::getConditionOperator
+     */
     public function testGetConditionOperator_Invalid()
     {
         $e = null;
