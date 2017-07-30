@@ -63,6 +63,14 @@ class Condition implements ICondition
      */
     const OPERATOR_NOT_IN = -4;
     /**
+     * Constant for like operator
+     */
+    const OPERATOR_LIKE = 5;
+    /**
+     * Constant for not like operator
+     */
+    const OPERATOR_NOT_LIKE = -5;
+    /**
      * Value of the left side of the condition
      *
      * Property used to store the value of the left side of the database condition.

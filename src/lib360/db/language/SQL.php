@@ -82,6 +82,8 @@ class SQL implements ILanguage
     const CONDITION_LESS_THAN_OR_EQUAL = '<=';
     const CONDITION_IN = 'in';
     const CONDITION_NOT_IN = 'not in';
+    const CONDITION_LIKE = 'like';
+    const CONDITION_NOT_LIKE = 'not like';
     const CONDITIONGROUP_AND = 'and';
     const CONDITIONGROUP_OR = 'or';
     const VALUE_NULL = 'null';
@@ -427,6 +429,12 @@ class SQL implements ILanguage
                 break;
             case Condition::OPERATOR_NOT_IN:
                 $operator = self::CONDITION_NOT_IN;
+                break;
+            case Condition::OPERATOR_LIKE:
+                $operator = self::CONDITION_LIKE;
+                break;
+            case Condition::OPERATOR_NOT_LIKE:
+                $operator = self::CONDITION_NOT_LIKE;
                 break;
             default:
                 throw new SQLException("Unsupported or illegal condition operator (" . $condition->operator . ").");
