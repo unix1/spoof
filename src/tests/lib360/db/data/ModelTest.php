@@ -20,8 +20,10 @@
 
 namespace spoof\tests\lib360\db\data;
 
+use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\data\ModelException;
 use spoof\lib360\db\data\RecordNotFoundException;
+use spoof\lib360\db\value\Value;
 
 class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
 {
@@ -133,6 +135,43 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     public function testGetByAttributes()
     {
         $users = HelperModelUser::getByAttributes(array('status' => 'active'));
+        $this->assertEquals(2, count($users));
+        foreach ($users as $user) {
+            $this->assertEquals('active', $user->get('status'));
+        }
+        $this->assertEquals(
+            array(
+                0 => array('id' => 2, 'name_first' => 'Numa', 'name_last' => null, 'status' => 'active'),
+                1 => array('id' => 4, 'name_first' => 'Mono', 'name_last' => 'Sailor', 'status' =>'active'),
+            ),
+            array(
+                0 => array(
+                    'id' => $users[0]->get('id'),
+                    'name_first' => $users[0]->get('name_first'),
+                    'name_last' => $users[0]->get('name_last'),
+                    'status' => $users[0]->get('status'),
+                ),
+                1 => array(
+                    'id' => $users[1]->get('id'),
+                    'name_first' => $users[1]->get('name_first'),
+                    'name_last' => $users[1]->get('name_last'),
+                    'status' => $users[1]->get('status'),
+                ),
+            )
+        );
+    }
+
+    /**
+     * @covers \spoof\lib360\db\data\Model::getByAttributes
+     */
+    public function testGetByCondition()
+    {
+        $condition = new Condition(
+            new Value('status', Value::TYPE_COLUMN),
+            Condition::OPERATOR_EQUALS,
+            new Value('active', Value::TYPE_STRING)
+        );
+        $users = HelperModelUser::getByCondition($condition);
         $this->assertEquals(2, count($users));
         foreach ($users as $user) {
             $this->assertEquals('active', $user->get('status'));

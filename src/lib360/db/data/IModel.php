@@ -20,6 +20,8 @@
 
 namespace spoof\lib360\db\data;
 
+use spoof\lib360\db\condition\ICondition;
+
 /**
  * Database model class
  */
@@ -60,7 +62,14 @@ interface IModel
      */
     public static function getByAttributes(array $attributes);
 
-//    public static function getByAttributeValues(array $attributes);
+    /**
+     * Gets model list by condition.
+     *
+     * @param ICondition $condition
+     *
+     * @return ModelList list of model objects
+     */
+    public static function getByCondition(ICondition $condition);
 
     /**
      * Gets attribute value.

@@ -20,6 +20,8 @@
 
 namespace spoof\lib360\db\data;
 
+use spoof\lib360\db\condition\ICondition;
+
 /**
  * Database model class
  */
@@ -128,6 +130,22 @@ abstract class Model implements IModel
         // NOTE: makes sure constructor has run and child class table is set
         new $class();
         $recordlist = static::$table->selectRecords($attributes);
+        return new ModelList($recordlist, $class);
+    }
+
+    /**
+     * Gets model list by condition.
+     *
+     * @param ICondition $condition
+     *
+     * @return ModelList list of model objects
+     */
+    public static function getByCondition(ICondition $condition)
+    {
+        $class = get_called_class();
+        // NOTE: makes sure constructor has run and child class table is set
+        new $class();
+        $recordlist = static::$table->select($condition);
         return new ModelList($recordlist, $class);
     }
 
