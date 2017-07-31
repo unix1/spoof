@@ -51,6 +51,13 @@ interface IModel
      */
     public static function getByKey($key);
 
+    /**
+     * Gets model list by attributes.
+     *
+     * @param array $attributes indexed by string keys and mixed values used for criteria
+     *
+     * @return ModelList list of model objects
+     */
     public static function getByAttributes(array $attributes);
 
 //    public static function getByAttributeValues(array $attributes);
