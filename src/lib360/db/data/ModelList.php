@@ -48,6 +48,20 @@ class ModelList implements IModelList
     }
 
     /**
+     * Exports model list to array representation.
+     *
+     * @return array array of associative arrays with field names as indexes
+     */
+    public function toArray()
+    {
+        $models = array();
+        foreach ($this as $model) {
+            $models[] = $model->toArray();
+        }
+        return $models;
+    }
+
+    /**
      *  Gets a count of elements in a list.
      *
      * @return int Number of elements

@@ -31,6 +31,13 @@ interface IModelList extends \Iterator, \ArrayAccess, \Countable
      */
     public function __construct(IRecordList $recordlist, $modelClass);
 
+    /**
+     * Exports model list to array representation.
+     *
+     * @return array array of associative arrays with field names as indexes
+     */
+    public function toArray();
+
 }
 
 ?>

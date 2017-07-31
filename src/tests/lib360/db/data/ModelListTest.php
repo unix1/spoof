@@ -204,6 +204,35 @@ class ModelListTest extends \spoof\tests\lib360\db\DatabaseTestCase
         );
     }
 
+    /**
+     * @covers \spoof\lib360\db\data\ModelList::toArray
+     * @depends testConstruct
+     * @depends testCurrent
+     * @depends testKey
+     * @depends testNext
+     */
+    public function testToArray()
+    {
+        $users = HelperModelUser::getByAttributes(array('status' => 'inactive'))->toArray();
+        $expected = array(
+            array(
+                'id' => 1,
+                'date_created' => '2011-12-12 04:23:45',
+                'name_first' => 'Juno',
+                'name_last' => 'Jiana',
+                'status' => 'inactive',
+            ),
+            array(
+                'id' => 3,
+                'date_created' => '2009-03-09 16:54:23',
+                'name_first' => 'Steep',
+                'name_last' => 'Pinata',
+                'status' => 'inactive',
+            ),
+        );
+        $this->assertEquals($expected, $users, "Users array didn't match expected");
+    }
+
 }
 
 ?>
