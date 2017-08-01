@@ -4,6 +4,14 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and notable new features.
 
+0.8.3
+-----
+
+new features:
+- added support for `LIKE` and `NOT LIKE` operators
+- added `ModelList::toArray()` method
+- added `Model::getByCondition` method
+
 0.8.2
 -----
 
