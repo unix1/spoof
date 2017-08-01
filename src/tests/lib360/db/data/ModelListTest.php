@@ -120,6 +120,21 @@ class ModelListTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\ModelList::rewind
+     * @covers \spoof\lib360\db\data\ModelList::valid
+     * @depends testConstruct
+     */
+    public function testRewind_Empty()
+    {
+        $users = HelperModelUser::getByAttributes(array('status' => 'foobar'));
+        $loopEntered = false;
+        foreach ($users as $user) {
+            $loopEntered = true;
+        }
+        $this->assertFalse($loopEntered, "Empty array expected, shouldn't have entered loop");
+    }
+
+    /**
      * @covers \spoof\lib360\db\data\ModelList::offsetExists
      * @depends testConstruct
      */

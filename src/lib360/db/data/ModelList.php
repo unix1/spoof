@@ -112,13 +112,17 @@ class ModelList implements IModelList
     /**
      * Resets internal pointer to first element, return its model object.
      *
-     * @return IModel instance of Model implementation
+     * @return IModel|boolean instance of Model implementation or boolean false when array is empty
      */
     public function rewind()
     {
+        $value = false;
         $record = reset($this->recordList);
-        $class = $this->modelClass;
-        return $class::createFromRecord($record);
+        if ($record !== FALSE) {
+            $class = $this->modelClass;
+            $value = $class::createFromRecord($record);
+        }
+        return $value;
     }
 
     /**
