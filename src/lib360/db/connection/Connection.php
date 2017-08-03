@@ -74,6 +74,26 @@ abstract class Connection implements IConnection
     public function __construct(IConfig $config)
     {
         $this->config = $config;
+        $driverName = $this->parseDriver($config);
+        try {
+            $this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
+        } catch (NotFoundException $e) {
+            /// TODO implement some logging here
+            throw $e;
+        }
+    }
+
+    /**
+     * Parses name of the driver class from Config object.
+     *
+     * @param IConfig $config
+     *
+     * @return string driver class name
+     *
+     * @throws ConfigException when driver name cannot be determined
+     */
+    public function parseDriver(IConfig $config)
+    {
         $col = strpos($config->dsn, ':');
         if ($col === false || $col == 0) {
             throw new ConfigException("Invalid DSN ({$config->dsn}); couldn't parse driver name.");
@@ -84,12 +104,7 @@ abstract class Connection implements IConnection
         } else {
             $driverName = ucfirst(substr($config->dsn, 0, $col));
         }
-        try {
-            $this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
-        } catch (NotFoundException $e) {
-            /// TODO implement some logging here
-            throw $e;
-        }
+        return $driverName;
     }
 
     /**

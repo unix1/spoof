@@ -36,6 +36,17 @@ interface IConnection
     public function __construct(IConfig $config);
 
     /**
+     * Parses name of the driver class from Config object.
+     *
+     * @param IConfig $config
+     *
+     * @return string driver class name
+     *
+     * @throws ConfigException when driver name cannot be determined
+     */
+    public function parseDriver(IConfig $config);
+
+    /**
      * Connects the object to the database.
      *
      * @return mixed connection object

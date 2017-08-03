@@ -44,6 +44,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \spoof\lib360\db\connection\Connection::__construct
+     * @covers \spoof\lib360\db\connection\Connection::parseDriver
      */
     public function testConstruct_BadDSN()
     {
@@ -61,6 +62,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \spoof\lib360\db\connection\Connection::__construct
+     * @covers \spoof\lib360\db\connection\Connection::parseDriver
      */
     public function testConstruct_BadDSNDriver()
     {
@@ -78,6 +80,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \spoof\lib360\db\connection\Connection::__construct
+     * @covers \spoof\lib360\db\connection\Connection::parseDriver
      */
     public function testConstruct_Success()
     {
@@ -90,7 +93,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\connection\Connection::__construct
+     * @covers \spoof\lib360\db\connection\Connection::__construct
+     * @covers \spoof\lib360\db\connection\Connection::parseDriver
      * @depends testConstruct_Success
      */
     public function testConstruct_SuccessCustomDriver()
@@ -107,7 +111,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\connection\Connection::isConnected
+     * @covers \spoof\lib360\db\connection\Connection::isConnected
      * @depends testConstruct_Success
      */
     public function testIsConnected_False()
@@ -117,7 +121,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\connection\Connection::isConnected
+     * @covers \spoof\lib360\db\connection\Connection::isConnected
      * @depends testConstruct_Success
      */
     public function testIsConnected_True()
@@ -128,7 +132,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\connection\Connection::getConnection
+     * @covers \spoof\lib360\db\connection\Connection::getConnection
      * @depends testConstruct_Success
      */
     public function testGetConnection()
@@ -151,7 +155,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers  \spoof\lib360\db\connection\Connection::disconnect
+     * @covers \spoof\lib360\db\connection\Connection::disconnect
      * @depends testConstruct_Success
      * @depends testIsConnected_True
      */
