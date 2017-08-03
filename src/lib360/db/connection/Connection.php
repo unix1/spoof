@@ -68,19 +68,12 @@ abstract class Connection implements IConnection
      *    invalid format
      * @throws NotFoundException when driver specified with $config
      *    cannot be loaded
-     *
-     * @todo extra logging when \spoof\lib360\db\object\Factory throws exception?
      */
     public function __construct(IConfig $config)
     {
         $this->config = $config;
         $driverName = $this->parseDriver($config);
-        try {
-            $this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
-        } catch (NotFoundException $e) {
-            /// TODO implement some logging here
-            throw $e;
-        }
+        $this->driver = Factory::get(Factory::OBJECT_TYPE_DRIVER, $driverName);
     }
 
     /**
