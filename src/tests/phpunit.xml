@@ -1,6 +1,7 @@
-<phpunit verbose="true" backupGlobals="false" backupStaticAttributes="false">
+<phpunit verbose="true" bootstrap="bootstrap.php">
     <php>
         <var name="DB_DSN" value="sqlite:test.db"/>
+        <var name="DB_FILE" value="test.db"/>
     </php>
     <testsuites>
         <testsuite name="lib360">
