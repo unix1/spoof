@@ -29,16 +29,18 @@ Basic Usage
 ### connection
 Create a PDO connection and add to connection pool with alias `test`:
 ```php
-use \spoof\lib360\db\connection as conn;
+use spoof\lib360\db\connection\Config;
+use spoof\lib360\db\connection\PDO;
+use spoof\lib360\db\connection\Pool;
 
-$conn = new conn\PDO(new conn\Config('mysql:host=localhost;dbname=test', 'root', NULL));
-conn\Pool::add($conn, 'test');
+$conn = new PDO(new Config('mysql:host=localhost;dbname=test', 'root', NULL));
+Pool::add($conn, 'test');
 ```
 
 ### select using table factory
 This method allows very quick, one-off access to your data.
 ```php
-use \spoof\lib360\db\data\TableFactory;
+use spoof\lib360\db\data\TableFactory;
 
 $userTable = TableFactory::get('test', 'users');
 $result = $userTable->select();
@@ -47,12 +49,12 @@ $result = $userTable->select();
 ### select using a table class
 Defining a table class allows you to define a reusable component instead of using defaults from factory. Below $db is the database alias name, and $name is the table or storage name.
 ```php
-use \spoof\lib360\db\data\Table
+use spoof\lib360\db\data\Table
 
 class UserTable extends Table
 {
-	protected $db = 'test';
-	protected $name = 'users';
+    protected $db = 'test';
+    protected $name = 'users';
 }
 
 $userTable = new UserTable();
@@ -62,20 +64,20 @@ $result = $userTable->select();
 ### create conditions
 Condition objects allow you to define a query restriction that can be reused. The condition object below would read: column user_id equals to integer 5.
 ```php
-use \spoof\lib360\db\condition\Condition;
-use \spoof\lib360\db\value\Value;
+use spoof\lib360\db\condition\Condition;
+use spoof\lib360\db\value\Value;
 
 $cond = new Condition(
-	new Value('user_id', Value::TYPE_COLUMN),
-	Condition::OPERATOR_EQUALS,
-	new Value(5, Value::TYPE_INTEGER)
+    new Value('user_id', Value::TYPE_COLUMN),
+    Condition::OPERATOR_EQUALS,
+    new Value(5, Value::TYPE_INTEGER)
 );
 ```
 
 ### use condition groups
 Condition groups allow you to combine conditions and other condition groups together.
 ```php
-use \spoof\lib360\db\condition\ConditionGroup;
+use spoof\lib360\db\condition\ConditionGroup;
 
 $condgroup1 = new ConditionGroup($cond1);
 $condgroup1->addCondition(ConditionGroup::OPERATOR_AND, $cond2);
@@ -100,9 +102,9 @@ This is equivalent of above but defined inside the class as default. You can alw
 ```php
 class UserTable extends Table
 {
-	protected $db = 'test';
-	protected $name = 'user';
-	protected $fields = array('id', 'name');
+    protected $db = 'test';
+    protected $name = 'user';
+    protected $fields = array('id', 'name');
 }
 
 $userTable = new UserTable();
@@ -115,47 +117,47 @@ Advanced Usage
 ### create joins
 Let's say you want to display comments made by users; but comments table has the users' ID value, so you want to join against the users table to grab name instead. And you also want to join users table against user_groups to grab their group name.
 ```php
-use \spoof\lib360\db\value\Value;
-use \spoof\lib360\db\condition\Condition;
-use \spoof\lib360\db\join\Join;
+use spoof\lib360\db\condition\Condition;
+use spoof\lib360\db\join\Join;
+use spoof\lib360\db\value\Value;
 
 // create condition object linking comments.user_id = users.user_id
-$cond12 = new Condition(
-	new Value('comments.user_id', Value::TYPE_COLUMN),
-	Condition::OPERATOR_EQUALS,
-	new Value('users.user_id', Value::TYPE_COLUMN)
+$condJoinUsers = new Condition(
+    new Value('comments.user_id', Value::TYPE_COLUMN),
+    Condition::OPERATOR_EQUALS,
+    new Value('users.user_id', Value::TYPE_COLUMN)
 );
 
 // create a condition object linking users.group_id = user_group.group_id
-$cond23 = new Condition(
-	new Value('users.group_id', Value::TYPE_COLUMN),
-	Condition::OPERATOR_EQUALS,
-	new Value('user_group.group_id', Value::TYPE_COLUMN)
+$condJoinUserGroup = new Condition(
+    new Value('users.group_id', Value::TYPE_COLUMN),
+    Condition::OPERATOR_EQUALS,
+    new Value('user_group.group_id', Value::TYPE_COLUMN)
 );
 
 // create a join object with initial inner join of users and comments tables
-$j = new Join('comments', Join::JOIN_TYPE_INNER, 'users', $cond12);
+$j = new Join('comments', Join::JOIN_TYPE_INNER, 'users', $condJoinUsers);
 
 // add user_group table as a left outer join
-$j->addTable(Join::JOIN_TYPE_LEFT_OUTER, 'user_group', $cond23);
+$j->addTable(Join::JOIN_TYPE_LEFT_OUTER, 'user_group', $condJoinUserGroup);
 ```
 
 ### create views
 Now use the above join inside a view class. Notice you can add as many join objects as desired.
 ```php
 
-use \spoof\lib360\db\data\View;
+use spoof\lib360\db\data\View;
 
 class UserCommentsView extends View
 {
-	public function __construct()
-	{
-		// same join creation code as above resulting in $j object
-		// ...
+    public function __construct()
+    {
+        // same join creation code as above resulting in $j object
+        // ...
 
-		// add join to array
-		$this->joins[] = $j;
-	}
+        // add join to array
+        $this->joins[] = $j;
+    }
 }
 ```
 
