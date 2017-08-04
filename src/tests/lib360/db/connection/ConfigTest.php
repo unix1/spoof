@@ -21,8 +21,9 @@
 namespace spoof\tests\lib360\db\connection;
 
 use spoof\lib360\db\connection\Config;
+use spoof\tests\TestCase;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @covers \spoof\lib360\db\connection\Config::__construct

@@ -22,8 +22,9 @@ namespace spoof\tests\lib360\db\condition;
 
 use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\value\Value;
+use spoof\tests\TestCase;
 
-class ConditionTest extends \PHPUnit_Framework_TestCase
+class ConditionTest extends TestCase
 {
     /**
      * @covers \spoof\lib360\db\condition\Condition::__construct

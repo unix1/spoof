@@ -24,8 +24,9 @@ use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\ConfigException;
 use spoof\lib360\db\object\Factory;
 use spoof\lib360\db\object\NotFoundException;
+use spoof\tests\TestCase;
 
-class ConnectionTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends TestCase
 {
     public $configBad1;
     public $configBad2;
@@ -140,18 +141,10 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $c = new HelperConnection1($this->config1);
         $c->connect();
         $this->assertEquals(
-            $this->getProtectedProperty($c, 'connection')->getValue($c),
+            $this->getProtectedProperty($c, 'connection'),
             $c->getConnection(),
             "Failed to return correct connection property value"
         );
-    }
-
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
     }
 
     /**

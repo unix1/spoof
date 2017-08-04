@@ -21,8 +21,9 @@
 namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\data\TableFactory;
+use spoof\tests\TestCase;
 
-class TableFactoryTest extends \PHPUnit_Framework_TestCase
+class TableFactoryTest extends TestCase
 {
 
     /**
@@ -32,17 +33,9 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $t1 = new HelperTable();
         TableFactory::cache($t1);
-        $p = $this->getProtectedProperty('\spoof\lib360\db\data\TableFactory', 'cache')->getValue();
+        $p = $this->getProtectedProperty('\spoof\lib360\db\data\TableFactory', 'cache');
         $t2 = $p[$t1->getDB()][$t1->getName()];
         $this->assertEquals($t1, $t2, "Cached value is different from the returned value");
-    }
-
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
     }
 
     /**

@@ -23,8 +23,9 @@ namespace spoof\tests\lib360\db\condition;
 use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\condition\ConditionGroup;
 use spoof\lib360\db\value\Value;
+use spoof\tests\TestCase;
 
-class ConditionGroupTest extends \PHPUnit_Framework_TestCase
+class ConditionGroupTest extends TestCase
 {
 
     public $condition1;

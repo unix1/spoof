@@ -22,8 +22,9 @@ namespace spoof\tests\lib360\db\connection;
 
 use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\Pool;
+use spoof\tests\TestCase;
 
-class PoolTest extends \PHPUnit_Framework_TestCase
+class PoolTest extends TestCase
 {
     public $conn1;
     public $conn2;
@@ -60,17 +61,9 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertArrayHasKey(
             'test2',
-            $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections')->getValue(),
+            $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections'),
             "Failed to create an internal array key with given label"
         );
-    }
-
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
     }
 
     /**
@@ -79,7 +72,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
      */
     public function testAdd_SuccessElementValue()
     {
-        $c = $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections')->getValue();
+        $c = $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections');
         $this->assertEquals($this->conn2, $c['test2'], "Connection object doesn't match");
     }
 
@@ -244,7 +237,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         Pool::add($this->conn1, 'test1');
         Pool::removeByName('test1');
-        $c = $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections')->getValue();
+        $c = $this->getProtectedProperty('\spoof\lib360\db\connection\Pool', 'connections');
         $this->assertEquals(false, isset($c['test1']), "Failed to unset internal reference to connection object");
     }
 

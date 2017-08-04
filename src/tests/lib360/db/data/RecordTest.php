@@ -21,8 +21,9 @@
 namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\data\Record;
+use spoof\tests\TestCase;
 
-class RecordTest extends \PHPUnit_Framework_TestCase
+class RecordTest extends TestCase
 {
 
     /**
@@ -43,20 +44,9 @@ class RecordTest extends \PHPUnit_Framework_TestCase
         $record = new Record($type);
         $this->assertEquals(
             $type,
-            $this->getProtectedProperty('\spoof\lib360\db\data\Record', '__type')->getValue($record),
+            $this->getProtectedProperty($record, '__type'),
             "Failed to set custom type"
         );
-    }
-
-    /**
-     * @covers \spoof\lib360\db\data\Record::__construct
-     */
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
     }
 
     /**

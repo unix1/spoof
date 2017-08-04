@@ -22,8 +22,9 @@ namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\data\Record;
 use spoof\lib360\db\data\RecordList;
+use spoof\tests\TestCase;
 
-class RecordListTest extends \PHPUnit_Framework_TestCase
+class RecordListTest extends TestCase
 {
 
     /**

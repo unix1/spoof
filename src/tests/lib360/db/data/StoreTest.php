@@ -24,8 +24,9 @@ use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\Pool;
 use spoof\lib360\db\object\Factory;
 use spoof\tests\lib360\db\connection\HelperConnection1;
+use spoof\tests\TestCase;
 
-class StoreTest extends \PHPUnit_Framework_TestCase
+class StoreTest extends TestCase
 {
     protected $s;
     protected $s2;
@@ -57,18 +58,10 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     {
         $actual = $this->s->getName();
         $this->assertEquals(
-            $this->getProtectedProperty($this->s, 'name')->getValue($this->s),
+            $this->getProtectedProperty($this->s, 'name'),
             $actual,
             "getName didn't return the value of name property from extending class"
         );
-    }
-
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
     }
 
     /**
@@ -78,7 +71,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     {
         $actual = $this->s->getDB();
         $this->assertEquals(
-            $this->getProtectedProperty($this->s, 'db')->getValue($this->s),
+            $this->getProtectedProperty($this->s, 'db'),
             $actual,
             "getName didn't return the value of name property from extending class"
         );
@@ -140,7 +133,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function testGetExecutor_Custom()
     {
         $this->assertEquals(
-            $this->getProtectedProperty($this->s2, 'executor')->getValue($this->s2),
+            $this->getProtectedProperty($this->s2, 'executor'),
             $this->s2->getExecutor(), "Returned executor didn't match local custom executor specified"
         );
     }
@@ -151,7 +144,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function testGetLanguage_Custom()
     {
         $this->assertEquals(
-            $this->getProtectedProperty($this->s2, 'language')->getValue($this->s2),
+            $this->getProtectedProperty($this->s2, 'language'),
             $this->s2->getLanguage(), "Returned language didn't match local custom language specified"
         );
     }

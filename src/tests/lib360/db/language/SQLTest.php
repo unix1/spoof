@@ -28,8 +28,9 @@ use spoof\lib360\db\language\SQL;
 use spoof\lib360\db\language\SQLException;
 use spoof\lib360\db\query\Query;
 use spoof\lib360\db\value\Value;
+use spoof\tests\TestCase;
 
-class SQLTest extends \PHPUnit_Framework_TestCase
+class SQLTest extends TestCase
 {
 
     public $l;

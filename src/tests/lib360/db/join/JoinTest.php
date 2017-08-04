@@ -23,8 +23,9 @@ namespace spoof\tests\lib360\db\join;
 use spoof\lib360\db\condition\Condition;
 use spoof\lib360\db\join\Join;
 use spoof\lib360\db\value\Value;
+use spoof\tests\TestCase;
 
-class JoinTest extends \PHPUnit_Framework_TestCase
+class JoinTest extends TestCase
 {
 
     /**

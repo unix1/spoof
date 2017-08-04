@@ -19,8 +19,9 @@
  */
 
 namespace spoof\tests\lib360\db\driver;
+use spoof\tests\TestCase;
 
-class DriverTest extends \PHPUnit_Framework_TestCase
+class DriverTest extends TestCase
 {
 
     /**

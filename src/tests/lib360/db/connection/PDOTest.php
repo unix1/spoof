@@ -22,8 +22,9 @@ namespace spoof\tests\lib360\db\connection;
 
 use spoof\lib360\db\connection\Config;
 use spoof\lib360\db\connection\PDO;
+use spoof\tests\TestCase;
 
-class PDOTest extends \PHPUnit_Framework_TestCase
+class PDOTest extends TestCase
 {
 
     /**

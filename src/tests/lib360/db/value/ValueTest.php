@@ -23,17 +23,10 @@ namespace spoof\tests\lib360\db\value;
 use spoof\lib360\db\value\InvalidValueException;
 use spoof\lib360\db\value\UnknownTypeException;
 use spoof\lib360\db\value\Value;
+use spoof\tests\TestCase;
 
-class ValueTest extends \PHPUnit_Framework_TestCase
+class ValueTest extends TestCase
 {
-
-    protected function getProtectedProperty($class, $property)
-    {
-        $r = new \ReflectionClass($class);
-        $p = $r->getProperty($property);
-        $p->setAccessible(true);
-        return $p;
-    }
 
     public function test_ConstantsUnique()
     {
@@ -116,8 +109,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(null, Value::TYPE_NULL),
             array(
-                $this->getProtectedProperty($v, 'value')->getValue($v),
-                $this->getProtectedProperty($v, 'type')->getValue($v)
+                $this->getProtectedProperty($v, 'value'),
+                $this->getProtectedProperty($v, 'type'),
             ),
             "Failed to set null type and value"
         );
@@ -134,8 +127,8 @@ class ValueTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(null, Value::TYPE_NULL),
             array(
-                $this->getProtectedProperty($v, 'value')->getValue($v),
-                $this->getProtectedProperty($v, 'type')->getValue($v)
+                $this->getProtectedProperty($v, 'value'),
+                $this->getProtectedProperty($v, 'type'),
             ),
             "Failed to set null type and value"
         );
