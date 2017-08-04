@@ -18,28 +18,10 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\tests\lib360\crypt;
+namespace spoof\tests;
 
-use spoof\tests\TestCase;
-
-class RandomTest extends TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @covers \spoof\lib360\crypt\Random::getString
-     */
-    public function testGetString()
-    {
-        $tries = 1000;
-        $result = array();
-        for ($i = 0; $i < $tries; ++$i) {
-            $key = \spoof\lib360\crypt\Random::getString(2, true, true);
-            $result[$key] = 1;
-        }
-        $actual = count($result);
-        $this->assertEquals($tries, $actual, "Expected $tries result, but got $actual");
-    }
-
 }
 
 ?>

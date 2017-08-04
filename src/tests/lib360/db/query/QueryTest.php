@@ -21,8 +21,9 @@
 namespace spoof\tests\lib360\db\query;
 
 use spoof\lib360\db\query\Query;
+use spoof\tests\TestCase;
 
-class QueryTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
 
     /**
