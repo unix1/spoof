@@ -27,19 +27,19 @@ use spoof\lib360\db\object\NotFoundException;
 
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
-    public $dbconfigBad1;
-    public $dbconfigBad2;
-    public $dbconfig1;
-    public $dbconfig2;
-    public $dbconfigCustomDriver;
+    public $configBad1;
+    public $configBad2;
+    public $config1;
+    public $config2;
+    public $configCustomDriver;
 
     public function setUp()
     {
-        $this->dbconfigBad1 = new Config('mysql');
-        $this->dbconfigBad2 = new Config('fake:localhost');
-        $this->dbconfigCustomDriver = new Config('mysql:localhost', null, null, null, 'CustomDriver');
-        $this->dbconfig1 = new Config('mysql:localhost');
-        $this->dbconfig2 = new Config('pgsql:localhost');
+        $this->configBad1 = new Config('mysql');
+        $this->configBad2 = new Config('fake:localhost');
+        $this->configCustomDriver = new Config('mysql:localhost', null, null, null, 'CustomDriver');
+        $this->config1 = new Config('mysql:localhost');
+        $this->config2 = new Config('pgsql:localhost');
     }
 
     /**
@@ -50,7 +50,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         try {
-            $c = new HelperConnection1($this->dbconfigBad1);
+            $c = new HelperConnection1($this->configBad1);
         } catch (ConfigException $e) {
         }
         $this->assertInstanceOf(
@@ -68,7 +68,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         try {
-            $c = new HelperConnection1($this->dbconfigBad2);
+            $c = new HelperConnection1($this->configBad2);
         } catch (NotFoundException $e) {
         }
         $this->assertInstanceOf(
@@ -86,7 +86,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $e = null;
         try {
-            $c = new HelperConnection1($this->dbconfig1);
+            $c = new HelperConnection1($this->config1);
         } catch (NotFoundException $e) {
         }
         $this->assertEquals(null, $e, "Caught an exception during connection class instantiation");
@@ -101,7 +101,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $driverTypeBackup = Factory::getType('Driver');
         Factory::setType('Driver', '\spoof\tests\lib360\db\connection\\', '\spoof\lib360\db\driver\IDriver');
-        $c = new HelperConnection1($this->dbconfigCustomDriver);
+        $c = new HelperConnection1($this->configCustomDriver);
         $this->assertInstanceOf(
             '\spoof\tests\lib360\db\connection\CustomDriver',
             $c->driver,
@@ -116,7 +116,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsConnected_False()
     {
-        $c = new HelperConnection1($this->dbconfig1);
+        $c = new HelperConnection1($this->config1);
         $this->assertFalse($c->isConnected(), "Connection object should not be connected yet");
     }
 
@@ -126,7 +126,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsConnected_True()
     {
-        $c = new HelperConnection1($this->dbconfig1);
+        $c = new HelperConnection1($this->config1);
         $c->connect();
         $this->assertTrue($c->isConnected(), "Connection object should be connected.");
     }
@@ -137,7 +137,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConnection()
     {
-        $c = new HelperConnection1($this->dbconfig1);
+        $c = new HelperConnection1($this->config1);
         $c->connect();
         $this->assertEquals(
             $this->getProtectedProperty($c, 'connection')->getValue($c),
@@ -161,7 +161,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testDisconnect()
     {
-        $c = new HelperConnection1($this->dbconfig1);
+        $c = new HelperConnection1($this->config1);
         $c->connect();
         $c->disconnect();
         $this->assertFalse($c->isConnected(), "Connection failed to disconnect");
