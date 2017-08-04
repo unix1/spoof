@@ -22,6 +22,7 @@ namespace spoof\tests\lib360\db\data;
 
 use spoof\lib360\db\data\Record;
 use spoof\tests\TestCase;
+use spoof\tests\Util;
 
 class RecordTest extends TestCase
 {
@@ -44,7 +45,7 @@ class RecordTest extends TestCase
         $record = new Record($type);
         $this->assertEquals(
             $type,
-            $this->getProtectedProperty($record, '__type'),
+            Util::getProtectedProperty($record, '__type'),
             "Failed to set custom type"
         );
     }

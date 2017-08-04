@@ -24,6 +24,7 @@ use spoof\lib360\db\value\InvalidValueException;
 use spoof\lib360\db\value\UnknownTypeException;
 use spoof\lib360\db\value\Value;
 use spoof\tests\TestCase;
+use spoof\tests\Util;
 
 class ValueTest extends TestCase
 {
@@ -109,8 +110,8 @@ class ValueTest extends TestCase
         $this->assertEquals(
             array(null, Value::TYPE_NULL),
             array(
-                $this->getProtectedProperty($v, 'value'),
-                $this->getProtectedProperty($v, 'type'),
+                Util::getProtectedProperty($v, 'value'),
+                Util::getProtectedProperty($v, 'type'),
             ),
             "Failed to set null type and value"
         );
@@ -127,8 +128,8 @@ class ValueTest extends TestCase
         $this->assertEquals(
             array(null, Value::TYPE_NULL),
             array(
-                $this->getProtectedProperty($v, 'value'),
-                $this->getProtectedProperty($v, 'type'),
+                Util::getProtectedProperty($v, 'value'),
+                Util::getProtectedProperty($v, 'type'),
             ),
             "Failed to set null type and value"
         );

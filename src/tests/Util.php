@@ -20,8 +20,17 @@
 
 namespace spoof\tests;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+class Util
 {
+
+    public static function getProtectedProperty($objectOrClass, $property)
+    {
+        $r = new \ReflectionClass($objectOrClass);
+        $p = $r->getProperty($property);
+        $p->setAccessible(true);
+        return is_object($objectOrClass) ? $p->getValue($objectOrClass) : $p->getValue();
+    }
+
 }
 
 ?>

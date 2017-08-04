@@ -25,6 +25,7 @@ use spoof\lib360\db\object\Factory;
 use spoof\lib360\db\object\TypeNotFoundException;
 use spoof\lib360\db\object\UnexpectedObjectTypeException;
 use spoof\tests\TestCase;
+use spoof\tests\Util;
 
 class FactoryTest extends TestCase
 {
@@ -105,7 +106,7 @@ class FactoryTest extends TestCase
     {
         Factory::get(Factory::OBJECT_TYPE_LANGUAGE, 'SQL');
         Factory::flushCache();
-        $actual = $this->getProtectedProperty('\spoof\lib360\db\object\Factory', 'objects');
+        $actual = Util::getProtectedProperty('\spoof\lib360\db\object\Factory', 'objects');
         $expected = array();
         $this->assertEquals($expected, $actual, "Failed to flush object cache");
     }
@@ -186,7 +187,7 @@ class FactoryTest extends TestCase
     public function testGetType_Success()
     {
         $type = 'Driver';
-        $types = $this->getProtectedProperty('\spoof\lib360\db\object\Factory', 'types');
+        $types = Util::getProtectedProperty('\spoof\lib360\db\object\Factory', 'types');
         $expected = $types[$type];
         $actual = Factory::getType($type);
         $this->assertEquals($expected, $actual, "Returned type definition didn't match internal values");

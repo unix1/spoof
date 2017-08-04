@@ -25,6 +25,7 @@ use spoof\lib360\db\connection\Pool;
 use spoof\lib360\db\object\Factory;
 use spoof\tests\lib360\db\connection\HelperConnection1;
 use spoof\tests\TestCase;
+use spoof\tests\Util;
 
 class StoreTest extends TestCase
 {
@@ -58,7 +59,7 @@ class StoreTest extends TestCase
     {
         $actual = $this->s->getName();
         $this->assertEquals(
-            $this->getProtectedProperty($this->s, 'name'),
+            Util::getProtectedProperty($this->s, 'name'),
             $actual,
             "getName didn't return the value of name property from extending class"
         );
@@ -71,7 +72,7 @@ class StoreTest extends TestCase
     {
         $actual = $this->s->getDB();
         $this->assertEquals(
-            $this->getProtectedProperty($this->s, 'db'),
+            Util::getProtectedProperty($this->s, 'db'),
             $actual,
             "getName didn't return the value of name property from extending class"
         );
@@ -133,7 +134,7 @@ class StoreTest extends TestCase
     public function testGetExecutor_Custom()
     {
         $this->assertEquals(
-            $this->getProtectedProperty($this->s2, 'executor'),
+            Util::getProtectedProperty($this->s2, 'executor'),
             $this->s2->getExecutor(), "Returned executor didn't match local custom executor specified"
         );
     }
@@ -144,7 +145,7 @@ class StoreTest extends TestCase
     public function testGetLanguage_Custom()
     {
         $this->assertEquals(
-            $this->getProtectedProperty($this->s2, 'language'),
+            Util::getProtectedProperty($this->s2, 'language'),
             $this->s2->getLanguage(), "Returned language didn't match local custom language specified"
         );
     }
