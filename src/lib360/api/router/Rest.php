@@ -51,7 +51,7 @@ class Rest implements api\IRouter
     /**
      * Constructor, sets configuration
      *
-     * @param string $namespace namespace (without precceding backslashes)
+     * @param string $namespace namespace (without preceeding backslashes)
      * @param array $config configuration array, optional, default NULL
      */
     public function __construct($namespace, array $config = null)
