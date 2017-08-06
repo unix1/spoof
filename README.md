@@ -145,7 +145,6 @@ $j->addTable(Join::JOIN_TYPE_LEFT_OUTER, 'user_group', $condJoinUserGroup);
 ### create views
 Now use the above join inside a view class. Notice you can add as many join objects as desired.
 ```php
-
 use spoof\lib360\db\data\View;
 
 class UserCommentsView extends View
