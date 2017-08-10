@@ -90,6 +90,9 @@ class Rest implements api\IRouter
         } catch (\InvalidArgumentException $e) {
             $response->status = api\Response::STATUS_BAD_REQUEST;
             $response->body = $e->getMessage();
+        } catch (\BadMethodCallException $e) {
+            $response->status = api\Response::STATUS_METHOD_NOT_IMPLEMENTED;
+            $response->body = $e->getMessage();
         } catch (api\ResourceNotFoundException $e) {
             $response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
             $response->body = $e->getMessage();
