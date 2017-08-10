@@ -20,8 +20,10 @@
 
 namespace spoof\lib360\api\request;
 
-use spoof\lib360\api;
-use spoof\lib360\auth;
+use spoof\lib360\api\IRouter;
+use spoof\lib360\api\Request;
+use spoof\lib360\api\Response;
+use spoof\lib360\auth\IAuthenticator;
 
 /**
  * Abstract handler class for requests
@@ -34,22 +36,22 @@ abstract class Handler implements IHandler
 
     /**
      * Internal storage for authenticator
-     * @var auth\IAuthenticator
+     * @var IAuthenticator
      */
     protected $authenticator;
 
     /**
      * Internal storage for request router
-     * @var api\IRouter
+     * @var IRouter
      */
     protected $router;
 
     /**
      * Sets the authenticator
      *
-     * @param auth\IAuthenticator $authenticator authenticator object
+     * @param IAuthenticator $authenticator authenticator object
      */
-    public function setAuthenticator(auth\IAuthenticator $authenticator)
+    public function setAuthenticator(IAuthenticator $authenticator)
     {
         $this->authenticator = $authenticator;
     }
@@ -57,9 +59,9 @@ abstract class Handler implements IHandler
     /**
      * Sets the application router
      *
-     * @param api\IRouter $router request router object
+     * @param IRouter $router request router object
      */
-    public function setRouter(api\IRouter $router)
+    public function setRouter(IRouter $router)
     {
         $this->router = $router;
     }
@@ -78,17 +80,17 @@ abstract class Handler implements IHandler
             try {
                 $response = $this->router->handleRequest($request);
             } catch (\BadMethodCallException $e) {
-                $response = new api\Response();
-                $response->status = api\Response::STATUS_METHOD_NOT_IMPLEMENTED;
+                $response = new Response();
+                $response->status = Response::STATUS_METHOD_NOT_IMPLEMENTED;
                 $response->body = $e->getMessage();
             } catch (\Exception $e) {
-                $response = new api\Response();
-                $response->status = api\Response::STATUS_ERROR;
+                $response = new Response();
+                $response->status = Response::STATUS_ERROR;
                 $response->body = $e->getMessage();
             }
         } else {
-            $response = new api\Response();
-            $response->status = api\Response::STATUS_AUTH_FAILED;
+            $response = new Response();
+            $response->status = Response::STATUS_AUTH_FAILED;
         }
         $this->sendResponse($response);
     }
@@ -96,11 +98,11 @@ abstract class Handler implements IHandler
     /**
      * Authenticates the request via the authenticator
      *
-     * @param api\Request $request request object
+     * @param Request $request request object
      *
      * @return boolean TRUE on success, FALSE otherwise
      */
-    public function authenticate(api\Request $request)
+    public function authenticate(Request $request)
     {
         return $this->authenticator->authenticate($request);
     }
