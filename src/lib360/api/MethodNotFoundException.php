@@ -21,9 +21,9 @@
 namespace spoof\lib360\api;
 
 /**
- * Exception type for API - resource not found
+ * Exception type for API - method not found
  */
-class ResourceNotFoundException extends Exception
+class MethodNotFoundException extends Exception
 {
 }
 

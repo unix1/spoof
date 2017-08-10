@@ -79,8 +79,11 @@ class Rest implements api\IRouter
             // map request to class and method
             list($class, $method, $args) = $this->translateRequest($request);
             // make sure class and method exist
-            if (!class_exists($class) || !method_exists($class, $method)) {
+            if (!class_exists($class)) {
                 throw new api\ResourceNotFoundException('Resource not found');
+            }
+            if (!method_exists($class, $method)) {
+                throw new api\MethodNotFoundException('Method not found');
             }
             $module = new $class($this->config);
             // execute called function
@@ -95,6 +98,9 @@ class Rest implements api\IRouter
             $response->body = $e->getMessage();
         } catch (api\ResourceNotFoundException $e) {
             $response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
+            $response->body = $e->getMessage();
+        } catch (api\MethodNotFoundException $e) {
+            $response->status = api\Response::STATUS_METHOD_NOT_ALLOWED;
             $response->body = $e->getMessage();
         }
         // return result
