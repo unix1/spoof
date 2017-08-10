@@ -84,7 +84,9 @@ class Rest extends api\request\Handler
             case api\Response::STATUS_OK:
             case api\Response::STATUS_BAD_REQUEST:
             case api\Response::STATUS_RESOURCE_NOT_FOUND:
+            case api\Response::STATUS_METHOD_NOT_ALLOWED:
             case api\Response::STATUS_ERROR:
+            case api\Response::STATUS_METHOD_NOT_IMPLEMENTED:
                 $body = $response->body;
             default:
                 $header = $protocol . ' ' . $this->statusMap[$response->status];
@@ -92,6 +94,7 @@ class Rest extends api\request\Handler
 
         // output response
         header($header);
+        header('Content-Type: application/json');
         if (isset($body)) {
             echo json_encode(
                 array(
