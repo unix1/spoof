@@ -72,6 +72,8 @@ abstract class Handler implements IHandler
      * - parses the request into a request object
      * - calls the router that handles the request object
      * - sends the response to the client
+     *
+     * @return mixed optional response from handler implementation
      */
     public function handle()
     {
@@ -92,7 +94,7 @@ abstract class Handler implements IHandler
             $response = new Response();
             $response->status = Response::STATUS_AUTH_FAILED;
         }
-        $this->sendResponse($response);
+        return $this->sendResponse($response);
     }
 
     /**
