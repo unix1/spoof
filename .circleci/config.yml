@@ -8,8 +8,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install and enable xdebug
-          command: 'sudo pecl install xdebug && sudo docker-php-ext-enable xdebug'
+          name: Enable xdebug
+          command: 'sudo docker-php-ext-enable xdebug'
       - run:
           name: Make default timezone UTC
           command: 'echo "date.timezone = UTC" | sudo tee /usr/local/etc/php/conf.d/date.ini > /dev/null'
