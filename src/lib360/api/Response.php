@@ -31,7 +31,7 @@ class Response
      */
     const STATUS_OK = 1;
     const STATUS_OK_CREATED = 2;
-    const STATUS_METHOD_NOT_DEFINED = 3;
+    const STATUS_METHOD_NOT_ALLOWED = 3;
     const STATUS_METHOD_NOT_IMPLEMENTED = 4;
     const STATUS_RESOURCE_NOT_FOUND = 5;
     const STATUS_ERROR = 6;
