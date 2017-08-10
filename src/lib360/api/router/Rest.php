@@ -78,12 +78,13 @@ class Rest implements api\IRouter
         try {
             // map request to class and method
             list($class, $method, $args) = $this->translateRequest($request);
-            // make sure class and method exist
+            // make sure class exists
             if (!class_exists($class)) {
                 throw new api\ResourceNotFoundException('Resource not found');
             }
+            // make sure class method exists
             if (!method_exists($class, $method)) {
-                throw new api\MethodNotFoundException('Method not found');
+                throw new api\MethodNotFoundException('Resource method not found');
             }
             $module = new $class($this->config);
             // execute called function
