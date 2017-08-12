@@ -23,7 +23,7 @@ namespace spoof\lib360\api;
 /**
  * Exception type for API - method not found
  */
-class MethodNotFoundException extends Exception
+class MethodNotAvailableException extends Exception
 {
 }
 

@@ -84,7 +84,7 @@ class Rest implements api\IRouter
             }
             // make sure class method exists
             if (!method_exists($class, $method)) {
-                throw new api\MethodNotFoundException('Resource method not found');
+                throw new api\MethodNotAvailableException('Resource method not found');
             }
             $module = new $class($this->config);
             // execute called function
@@ -100,7 +100,7 @@ class Rest implements api\IRouter
         } catch (api\ResourceNotFoundException $e) {
             $response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
             $response->body = $e->getMessage();
-        } catch (api\MethodNotFoundException $e) {
+        } catch (api\MethodNotAvailableException $e) {
             $response->status = api\Response::STATUS_METHOD_NOT_ALLOWED;
             $response->body = $e->getMessage();
         }
