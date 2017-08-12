@@ -162,7 +162,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
-     * @covers \spoof\lib360\db\data\Model::getByAttributes
+     * @covers \spoof\lib360\db\data\Model::getByCondition
      */
     public function testGetByCondition()
     {
