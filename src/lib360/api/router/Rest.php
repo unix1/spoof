@@ -21,6 +21,7 @@
 namespace spoof\lib360\api\router;
 
 use spoof\lib360\api;
+use spoof\lib360\NotFoundException;
 
 /**
  * Simple RESTful API handler
@@ -97,7 +98,7 @@ class Rest implements api\IRouter
         } catch (\BadMethodCallException $e) {
             $response->status = api\Response::STATUS_METHOD_NOT_IMPLEMENTED;
             $response->body = $e->getMessage();
-        } catch (api\ResourceNotFoundException $e) {
+        } catch (NotFoundException $e) {
             $response->status = api\Response::STATUS_RESOURCE_NOT_FOUND;
             $response->body = $e->getMessage();
         } catch (api\MethodNotAvailableException $e) {

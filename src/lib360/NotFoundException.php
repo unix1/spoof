@@ -18,14 +18,10 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\api;
+namespace spoof\lib360;
 
-use spoof\lib360\NotFoundException;
 
-/**
- * Exception type for API - resource not found
- */
-class ResourceNotFoundException extends Exception implements NotFoundException
+interface NotFoundException
 {
 }
 

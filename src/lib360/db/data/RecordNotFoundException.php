@@ -20,10 +20,13 @@
 
 namespace spoof\lib360\db\data;
 
+use spoof\lib360\db\Exception;
+use spoof\lib360\NotFoundException;
+
 /**
  * RecordNotFoundException class
  */
-class RecordNotFoundException extends \spoof\lib360\db\Exception
+class RecordNotFoundException extends Exception implements NotFoundException
 {
 }
 
