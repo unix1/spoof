@@ -122,6 +122,22 @@ class RestTest extends TestCase
      * @covers \spoof\lib360\api\router\Rest::translateRequest
      * @covers \spoof\lib360\api\router\Rest::translateOperation
      */
+    public function testHandleRequest_Fail_ForbiddenException()
+    {
+        $rest = new Rest('spoof\tests\lib360\api\router');
+        $request = new Request();
+        $request->parts[0] = 'HelperRestResource';
+        $request->parts[1] = 'ForbiddenException';
+        $request->operation = 'GET';
+        $response = $rest->handleRequest($request);
+        $this->assertEquals(Response::STATUS_FORBIDDEN, $response->status);
+    }
+
+    /**
+     * @covers \spoof\lib360\api\router\Rest::handleRequest
+     * @covers \spoof\lib360\api\router\Rest::translateRequest
+     * @covers \spoof\lib360\api\router\Rest::translateOperation
+     */
     public function testHandleRequest_Success_OnePart()
     {
         $rest = new Rest('spoof\tests\lib360\api\router');

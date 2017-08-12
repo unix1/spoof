@@ -18,38 +18,13 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\tests\lib360\api\router;
+namespace spoof\lib360\api;
 
-use spoof\lib360\api\ForbiddenException;
-
-class HelperRestResource
+/**
+ * Exception type for API - forbidden
+ */
+class ForbiddenException extends Exception
 {
-
-    public function submit(array $args)
-    {
-        return 'foo';
-    }
-
-    public function submitFoo(array $args)
-    {
-        return $args ?: 'foo submitted';
-    }
-
-    public function getArgs(array $args)
-    {
-        return $args;
-    }
-
-    public function getInvalidArgumentException(array $args)
-    {
-        throw new \InvalidArgumentException('Testing invalid argument exception');
-    }
-
-    public function getForbiddenException(array $args)
-    {
-        throw new ForbiddenException('Testing forbidden exception');
-    }
-
 }
 
 ?>

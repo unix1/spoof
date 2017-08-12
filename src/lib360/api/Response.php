@@ -37,6 +37,8 @@ class Response
     const STATUS_ERROR = 6;
     const STATUS_AUTH_FAILED = 7;
     const STATUS_BAD_REQUEST = 8;
+    const STATUS_FORBIDDEN = 9;
+
     /**
      * Status of the response
      */

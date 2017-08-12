@@ -104,6 +104,9 @@ class Rest implements api\IRouter
         } catch (api\MethodNotAvailableException $e) {
             $response->status = api\Response::STATUS_METHOD_NOT_ALLOWED;
             $response->body = $e->getMessage();
+        } catch (api\ForbiddenException $e) {
+            $response->status = api\Response::STATUS_FORBIDDEN;
+            $response->body = $e->getMessage();
         }
         // return result
         return $response;

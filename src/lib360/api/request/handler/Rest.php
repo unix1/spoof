@@ -36,6 +36,7 @@ class Rest extends api\request\Handler
         api\Response::STATUS_OK_CREATED => '201 Created',
         api\Response::STATUS_BAD_REQUEST => '400 Bad Request',
         api\Response::STATUS_AUTH_FAILED => '401 Unauthorized',
+        api\Response::STATUS_FORBIDDEN => '403 Forbidden',
         api\Response::STATUS_RESOURCE_NOT_FOUND => '404 Not Found',
         api\Response::STATUS_METHOD_NOT_ALLOWED => '405 Method Not Allowed',
         api\Response::STATUS_ERROR => '500 Internal Server Error',
@@ -85,6 +86,7 @@ class Rest extends api\request\Handler
         switch ($response->status) {
             case api\Response::STATUS_OK:
             case api\Response::STATUS_BAD_REQUEST:
+            case api\Response::STATUS_FORBIDDEN:
             case api\Response::STATUS_RESOURCE_NOT_FOUND:
             case api\Response::STATUS_METHOD_NOT_ALLOWED:
             case api\Response::STATUS_ERROR:
