@@ -91,7 +91,7 @@ class RestTest extends TestCase
         $request = $rest->getRequest();
         // NOTE typically we'd expect 'putarg1' => 'putval1' in the data array
         // below, but this is not testable without the actual PUT HTTP request
-        // so that the php://input stream exists
+        // so that the read-only php://input stream exists
         $this->assertEquals(
             array(
                 'PUT',
@@ -125,6 +125,8 @@ class RestTest extends TestCase
             ob_end_clean();
             $outputObject = json_decode($output);
             $this->assertTrue($result);
+            // NOTE we can't test HTTP header output without the actual HTTP
+            // request, but we can test body when it exists.
             if ($this->responseStatusMayHaveBody($key)) {
                 $this->assertEquals($key, $outputObject->status);
             }
