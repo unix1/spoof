@@ -83,6 +83,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Model::__construct
      * @covers \spoof\lib360\db\data\Model::getByKey
      */
     public function testGetByKey_NotFound()
@@ -96,6 +97,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
     
     /**
+     * @covers \spoof\lib360\db\data\Model::__construct
      * @covers \spoof\lib360\db\data\Model::create
      */
     public function testCreate()
@@ -115,6 +117,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Model::__construct
      * @covers \spoof\lib360\db\data\Model::createFromRecord
      */
     public function testCreateFromRecord()
@@ -130,6 +133,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Model::__construct
      * @covers \spoof\lib360\db\data\Model::getByAttributes
      */
     public function testGetByAttributes()
@@ -162,6 +166,7 @@ class ModelTest extends \spoof\tests\lib360\db\DatabaseTestCase
     }
 
     /**
+     * @covers \spoof\lib360\db\data\Model::__construct
      * @covers \spoof\lib360\db\data\Model::getByCondition
      */
     public function testGetByCondition()
