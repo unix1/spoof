@@ -18,23 +18,23 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\api;
+namespace spoof\tests\lib360\auth;
 
-/**
- * Application service interface that handles the request object
- */
-interface IRouter
+use spoof\lib360\api\Request;
+use spoof\lib360\auth\AllowAll;
+use spoof\tests\TestCase;
+
+class AllowAllTest extends TestCase
 {
 
     /**
-     * Handles API request and returns API response
-     *
-     * @param Request $request request object
-     *
-     * @return Response response object
+     * @covers \spoof\lib360\auth\AllowAll::authenticate
      */
-    public function handleRequest(Request $request);
-
+    public function testAuthenticate()
+    {
+        $auth = new AllowAll();
+        $this->assertTrue($auth->authenticate(new Request()));
+    }
 }
 
 ?>

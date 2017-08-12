@@ -69,6 +69,8 @@ interface IHandler
      * Output a response to the client
      *
      * @param api\Response $response response object
+     *
+     * @return mixed optional return value, may not be related to output sent
      */
     public function sendResponse(api\Response $response);
 

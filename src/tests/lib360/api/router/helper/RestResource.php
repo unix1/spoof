@@ -18,22 +18,15 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\api;
+namespace spoof\tests\lib360\api\router\helper;
 
-/**
- * Application service interface that handles the request object
- */
-interface IRouter
+class RestResource
 {
 
-    /**
-     * Handles API request and returns API response
-     *
-     * @param Request $request request object
-     *
-     * @return Response response object
-     */
-    public function handleRequest(Request $request);
+    public function getArgs(array $args)
+    {
+        return $args;
+    }
 
 }
 

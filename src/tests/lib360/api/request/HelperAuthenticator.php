@@ -18,22 +18,25 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\api;
+namespace spoof\tests\lib360\api\request;
 
-/**
- * Application service interface that handles the request object
- */
-interface IRouter
+use spoof\lib360\api\Request;
+use spoof\lib360\auth\IAuthenticator;
+
+class HelperAuthenticator implements IAuthenticator
 {
 
-    /**
-     * Handles API request and returns API response
-     *
-     * @param Request $request request object
-     *
-     * @return Response response object
-     */
-    public function handleRequest(Request $request);
+    protected $allow;
+
+    public function __construct($allow = true)
+    {
+        $this->allow = $allow;
+    }
+
+    public function authenticate(Request $request)
+    {
+        return $this->allow;
+    }
 
 }
 

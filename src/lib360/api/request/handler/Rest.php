@@ -74,6 +74,8 @@ class Rest extends api\request\Handler
      * Output a response to the client
      *
      * @param api\Response $response response object
+     *
+     * @return boolean true
      */
     public function sendResponse(api\Response $response)
     {
@@ -103,6 +105,8 @@ class Rest extends api\request\Handler
                 )
             );
         }
+
+        return true;
     }
 
 }

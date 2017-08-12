@@ -18,22 +18,30 @@
  *  along with Spoof.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace spoof\lib360\api;
+namespace spoof\tests\lib360\api\router;
 
-/**
- * Application service interface that handles the request object
- */
-interface IRouter
+class HelperRestResource
 {
 
-    /**
-     * Handles API request and returns API response
-     *
-     * @param Request $request request object
-     *
-     * @return Response response object
-     */
-    public function handleRequest(Request $request);
+    public function submit(array $args)
+    {
+        return 'foo';
+    }
+
+    public function submitFoo(array $args)
+    {
+        return $args ?: 'foo submitted';
+    }
+
+    public function getArgs(array $args)
+    {
+        return $args;
+    }
+
+    public function getInvalidArgumentException(array $args)
+    {
+        throw new \InvalidArgumentException('Testing invalid argument exception');
+    }
 
 }
 
