@@ -4,6 +4,13 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and notable new features.
 
+0.8.4
+-----
+
+new features:
+- added `NotFoundException` interface
+- added `ForbiddenException` class
+
 0.8.3
 -----
 
