@@ -20,18 +20,19 @@
 
 namespace spoof\tests\lib360\db\driver;
 
+use spoof\lib360\db\driver\Mysql;
 use spoof\tests\TestCase;
 
-class DriverTest extends TestCase
+class MysqlTest extends TestCase
 {
 
     /**
-     * @covers \spoof\lib360\db\driver\Driver::__construct
+     * @covers \spoof\lib360\db\driver\Mysql::__construct
      */
     public function testConstruct()
     {
-        $driver = new HelperDriver();
-        $expected = array('', '', '', '', '', '', '');
+        $driver = new Mysql();
+        $expected = array('`', '`', '`', '`', '.', 'SQL', 'PDO');
         $actual = array(
             $driver->tableQuoteStart,
             $driver->tableQuoteEnd,
