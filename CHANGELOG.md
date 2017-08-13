@@ -4,6 +4,12 @@ Changelog
 This document will list any non-backward compatible breaking changes between
 versions, and notable new features.
 
+0.9
+---
+
+potentially breaking changes:
+- removed `spoof\lib360\net` namespace
+
 0.8.4
 -----
 
