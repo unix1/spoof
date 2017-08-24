@@ -44,7 +44,7 @@ interface ITable extends IStore
      */
     public function select(
         ICondition $condition = null,
-        array $values = null,
+        array $values = array(),
         array $fields = null
     );
 
